@@ -25,16 +25,18 @@
         <!--=================================
  preloader -->
 
-        @include('layouts.main-header')
+        @include('layouts.header')
 
-        @include('layouts.main-sidebar')
+        @include('layouts.sidebar')
 
         <!--=================================
  Main content -->
         <!-- main-content -->
         <div class="content-wrapper">
 
-            @yield('page-header')
+            @yield('header')
+
+            @include('layouts.breadcrumb')
 
             @yield('content')
 

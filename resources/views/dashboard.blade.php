@@ -1,49 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.master')
+@section('title', __('main.dashboard'))
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="keywords" content="HTML5 Template" />
-    <meta name="description" content="Webmin - Bootstrap 4 & Angular 5 Admin Dashboard Template" />
-    <meta name="author" content="potenzaglobalsolutions.com" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    @include('layouts.head')
-</head>
-
-<body>
-
-    <div class="wrapper">
-
-        <!--=================================
- preloader -->
-
-        <div id="pre-loader">
-            <img src="assets/images/pre-loader/loader-01.svg" alt="">
-        </div>
-
-        <!--=================================
- preloader -->
-
-        @include('layouts.header')
-
-        @include('layouts.sidebar')
-
-        <!--=================================
- Main content -->
-        <!-- main-content -->
-        <div class="content-wrapper">
-            <div class="page-title">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <h4 class="mb-0">{{ __('main.dashboard') }}</h4>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb pt-0 pr-0 float-left float-sm-right">
-                        </ol>
-                    </div>
-                </div>
-            </div>
+@section('breadcrumb')
+    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('main.dashboard') }}</a></li>
+@endsection
+@section('content')
             <!-- widgets -->
             <div class="row">
                 <div class="col-xl-3 col-lg-6 col-md-6 mb-30">
@@ -663,24 +624,5 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <!--=================================
- wrapper -->
 
-            <!--=================================
- footer -->
-
-            @include('layouts.footer')
-        </div><!-- main content wrapper end-->
-    </div>
-    </div>
-    </div>
-
-    <!--=================================
- footer -->
-
-    @include('layouts.footer-scripts')
-
-</body>
-
-</html>
+@endsection
