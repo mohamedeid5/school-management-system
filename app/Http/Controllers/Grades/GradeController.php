@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Grades;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Grade;
+use App\Http\Requests\GradeRequest;
+use Illuminate\Support\Facades\Log;
 
 class GradeController extends Controller
 {
@@ -13,56 +14,62 @@ class GradeController extends Controller
      */
     public function index()
     {
-        $grades = ['gradesone' => 'gradesone', 'gradestwo' => 'gradestwo', 'gradesthree' => 'gradesthree'];
-
+        $grades = Grade::all();
         return view('grades.index', compact('grades'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(GradeRequest $request)
     {
-        //
-    }
+        try {
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+            $grade = Grade::create($request->validated());
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+            toastr()->success(__('main.created_successfully'));
+            return redirect()->route('grades.index');
+
+        } catch (\Exception $e) {
+            Log::error('Grade creation failed: ' . $e->getMessage());
+            toastr()->error(__('main.something_went_wrong'));
+            return redirect()->back()->withInput();
+        }
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(GradeRequest $request, Grade $grade)
     {
-        //
-    }
+        try {
+            $grade->update($request->validated());
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+            toastr()->success(__('main.updated_successfully'));
+            return redirect()->route('grades.index');
+
+        } catch (\Exception $e) {
+            Log::error('Grade update failed: ' . $e->getMessage());
+            toastr()->error(__('main.something_went_wrong'));
+
+            return redirect()->back()->withInput();
+        }
+    }
+    public function destroy(Grade $grade)
     {
-        //
+        try {
+
+            $grade->delete();
+
+            toastr()->success(__('main.deleted_successfully'));
+            return redirect()->route('grades.index');
+
+        } catch (\Exception $e) {
+            Log::error('Grade deletion failed: ' . $e->getMessage());
+            toastr()->error(__('main.something_went_wrong'));
+
+            return redirect()->back();
+        }
     }
 }

@@ -7,9 +7,12 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "brian2694/laravel-toastr": "^5.60",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
-        "mcamara/laravel-localization": "^2.3"
+        "mcamara/laravel-localization": "^2.3",
+        "spatie/laravel-translatable": "^6.13",
+        "yoeunes/toastr": "^3.3"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

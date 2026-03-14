@@ -20,12 +20,13 @@
 <script src="{{ URL::asset('assets/js/datepicker.js') }}"></script>
 <!-- sweetalert2 -->
 <script src="{{ URL::asset('assets/js/sweetalert2.js') }}"></script>
-<!-- toastr -->
-@yield('js')
-<script src="{{ URL::asset('assets/js/toastr.js') }}"></script>
 <!-- validation -->
 <script src="{{ URL::asset('assets/js/validation.js') }}"></script>
 <!-- lobilist -->
 <script src="{{ URL::asset('assets/js/lobilist.js') }}"></script>
 <!-- custom -->
 <script src="{{ URL::asset('assets/js/custom.js') }}"></script>
+<!-- toastr -->
+<script src="{{ URL::asset('assets/js/toastr.js') }}"></script>
+@yield('scripts')
+

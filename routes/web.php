@@ -29,7 +29,7 @@ function()
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
         // grades routes
-        Route::resource('grades', GradeController::class);
+        Route::resource('grades', GradeController::class)->except('create', 'edit', 'show');
 
     });
 });
