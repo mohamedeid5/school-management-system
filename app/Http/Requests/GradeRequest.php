@@ -35,7 +35,7 @@ class GradeRequest extends FormRequest
                 'max:255',
                 Rule::unique('grades', 'name->en')->ignore($this->grade),
             ],
-            'notes' => 'required|string',
+            'notes' => 'nullable|string',
         ];
     }
 
@@ -44,7 +44,7 @@ class GradeRequest extends FormRequest
         return [
             'name.required' => __('validation.required', ['attribute' => __('main.name')]),
             'name.max' => __('validation.max.string', ['attribute' => __('main.name'), 'max' => 255]),
-            'name.unique' => __('validation.unique', ['attribute' => __('main.name')]),
+            'name.*.unique' => __('validation.unique', ['attribute' => __('main.name')]),
             'notes.string' => __('validation.string', ['attribute' => __('main.notes')]),
         ];
     }

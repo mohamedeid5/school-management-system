@@ -13,4 +13,9 @@ class Grade extends Model
     protected $fillable = ['name', 'notes'];
 
     public array $translatable = ['name'];
+
+    public function classrooms()
+    {
+        return $this->hasMany(Classroom::class);
+    }
 }

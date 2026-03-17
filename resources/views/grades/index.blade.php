@@ -12,7 +12,6 @@
 
 @section('content')
     <div class="bg-white p-4 rounded shadow-sm">
-
         <div class="d-flex justify-content-between align-items-center mb-4">
             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createGradeModal">
                 {{ __('main.add_grade') }}
@@ -145,6 +144,7 @@
 
                                         <div class="modal-body">
                                             <p class="mb-0">{{ __('main.warning_grade') }}</p>
+                                            <input type="text" disabled class="form-control mt-2" value="{{ $grade->name }}">
                                         </div>
 
                                         <div class="modal-footer">
@@ -170,6 +170,13 @@
     </div>
 
     <!-- create modal -->
+     @if($errors->any())
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                $('#createGradeModal').modal('show');
+            });
+        </script>
+    @endif
 
     <div class="modal fade" id="createGradeModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -188,18 +195,40 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label>{{ __('main.stage_name_ar') }}</label>
-                                <input type="text" name="name[ar]" class="form-control">
+                                <input
+                                    type="text"
+                                    name="name[ar]"
+                                    value="{{ old('name.ar') }}"
+                                    class="form-control @error('name.ar') is-invalid @enderror">
+                                @error('name.ar')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="col-md-6 mb-3">
                                 <label>{{ __('main.stage_name_en') }}</label>
-                                <input type="text" name="name[en]" class="form-control">
+                                <input
+                                    type="text"
+                                    name="name[en]"
+                                    value="{{ old('name.en') }}"
+                                    class="form-control form-control @error('name.en') is-invalid @enderror"
+                                    >
+                                @error('name.en')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
                         <div class="form-group mb-0">
                             <label>{{ __('main.notes') }}</label>
-                            <textarea name="notes" class="form-control" rows="3"></textarea>
+                            <textarea
+                                    name="notes"
+                                    class="form-control @error('name.notes') is-invalid @enderror"
+                                    rows="3"
+                                    >{{ old('notes') }}</textarea>
+                            @error('notes')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
 

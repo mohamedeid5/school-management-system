@@ -45,8 +45,8 @@ class GradeController extends Controller
     {
         try {
             $grade->update($request->validated());
-
             toastr()->success(__('main.updated_successfully'));
+
             return redirect()->route('grades.index');
 
         } catch (\Exception $e) {
@@ -59,10 +59,9 @@ class GradeController extends Controller
     public function destroy(Grade $grade)
     {
         try {
-
             $grade->delete();
-
             toastr()->success(__('main.deleted_successfully'));
+
             return redirect()->route('grades.index');
 
         } catch (\Exception $e) {
