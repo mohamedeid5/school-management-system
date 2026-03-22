@@ -33,7 +33,12 @@ class GradeController extends Controller
             return redirect()->route('grades.index');
 
         } catch (\Exception $e) {
-            Log::error('Grade creation failed for: ' . $e->getMessage());
+            Log::error('Grade creation failed for', [
+                'user_id' => auth()->id(),
+                'error' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
+            ]);
             toastr()->error(__('main.something_went_wrong'));
             return redirect()->route('grades.index');
         }
@@ -52,7 +57,12 @@ class GradeController extends Controller
             return redirect()->route('grades.index');
 
         } catch (\Exception $e) {
-            Log::error('Grade update failed for ID ' . $grade->id . ': ' . $e->getMessage());
+            Log::error('Grade update failed for', [
+                'user_id' => auth()->id(),
+                'error' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
+            ]);
             toastr()->error(__('main.something_went_wrong'));
 
             return redirect()->route('grades.index');
@@ -71,7 +81,12 @@ class GradeController extends Controller
 
             return redirect()->route('grades.index');
         } catch (\Exception $e) {
-            Log::error('Grade deletion failed for ID ' . $grade->id . ': '. $e->getMessage());
+            Log::error('Grade deletion failed', [
+                'user_id' => auth()->id(),
+                'error' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
+            ]);
             toastr()->error(__('main.something_went_wrong'));
 
             return redirect()->route('grades.index');

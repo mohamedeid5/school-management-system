@@ -10,6 +10,7 @@
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
         "mcamara/laravel-localization": "^2.3",
+        "spatie/laravel-activitylog": "^4.12",
         "spatie/laravel-translatable": "^6.13",
         "yoeunes/toastr": "^3.3"
     },

@@ -5,14 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Grade extends Model
 {
-    use HasTranslations, HasFactory;
+    use HasTranslations, HasFactory, LogsActivity;
 
     protected $fillable = ['name', 'notes'];
 
     public array $translatable = ['name'];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+             ->logOnly(['name', 'grade_id'])
+             ->logOnlyDirty()
+             ->dontSubmitEmptyLogs();
+    }
 
     public function classrooms()
     {

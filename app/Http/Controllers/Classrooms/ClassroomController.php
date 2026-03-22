@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 
 class ClassroomController extends Controller
 {
@@ -50,7 +50,12 @@ class ClassroomController extends Controller
             return redirect()->route('classrooms.index');
 
         } catch (\Exception $e) {
-            Log::error('Classroom creation failed: ' . $e->getMessage());
+            Log::error('Classroom creation failed', [
+                'user_id' => auth()->id(),
+                'error' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
+            ]);
             toastr()->error(__('main.something_went_wrong'));
 
             return redirect()->back();
@@ -67,7 +72,12 @@ class ClassroomController extends Controller
 
             return redirect()->route('classrooms.index');
         } catch (Exception $e) {
-            Log::error('Classroom update failed: ' . $e->getMessage());
+            Log::error('Classroom update failed', [
+                'user_id' => auth()->id(),
+                'error' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
+            ]);
             toastr()->error(__('main.something_went_wrong'));
 
             return redirect()->back();
@@ -82,7 +92,12 @@ class ClassroomController extends Controller
 
             return redirect()->route('classrooms.index');
         } catch(Exception $e) {
-            Log::error('Classroom delete failed: ' . $e->getMessage());
+            Log::error('Classroom delete failed', [
+                'user_id' => auth()->id(),
+                'error' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
+            ]);
             toastr()->error(__('main.something_went_wrong'));
 
             return redirect()->back();
@@ -96,14 +111,19 @@ class ClassroomController extends Controller
         try {
 
             DB::transaction(function() use ($validated) {
-                Classroom::whereIn('id', $validated['ids'])->get()->each->delete();
+                Classroom::whereIn('id', $validated['ids'])->delete();
             });
 
             toastr()->success(__('main.deleted_successfully'));
             return redirect()->route('classrooms.index');
 
         } catch (Exception $e) {
-             Log::error('Bulk classroom delete failed: ' . $e->getMessage());
+             Log::error('Bulk classroom delete failed', [
+                'user_id' => auth()->id(),
+                'error' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
+            ]);
             toastr()->error(__('main.something_went_wrong'));
 
             return redirect()->back();
