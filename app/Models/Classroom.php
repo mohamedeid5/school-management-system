@@ -2,17 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 
 class Classroom extends Model
 {
 
-    use HasTranslations;
+    use HasTranslations, HasFactory;
 
     protected $fillable = ['name', 'grade_id'];
 
-    protected array $translatable = ['name'];
+    public array $translatable = ['name'];
 
     public function grade()
     {

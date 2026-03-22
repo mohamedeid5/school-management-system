@@ -10,7 +10,7 @@ use App\Http\Controllers\Classrooms\ClassroomController;
 Route::group(
 [
     'prefix' => LaravelLocalization::setLocale(),
-    'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+    //'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
 ],
 function()
 {
@@ -33,7 +33,10 @@ function()
         Route::resource('grades', GradeController::class)->except('create', 'edit', 'show');
 
         // classrooms routes
+        Route::delete('/classrooms/delete-selected', [ClassroomController::class, 'destroySelected'])
+            ->name('classrooms.destroySelected');
          Route::resource('classrooms', ClassroomController::class)->except('create', 'edit', 'show');
+
 
     });
 });
