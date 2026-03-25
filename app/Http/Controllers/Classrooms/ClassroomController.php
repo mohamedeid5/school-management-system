@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Classrooms;
 
+use App\Actions\Classrooms\CreateClassroomAction;
 use App\Http\Controllers\Controller;
 use App\Models\Classroom;
 use App\Models\Grade;
@@ -9,9 +10,7 @@ use App\Http\Requests\ClassroomRequest;
 use App\Http\Requests\DeleteSelectedClassroomsRequest;
 use App\Http\Requests\UpdateClassroomRequest;
 use Exception;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 
@@ -30,39 +29,21 @@ class ClassroomController extends Controller
         return view('classrooms.index', compact('classrooms', 'grades'));
     }
 
-    public function store(ClassroomRequest $request): RedirectResponse
+    public function store(ClassroomRequest $request, CreateClassroomAction $createClassroomAction): RedirectResponse
     {
         try {
-
-            DB::transaction(function() use ($request) {
-                foreach ($request->list_classrooms as $classroomData) {
-                    Classroom::create([
-                        'name' => [
-                            'ar' => $classroomData['name'],
-                            'en' => $classroomData['name_en'],
-                        ],
-                        'grade_id' => $classroomData['grade_id'],
-                    ]);
-                }
-            });
-
+            $createClassroomAction->handle($request);
             toastr()->success(__('main.created_successfully'));
-            return redirect()->route('classrooms.index');
 
+            return redirect()->route('classrooms.index');
         } catch (\Exception $e) {
-            Log::error('Classroom creation failed', [
-                'user_id' => auth()->id(),
-                'error' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine()
-            ]);
+            $this->logError('Classroom creation failed', $e);
             toastr()->error(__('main.something_went_wrong'));
 
             return redirect()->back();
         }
 
     }
-
 
     public function update(UpdateClassroomRequest $request, Classroom $classroom): RedirectResponse
     {
@@ -72,12 +53,7 @@ class ClassroomController extends Controller
 
             return redirect()->route('classrooms.index');
         } catch (Exception $e) {
-            Log::error('Classroom update failed', [
-                'user_id' => auth()->id(),
-                'error' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine()
-            ]);
+            $this->logError('Classroom update failed', $e);
             toastr()->error(__('main.something_went_wrong'));
 
             return redirect()->back();
@@ -92,12 +68,7 @@ class ClassroomController extends Controller
 
             return redirect()->route('classrooms.index');
         } catch(Exception $e) {
-            Log::error('Classroom delete failed', [
-                'user_id' => auth()->id(),
-                'error' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine()
-            ]);
+            $this->logError('Classroom delete failed', $e);
             toastr()->error(__('main.something_went_wrong'));
 
             return redirect()->back();
@@ -106,24 +77,16 @@ class ClassroomController extends Controller
 
     public function destroySelected(DeleteSelectedClassroomsRequest $request): RedirectResponse
     {
-        $validated = $request->validated();
+        $request->validated();
 
         try {
-
-            DB::transaction(function() use ($validated) {
-                Classroom::whereIn('id', $validated['ids'])->delete();
-            });
+            Classroom::destroy($request->ids);
 
             toastr()->success(__('main.deleted_successfully'));
             return redirect()->route('classrooms.index');
 
         } catch (Exception $e) {
-             Log::error('Bulk classroom delete failed', [
-                'user_id' => auth()->id(),
-                'error' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine()
-            ]);
+            $this->logError('Bulk classroom delete failed', $e);
             toastr()->error(__('main.something_went_wrong'));
 
             return redirect()->back();

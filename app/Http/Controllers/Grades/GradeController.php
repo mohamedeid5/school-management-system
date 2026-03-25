@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Grades;
 use App\Http\Controllers\Controller;
 use App\Models\Grade;
 use App\Http\Requests\GradeRequest;
-use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 
@@ -26,19 +25,13 @@ class GradeController extends Controller
     public function store(GradeRequest $request): RedirectResponse
     {
         try {
-
-            $grade = Grade::create($request->validated());
+            Grade::create($request->validated());
 
             toastr()->success(__('main.created_successfully'));
             return redirect()->route('grades.index');
 
         } catch (\Exception $e) {
-            Log::error('Grade creation failed for', [
-                'user_id' => auth()->id(),
-                'error' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine()
-            ]);
+            $this->logError('Grade creation failed', $e);
             toastr()->error(__('main.something_went_wrong'));
             return redirect()->route('grades.index');
         }
@@ -57,12 +50,7 @@ class GradeController extends Controller
             return redirect()->route('grades.index');
 
         } catch (\Exception $e) {
-            Log::error('Grade update failed for', [
-                'user_id' => auth()->id(),
-                'error' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine()
-            ]);
+            $this->logError('Grade update failed', $e);
             toastr()->error(__('main.something_went_wrong'));
 
             return redirect()->route('grades.index');
@@ -81,15 +69,11 @@ class GradeController extends Controller
 
             return redirect()->route('grades.index');
         } catch (\Exception $e) {
-            Log::error('Grade deletion failed', [
-                'user_id' => auth()->id(),
-                'error' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine()
-            ]);
+            $this->logError('Grade deletion failed', $e);
             toastr()->error(__('main.something_went_wrong'));
 
             return redirect()->route('grades.index');
         }
     }
+
 }

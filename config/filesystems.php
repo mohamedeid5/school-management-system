@@ -60,6 +60,13 @@ return [
             'report' => false,
         ],
 
+        'parent_attachments' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/attachments/parents'),
+            'url' => env('APP_URL').'/storage/attachments/parents',
+            'visibility' => 'public',
+        ],
+
     ],
 
     /*

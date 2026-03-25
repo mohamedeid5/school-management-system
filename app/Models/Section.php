@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Translatable\HasTranslations;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Translatable\HasTranslations;
 
-class Grade extends Model
+class Section extends Model
 {
-    use HasTranslations, HasFactory, LogsActivity;
 
-    protected $fillable = ['name', 'notes'];
+    use LogsActivity, HasTranslations;
+
+    protected $fillable = ['name', 'status','grade_id', 'classroom_id'];
 
     public array $translatable = ['name'];
 
@@ -24,13 +24,15 @@ class Grade extends Model
              ->dontSubmitEmptyLogs();
     }
 
-    public function classrooms()
+    public function grade()
     {
-        return $this->hasMany(Classroom::class);
+        return $this->belongsTo(Grade::class);
     }
 
-    public function sections()
+    public function classroom()
     {
-        return $this->hasMany(Section::class);
+        return $this->belongsTo(Classroom::class);
     }
+
+
 }

@@ -1,10 +1,10 @@
 @if ($errors->any() and old('form_type') == 'create')
-            <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                $('#createclassroomModal').modal('show');
-            });
-        </script>
-    @endif
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            $('#createclassroomModal').modal('show');
+        });
+    </script>
+@endif
 
     <div class="modal fade" id="createclassroomModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -49,7 +49,7 @@
                                             value="{{ $classroom['name_en'] ?? '' }}" />
                                             @error('list_classrooms.*.name_en')
                                             <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
+                                            @enderror
                                     </div>
 
                                     <div class="col">

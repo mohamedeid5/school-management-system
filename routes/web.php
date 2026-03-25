@@ -6,11 +6,12 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Grades\GradeController;
 use App\Http\Controllers\Classrooms\ClassroomController;
+use App\Http\Controllers\Sections\SectionController;
 
 Route::group(
 [
     'prefix' => LaravelLocalization::setLocale(),
-    //'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+    'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
 ],
 function()
 {
@@ -35,8 +36,15 @@ function()
         // classrooms routes
         Route::delete('/classrooms/delete-selected', [ClassroomController::class, 'destroySelected'])
             ->name('classrooms.destroySelected');
-         Route::resource('classrooms', ClassroomController::class)->except('create', 'edit', 'show');
+        Route::resource('classrooms', ClassroomController::class)->except('create', 'edit', 'show');
 
+        // sections routes
+        Route::resource('sections', SectionController::class)->except('create', 'edit', 'show');
+        Route::get('get-classrooms/{id}', [SectionController::class, 'getClassrooms']);
+
+        // parents routes
+       // Route::get('parents', Myparent);
+        Route::view('add-parent', 'livewire.parents')->name('add_parent');
 
     });
 });
