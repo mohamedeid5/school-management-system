@@ -53,7 +53,7 @@ class SectionController extends Controller
             toastr()->success(__('main.created_successfully'));
             return redirect()->route('sections.index');
         } catch (\Exception $e) {
-            $this->logError('Section update failed', $e);
+            $this->logError('Section update failed', $e,  ['section_id' => $section->id]);
             toastr()->error(__('main.something_went_wrong'));
 
             return redirect()->back();
@@ -72,7 +72,7 @@ class SectionController extends Controller
             return redirect()->route('sections.index');
 
         } catch (\Exception $e) {
-            $this->logError('Section delete failed', $e);
+            $this->logError('Section delete failed', $e, ['section_id' => $section->id]);
             toastr()->error(__('main.something_went_wrong'));
 
             return redirect()->back();

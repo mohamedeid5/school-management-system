@@ -7,6 +7,7 @@ use App\Models\MyParent;
 use App\Models\ParentAttachment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Events\ParentCreated;
 
 class CreateParentAction
 {
@@ -17,6 +18,8 @@ class CreateParentAction
             $parent = MyParent::create($this->parentData($form));
 
             $this->storeAttachments($parent, $form);
+
+            event(new ParentCreated($parent));
 
             return $parent;
         });

@@ -53,7 +53,7 @@ class ClassroomController extends Controller
 
             return redirect()->route('classrooms.index');
         } catch (Exception $e) {
-            $this->logError('Classroom update failed', $e);
+            $this->logError('Classroom update failed', $e,  ['classroom_id' => $classroom->id]);
             toastr()->error(__('main.something_went_wrong'));
 
             return redirect()->back();
@@ -68,7 +68,7 @@ class ClassroomController extends Controller
 
             return redirect()->route('classrooms.index');
         } catch(Exception $e) {
-            $this->logError('Classroom delete failed', $e);
+            $this->logError('Classroom delete failed', $e,  ['classroom_id' => $classroom->id]);
             toastr()->error(__('main.something_went_wrong'));
 
             return redirect()->back();
@@ -80,13 +80,13 @@ class ClassroomController extends Controller
         $request->validated();
 
         try {
-            Classroom::destroy($request->ids);
+            $classroom = Classroom::destroy($request->ids);
 
             toastr()->success(__('main.deleted_successfully'));
             return redirect()->route('classrooms.index');
 
         } catch (Exception $e) {
-            $this->logError('Bulk classroom delete failed', $e);
+            $this->logError('Bulk classroom delete failed', $e,  ['classroom_id' => $request->id]);
             toastr()->error(__('main.something_went_wrong'));
 
             return redirect()->back();

@@ -50,7 +50,7 @@ class GradeController extends Controller
             return redirect()->route('grades.index');
 
         } catch (\Exception $e) {
-            $this->logError('Grade update failed', $e);
+            $this->logError('Grade update failed', $e, ['grade_id' => $grade->id]);
             toastr()->error(__('main.something_went_wrong'));
 
             return redirect()->route('grades.index');
@@ -69,7 +69,7 @@ class GradeController extends Controller
 
             return redirect()->route('grades.index');
         } catch (\Exception $e) {
-            $this->logError('Grade deletion failed', $e);
+            $this->logError('Grade deletion failed', $e, ['grade_id' => $grade->id]);
             toastr()->error(__('main.something_went_wrong'));
 
             return redirect()->route('grades.index');
