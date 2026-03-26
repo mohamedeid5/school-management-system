@@ -1,25 +1,22 @@
 <div>
-   <div class="stepwizard">
-        <div class="stepwizard-row setup-panel">
-            <div class="stepwizard-step">
-                <a href="#step-1" type="button" class="btn btn-circle {{ $currentStep != 1 ? 'btn-default' : 'btn-success' }}">1</a>
-                <p>معلومات الأب</p>
-            </div>
-            <div class="stepwizard-step">
-                <a href="#step-2" type="button" class="btn btn-circle {{ $currentStep != 2 ? 'btn-default' : 'btn-success' }}">2</a>
-                <p>معلومات الأم</p>
-            </div>
-            <div class="stepwizard-step">
-                <a href="#step-3" type="button" class="btn btn-circle {{ $currentStep != 3 ? 'btn-default' : 'btn-success' }}">3</a>
-                <p>تأكيد المعلومات</p>
-            </div>
+
+    @if($showForm)
+        <div class="mb-3">
+            <button wire:click="hideForm" class="btn btn-secondary shadow-sm">
+                <i class="fa fa-arrow-right"></i> {{ __('main.back_to_table') }}
+            </button>
         </div>
-    </div>
+        @include('livewire.stepwizard')
 
-    @include('livewire.father-form')
+        @include('livewire.father-form')
 
-    @include('livewire.mother-form')
+        @include('livewire.mother-form')
 
-    @include('livewire.confirmation-form')
+        @include('livewire.confirmation-form')
+    @else
+
+        @include('livewire.parent-table')
+
+    @endif
 
 </div>

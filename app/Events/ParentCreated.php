@@ -18,10 +18,7 @@ class ParentCreated
     /**
      * Create a new event instance.
      */
-    public function __construct(public MyParent $parent)
-    {
-        //
-    }
+    public function __construct(public MyParent $parent) {}
 
     /**
      * Get the channels the event should broadcast on.
