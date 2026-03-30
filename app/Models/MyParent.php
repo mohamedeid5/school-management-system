@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 use Spatie\Translatable\HasTranslations;
 
 class MyParent extends Model
 {
-    use HasTranslations, SoftDeletes;
+    use HasTranslations, SoftDeletes, LogsActivity;
 
     protected $fillable = [
         'email',
@@ -41,4 +43,12 @@ class MyParent extends Model
         'name_mother',
         'job_mother',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+             ->logOnly(['name', 'grade_id'])
+             ->logOnlyDirty()
+             ->dontSubmitEmptyLogs();
+    }
 }

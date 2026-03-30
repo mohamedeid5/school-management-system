@@ -79,9 +79,4 @@ class SectionController extends Controller
         }
     }
 
-    public function getClassrooms($id)
-    {
-        $classrooms = Classroom::where('grade_id', $id)->pluck('name', 'id');
-        return response()->json($classrooms);
-    }
 }

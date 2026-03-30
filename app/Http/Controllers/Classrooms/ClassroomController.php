@@ -80,7 +80,7 @@ class ClassroomController extends Controller
         $request->validated();
 
         try {
-            $classroom = Classroom::destroy($request->ids);
+            Classroom::destroy($request->ids);
 
             toastr()->success(__('main.deleted_successfully'));
             return redirect()->route('classrooms.index');

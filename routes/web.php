@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AjaxController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Http\Controllers\Auth\LoginController;
@@ -7,6 +8,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Grades\GradeController;
 use App\Http\Controllers\Classrooms\ClassroomController;
 use App\Http\Controllers\Sections\SectionController;
+use App\Http\Controllers\Teachers\TeacherController;
+use App\Http\Controllers\Students\StudentController;
 
 Route::group(
 [
@@ -40,11 +43,20 @@ function()
 
         // sections routes
         Route::resource('sections', SectionController::class)->except('create', 'edit', 'show');
-        Route::get('get-classrooms/{id}', [SectionController::class, 'getClassrooms']);
 
-        // parents routes
-       // Route::get('parents', Myparent);
+
         Route::view('add-parent', 'livewire.parents')->name('add_parent');
+
+        // teachers routes
+        Route::resource('teachers', TeacherController::class);
+
+        // students routes
+        Route::resource('students', StudentController::class);
+
+        Route::middleware(['auth'])->group(function () {
+            Route::get('get-classrooms/{id}', [AjaxController::class, 'getClassrooms']);
+            Route::get('get-sections/{id}', [AjaxController::class, 'getSections']);
+        });
 
     });
 });

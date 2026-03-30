@@ -14,7 +14,7 @@ class ReligionSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('religions')->truncate();
+        DB::table('religions')->delete();
             $religions = [
                 ['en'=> 'Muslim', 'ar'=> 'مسلم'],
                 ['en'=> 'Christian', 'ar'=> 'مسيحي'],

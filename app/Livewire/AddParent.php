@@ -9,6 +9,7 @@ use App\Models\BloodType;
 use App\Models\Religion;
 use Livewire\WithFileUploads;
 use App\Actions\Parents\CreateParentAction;
+use App\Actions\Parents\DeleteParentAction;
 use App\Actions\Parents\UpdateParentAction;
 use App\Models\MyParent;
 use App\Traits\Loggable;
@@ -21,11 +22,14 @@ class AddParent extends Component
 
     public ParentForm $form;
 
+    public $showTrashed = false;
+
     public $showForm = false;
 
     public $updateMode = false;
 
     public $parent_id;
+
 
     public function updated($propertyName): void
     {
@@ -34,11 +38,15 @@ class AddParent extends Component
 
     public function render()
     {
+        $parents = $this->showTrashed
+                ? MyParent::onlyTrashed()->latest()->get()
+                : MyParent::latest()->get();
+
         return view('livewire.add-parent', [
             'nationalities' => Nationality::all(),
             'type_bloods' => BloodType::all(),
             'religions' => Religion::all(),
-            'parents' => MyParent::all(),
+            'parents' => $parents,
         ]);
     }
 
@@ -92,7 +100,50 @@ class AddParent extends Component
         $this->form->address_mother = $parent->address_mother;
     }
 
-    protected function prepareForEdit($id)
+    public function delete($id, DeleteParentAction $deleteAction)
+    {
+        try {
+            $parent = MyParent::findOrFail($id);
+            $deleteAction->handle($parent);
+
+            toastr()->success(__('main.deleted_successfully'));
+        } catch (\Exception $e) {
+            $this->logError('Parent delete failed', $e);
+            toastr()->error(__('main.error_message'));
+        }
+    }
+
+    public function forceDelete($id, DeleteParentAction $deleteAction)
+    {
+        try {
+            $parent = MyParent::withTrashed()->findOrFail($id);
+            $deleteAction->forceDelete($parent);
+
+            toastr()->success(__('main.deleted_successfully'));
+        } catch (\Exception $e) {
+            $this->logError('Parent delete failed', $e, ['parent_id' => $id]);
+            toastr()->error(__('main.error_message'));
+        }
+    }
+
+    public function restore($id)
+    {
+        try {
+            $parent = MyParent::withTrashed()->findOrFail($id);
+            $parent->restore();
+        } catch (\Exception $e) {
+            $this->logError('Parent delete failed', $e, ['parent_id' => $parent->id]);
+            toastr()->error(__('main.error_message'));
+        }
+    }
+
+
+    public function toggleTrashed(): void
+    {
+        $this->showTrashed = !$this->showTrashed;
+    }
+
+    protected function prepareForEdit($id): void
     {
         $this->updateMode = true;
         $this->showForm = true;
@@ -107,7 +158,7 @@ class AddParent extends Component
         try {
             if($this->updateMode)
             {
-                $parent = MyParent::findOrFail($this->form->id);
+                $parent = MyParent::findOrFail($this->parent_id);
                 $updateAction->handle($parent, $this->form);
             } else {
                 $createAction->handle($this->form);

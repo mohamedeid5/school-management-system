@@ -1,4 +1,5 @@
 @extends('layouts.master')
+@section('title', __('main.parents'))
 @section('breadcrumb')
     <li class="breadcrumb-item">
         <a href="{{ route('dashboard') }}">{{ __('main.dashboard') }}</a>

@@ -67,9 +67,32 @@
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
                         </a>
-                        <ul id="classrooms" class="collapse" data-parent="#sidebarnav">
-                            <li><a href="">{{ __('main.parents_list') }}</a></li>
-                            <li><a href="">{{ __('main.add_parent') }}</a></li>
+                        <ul id="parents" class="collapse" data-parent="#sidebarnav">
+                            <li><a href="{{ route('add_parent') }}">{{ __('main.add_parent') }}</a></li>
+                        </ul>
+                    </li>
+                     <!-- menu item Teachers -->
+                    <li>
+                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#teachers">
+                            <div class="pull-left"><i class="ti-palette"></i><span
+                                    class="right-nav-text">{{ __('main.teachers') }}</span></div>
+                            <div class="pull-right"><i class="ti-plus"></i></div>
+                            <div class="clearfix"></div>
+                        </a>
+                        <ul id="teachers" class="collapse" data-parent="#sidebarnav">
+                            <li><a href="{{ route('teachers.index') }}">{{ __('main.teachers_list') }}</a></li>
+                        </ul>
+                    </li>
+                     <!-- menu item Teachers -->
+                    <li>
+                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#students">
+                            <div class="pull-left"><i class="ti-palette"></i><span
+                                    class="right-nav-text">{{ __('main.students') }}</span></div>
+                            <div class="pull-right"><i class="ti-plus"></i></div>
+                            <div class="clearfix"></div>
+                        </a>
+                        <ul id="students" class="collapse" data-parent="#sidebarnav">
+                            <li><a href="{{ route('students.index') }}">{{ __('main.students_list') }}</a></li>
                         </ul>
                     </li>
                     <!-- menu item calendar-->
