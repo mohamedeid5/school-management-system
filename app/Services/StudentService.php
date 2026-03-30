@@ -9,6 +9,8 @@ use App\Models\Classroom;
 use App\Models\Section;
 use App\Models\Student;
 use App\Models\User;
+use App\Models\Nationality;
+use App\Models\BloodType;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -29,11 +31,21 @@ class StudentService
 
     public function getCreatePageData()
     {
+        $classrooms = old('grade_id')
+                ? Classroom::where('grade_id', old('grade_id'))->get()
+                : Classroom::all();
+
+        $sections = old('classroom_id')
+                ? Section::where('classroom_id', old('classroom_id'))->get()
+                : Section::all();
+
         return [
             'parents' => MyParent::all(),
             'grades' => Grade::all(),
-            'classrooms' => Classroom::all(),
-            'sections' => Section::all(),
+            'classrooms' => $classrooms,
+            'sections' => $sections,
+            'nationalities' => Nationality::all(),
+            'bloodTypes' => BloodType::all(),
         ];
     }
 
@@ -78,6 +90,8 @@ class StudentService
             'grades' => Grade::all(),
             'classrooms' => Classroom::where('grade_id', $gradeId)->get(),
             'sections' => Section::where('classroom_id', $classroomId)->get(),
+            'nationalities' => Nationality::all(),
+            'bloodTypes' => BloodType::all(),
         ];
     }
 

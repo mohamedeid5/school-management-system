@@ -29,7 +29,6 @@
         @method('PUT')
 
         <div class="card-body">
-            {{-- الصف الأول: البيانات الأساسية --}}
             <div class="row">
                 <div class="col-md-4">
                     <label>{{ __('main.student_name') }} <span class="text-danger">*</span></label>
@@ -48,7 +47,7 @@
                 <div class="col-md-4">
                     <label>{{ __('main.password') }}</label>
                     <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
-                           placeholder="اتركه فارغاً إذا كنت لا تريد تغييره">
+                           placeholder="{{ __('main.leave_blank_to_keep_current') }}">
                     @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
             </div>
@@ -56,10 +55,34 @@
             <div class="row mt-3">
                 <div class="col-md-3">
                     <label>{{ __('main.gender') }}</label>
-                    <select name="gender" class="form-control">
-                        <option value="male" @selected(old('gender', $student->gender) == 'male')>{{ __('main.male') }}</option>
-                        <option value="female" @selected(old('gender', $student->gender) == 'female')>{{ __('main.female') }}</option>
+                    <select name="gender" class="form-control select2">
+                        <option value="male" @selected(old('gender', $student->gender->value) == 'male')>{{ __('main.male') }}</option>
+                        <option value="female" @selected(old('gender', $student->gender->value) == 'female')>{{ __('main.female') }}</option>
                     </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label>{{ __('main.nationality') }} <span class="text-danger">*</span></label>
+                    <select name="nationality_id" class="form-control select2 @error('nationality_id') is-invalid @enderror">
+                        @foreach($nationalities as $nationality)
+                            <option value="{{ $nationality->id }}" @selected(old('nationality_id', $student->nationality_id) == $nationality->id)>
+                                {{ $nationality->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('nationality_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                </div>
+
+                <div class="col-md-3">
+                    <label>{{ __('main.blood_type') }} <span class="text-danger">*</span></label>
+                    <select name="blood_type_id" class="form-control select2 @error('blood_type_id') is-invalid @enderror">
+                        @foreach($bloodTypes as $blood_type)
+                            <option value="{{ $blood_type->id }}" @selected(old('blood_type_id', $student->blood_type_id) == $blood_type->id)>
+                                {{ $blood_type->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('blood_type_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
 
                 <div class="col-md-3">
@@ -67,11 +90,12 @@
                     <input type="date" name="date_of_birth" class="form-control @error('date_of_birth') is-invalid @enderror"
                            value="{{ old('date_of_birth', $student->date_of_birth->format('Y-m-d')) }}">
                 </div>
+            </div>
 
-                <div class="col-md-6">
+            <div class="row mt-3">
+                <div class="col-md-12">
                     <label>{{ __('main.parent') }} <span class="text-danger">*</span></label>
-                    {{-- 1. حقل الأب (مفعل فيه البحث) --}}
-                    <select name="parent_id" class="form-control select2 @error('parent_id') is-invalid @enderror" id="parent_select">
+                    <select name="parent_id" class="form-control select2 @error('parent_id') is-invalid @enderror">
                         @foreach($parents as $parent)
                             <option value="{{ $parent->id }}" @selected(old('parent_id', $student->parent_id) == $parent->id)>
                                 {{ $parent->name_father }}
@@ -89,31 +113,22 @@
                 <div class="col-md-4">
                     <label>{{ __('main.grade') }}</label>
                     <select name="grade_id" class="form-control select2 @error('grade_id') is-invalid @enderror" id="grade_select">
-                         <option value="" disabled selected>
-                                اختر المرحلة ...
-                            </option>
                         @foreach($grades as $grade)
-                            <option
-                                value="{{ $grade->id }}"
+                            <option value="{{ $grade->id }}"
                                 @selected(session()->hasOldInput() ? old('grade_id') == $grade->id : $student->grade_id == $grade->id) >
                                 {{ $grade->name }}
                             </option>
                         @endforeach
-                        @error('grade_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </select>
+                    @error('grade_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
 
                 <div class="col-md-4">
                     <label>{{ __('main.classroom') }}</label>
                     <select name="classroom_id" class="form-control select2 @error('classroom_id') is-invalid @enderror" id="classroom_select">
-                            <option value="" disabled selected>
-                                اختر الصف ...
-                            </option>
-                            @foreach ($classrooms as $classroom)
-                            <option
-                                value="{{ $classroom->id }}"
-                                @selected(old('classroom_id', $student->classroom_id) == $classroom->id)
-                                >
+                        @foreach ($classrooms as $classroom)
+                            <option value="{{ $classroom->id }}"
+                                @selected(old('classroom_id') == $student->classroom_id) >
                                 {{ $classroom->name }}
                             </option>
                         @endforeach
@@ -124,15 +139,10 @@
                 <div class="col-md-4">
                     <label>{{ __('main.section') }}</label>
                     <select name="section_id" class="form-control select2 @error('section_id') is-invalid @enderror" id="section_select">
-                       <option value="" disabled selected>
-                                اختر القسم ...
-                        </option>
                         @foreach ($sections as $section)
-                            <option
-                                value="{{ $section->id }}"
-                                @selected(old('section_id', $student->section_id) == $section->id)
-                            >
-                                {{ $section->name }}
+                            <option value="{{ $section->id }}"
+                                @selected(old('section_id') == $student->section_id) >
+                                {{ $section->name }} - {{ $section->classroom->name }}
                             </option>
                         @endforeach
                     </select>
@@ -141,10 +151,25 @@
             </div>
 
             <div class="row mt-3">
-                <div class="col-md-4">
+                <div class="col-md-6">
+                    <label>{{ __('main.academic_year') }} <span class="text-danger">*</span></label>
+                    <select name="academic_year" class="form-control select2 @error('academic_year') is-invalid @enderror">
+                        @php $current_year = date('Y'); @endphp
+                        @for($year=$current_year - 1; $year<=$current_year + 1; $year++)
+                            @php $year_val = $year . '/' . ($year + 1); @endphp
+                            <option value="{{ $year_val }}" @selected(old('academic_year', $student->academic_year) == $year_val)>
+                                {{ $year_val }}
+                            </option>
+                        @endfor
+                    </select>
+                    @error('academic_year') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                </div>
+
+                <div class="col-md-6">
                     <label>{{ __('main.joining_date') }}</label>
-                    <input type="date" name="joining_date" class="form-control"
+                    <input type="date" name="joining_date" class="form-control @error('joining_date') is-invalid @enderror"
                            value="{{ old('joining_date', $student->joining_date->format('Y-m-d')) }}">
+                    @error('joining_date') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
             </div>
         </div>
@@ -170,7 +195,6 @@
 
         $('#grade_select').on('change', function() {
             var grade_id = $(this).val();
-
             $('#classroom_select').val(null).trigger('change');
             $('#section_select').val(null).trigger('change');
 
@@ -192,8 +216,7 @@
 
         $('#classroom_select').on('change', function() {
             var classroom_id = $(this).val();
-
-            $('#section_select').empty().append('<option value="">اختر الصف...</option>');
+            $('#section_select').empty().append('<option value="">اختر القسم...</option>');
             $('#section_select').trigger('change');
 
             if (classroom_id) {
@@ -202,10 +225,11 @@
                     type: "GET",
                     dataType: "json",
                     success: function(data) {
-                        $('#section_select').empty().append('<option selected disabled>اختر القسم...</option>');
+                        $('#section_select').empty().append('<option value="" selected disabled>اختر القسم...</option>');
                         $.each(data, function(key, value) {
                             $('#section_select').append('<option value="' + key + '">' + value + '</option>');
                         });
+                        $('#section_select').trigger('change');
                     },
                 });
             }

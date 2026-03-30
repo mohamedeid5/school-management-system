@@ -46,7 +46,7 @@
                     <td>
                         @foreach($teacher->sections as $section)
                             <span class="badge bg-info text-dark">
-                                {{ $section->name }}
+                                {{ $section->name }} - {{ $section->classroom->name }}
                             </span>
                         @endforeach
                     </td>

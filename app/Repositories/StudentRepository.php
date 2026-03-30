@@ -22,7 +22,10 @@ class StudentRepository
             'parent_id' => $data['parent_id'],
             'grade_id' => $data['grade_id'],
             'classroom_id' => $data['classroom_id'],
-            'section_id' => $data['section_id']
+            'section_id' => $data['section_id'],
+            'nationality_id' => $data['nationality_id'],
+            'blood_type_id' => $data['blood_type_id'],
+            'academic_year' => $data['academic_year']
         ]);
     }
 
@@ -35,7 +38,10 @@ class StudentRepository
             'parent_id' => $data['parent_id'],
             'grade_id' => $data['grade_id'],
             'classroom_id' => $data['classroom_id'],
-            'section_id' => $data['section_id']
+            'section_id' => $data['section_id'],
+            'nationality_id' => $data['nationality_id'],
+            'blood_type_id' => $data['blood_type_id'],
+            'academic_year' => $data['academic_year']
         ]);
     }
 

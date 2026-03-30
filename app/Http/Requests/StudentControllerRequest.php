@@ -34,6 +34,9 @@ class StudentControllerRequest extends FormRequest
             'date_of_birth' => 'required|date',
             'joining_date' => 'required|date',
             'gender' => 'required|in:male,female',
+            'nationality_id' => 'required|exists:nationalities,id',
+            'blood_type_id' => 'required|exists:blood_types,id',
+            'academic_year' => 'required|string|max:255'
         ];
     }
 }

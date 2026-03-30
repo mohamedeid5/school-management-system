@@ -4,30 +4,38 @@
 @section('css')
 <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+@endsection
+
+@section('breadcrumb')
+    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('main.dashboard') }}</a></li>
+    <li class="breadcrumb-item active">{{ __('main.students') }}</li>
 @endsection
 
 @section('content')
-<div class="card shadow-sm">
-    <div class="card-header">
-        <h3 class="card-title">{{ __('main.students_list') }}</h3>
-        <div class="card-tools">
-            <a href="{{ route('students.create') }}" class="btn btn-primary btn-sm">
-                <i class="fas fa-plus"></i> {{ __('main.add_student') }}
+<div class="card shadow-sm border-0">
+    <div class="card-header bg-white py-3">
+        <div class="d-flex justify-content-between align-items-center">
+            <h3 class="card-title font-weight-bold text-primary">
+                <i class="fa fa-user-graduate mr-1"></i> {{ __('main.students_list') }}
+            </h3>
+            <a href="{{ route('students.create') }}" class="btn btn-primary btn-sm shadow-sm">
+                <i class="fa fa-plus-circle"></i> {{ __('main.add_student') }}
             </a>
         </div>
     </div>
     <div class="card-body">
         <div class="table-responsive">
             <table id="datatable" class="table table-bordered table-hover align-middle text-center mb-0">
-                <thead>
+                <thead class="bg-light">
                     <tr>
                         <th>#</th>
                         <th>{{ __('main.student_code') }}</th>
                         <th>{{ __('main.name') }}</th>
-                        <th>{{ __('main.email') }}</th>
-                        <th>{{ __('main.grade') }}</th>
-                        <th>{{ __('main.classroom') }}</th>
-                        <th>{{ __('main.section') }}</th>
+                        <th>{{ __('main.gender') }}</th>
+                        <th>{{ __('main.nationality') }}</th>
+                        <th>{{ __('main.academic_info') }}</th>
+                        <th>{{ __('main.academic_year') }}</th>
                         <th>{{ __('main.processes') }}</th>
                     </tr>
                 </thead>
@@ -35,27 +43,35 @@
                     @foreach($students as $student)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td><span class="badge badge-info">{{ $student->student_code }}</span></td>
-                        <td>{{ $student->user->name }}</td>
-                        <td>{{ $student->user->email }}</td>
-                        <td>{{ $student->grade->name }}</td>
-                        <td>{{ $student->classroom->name }}</td>
-                        <td>{{ $student->section->name }}</td>
+                        <td><span class="badge badge-secondary px-2 py-1">{{ $student->student_code }}</span></td>
+                        <td class="text-left">
+                            <div class="font-weight-bold">{{ $student->user->name }}</div>
+                            <small class="text-muted">{{ $student->user->email }}</small>
+                        </td>
+                        <td>
+                            <i class="fa fa-male text-primary" title="{{ $student->gender->label() }}"></i>
+                        </td>
+                        <td>{{ $student->nationality->name }}</td>
+                        <td>
+                            <div class="small">{{ $student->grade->name }}</div>
+                            <div class="badge badge-light border">{{ $student->classroom->name }}</div>
+                        </td>
+                        <td><span class="text-primary font-weight-bold">{{ $student->academic_year }}</span></td>
                         <td>
                             <div class="btn-group">
-                                <a href="{{ route('students.edit', $student->id) }}" class="btn btn-info btn-sm" title="{{ __('main.edit') }}">
-                                    <i class="fa fa-edit"></i>
-                                </a>
-                               <form action="{{ route('students.destroy', $student->id) }}" method="POST" style="display: inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                     <button type="button" class="btn btn-danger btn-sm delete-student" data-toggle="modal" data-target="#delete{{ $student->id }}" title="{{ __('main.delete') }}">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                                </form>
-                                <a href="{{ route('students.show', $student->id) }}" class="btn btn-warning btn-sm" title="{{ __('main.show') }}">
+                                <a href="{{ route('students.show', $student->id) }}" class="btn btn-outline-warning btn-sm" title="{{ __('main.show') }}">
                                     <i class="fa fa-eye"></i>
                                 </a>
+                                <a href="{{ route('students.edit', $student->id) }}" class="btn btn-outline-info btn-sm" title="{{ __('main.edit') }}">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <form action="{{ route('students.destroy', $student->id) }}" method="POST" class="d-inline delete-form">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="button" class="btn btn-outline-danger btn-sm confirm-delete" title="{{ __('main.delete') }}">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>
@@ -69,13 +85,14 @@
 
 @section('scripts')
 <script>
-    $(function() {
-        $('.delete-student').on('click', function(e) {
-            e.preventDefault();
-            if (confirm("{{ __('main.confirm_delete_teacher') }}")) {
-                $(this).closest('form').submit();
+
+    $(document).ready(function() {
+        $('.confirm-delete').on('click', function(e) {
+            var form = $(this).closest('form');
+            if (confirm("{{ __('main.confirm_delete') }}")) {
+                form.submit();
             }
         });
-    })
+    });
 </script>
 @endsection

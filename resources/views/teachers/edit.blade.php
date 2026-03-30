@@ -79,7 +79,7 @@
                     @php $selected_sections = old('section_ids', $teacher->sections->pluck('id')->toArray()); @endphp
                     @foreach($sections as $section)
                         <option value="{{ $section->id }}" @selected(in_array($section->id, $selected_sections))>
-                            {{ $section->name }}
+                            {{ $section->name }} - {{ $section->classroom->name }}
                         </option>
                     @endforeach
                 </select>

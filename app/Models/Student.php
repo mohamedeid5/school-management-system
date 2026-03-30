@@ -21,6 +21,9 @@ class Student extends Model
         'grade_id',
         'classroom_id',
         'section_id',
+        'nationality_id',
+        'blood_type_id',
+        'academic_year'
     ];
 
     protected $casts = [
@@ -41,7 +44,10 @@ class Student extends Model
                 'date_of_birth',
                 'joining_date',
                 'gender',
-                'student_code'
+                'student_code',
+                'nationality_id',
+                'blood_type_id',
+                'academic_year'
             ])
              ->logOnlyDirty()
              ->dontSubmitEmptyLogs();
@@ -70,6 +76,17 @@ class Student extends Model
     public function section()
     {
         return $this->belongsTo(Section::class);
+    }
+
+    public function nationality()
+    {
+        return $this->belongsTo(Nationality::class);
+    }
+
+    public function bloodType()
+    {
+        return $this->belongsTo(BloodType::class);
+
     }
 
 }

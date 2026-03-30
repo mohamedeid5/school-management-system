@@ -22,6 +22,9 @@ return new class extends Migration
             $table->foreignId('grade_id')->constrained()->onDelete('cascade');
             $table->foreignId('classroom_id')->constrained()->onDelete('cascade');
             $table->foreignId('section_id')->constrained()->onDelete('cascade');
+            $table->foreignId('nationality_id')->constrained('nationalities')->cascadeOnDelete();
+            $table->foreignId('blood_type_id')->constrained('blood_types')->cascadeOnDelete();
+            $table->string('academic_year');
             $table->timestamps();
             $table->softDeletes();
         });

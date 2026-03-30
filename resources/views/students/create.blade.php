@@ -3,6 +3,11 @@
 
 @section('css')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+    .select2-container .select2-selection--single { height: 38px !important; border: 1px solid #ced4da !important; }
+    .select2-container--default .select2-selection--single .select2-selection__arrow { height: 36px !important; }
+    .select2-container--default .select2-selection--single .select2-selection__rendered { line-height: 35px !important; }
+</style>
 @endsection
 
 @section('breadcrumb')
@@ -19,6 +24,7 @@
     <form action="{{ route('students.store') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
         @csrf
         <div class="card-body">
+            {{-- الصف الأول: الحساب --}}
             <div class="row">
                 <div class="col-md-4">
                     <label>{{ __('main.student_name') }} <span class="text-danger">*</span></label>
@@ -39,21 +45,46 @@
                 </div>
             </div>
 
+            {{-- الصف الثاني: البيانات الشخصية --}}
             <div class="row mt-3">
                 <div class="col-md-3">
                     <label>{{ __('main.gender') }}</label>
-                    <select name="gender" class="form-control">
+                    <select name="gender" class="form-control select2">
                         <option value="male" @selected(old('gender') == 'male')>{{ __('main.male') }}</option>
                         <option value="female" @selected(old('gender') == 'female')>{{ __('main.female') }}</option>
                     </select>
                 </div>
 
                 <div class="col-md-3">
+                    <label>{{ __('main.nationality') }} <span class="text-danger">*</span></label>
+                    <select name="nationality_id" class="form-control select2 @error('nationality_id') is-invalid @enderror">
+                        <option value="" selected disabled>{{ __('main.choose') }}...</option>
+                        @foreach($nationalities as $nationality)
+                            <option value="{{ $nationality->id }}" @selected(old('nationality_id') == $nationality->id)>{{ $nationality->name }}</option>
+                        @endforeach
+                    </select>
+                    @error('nationality_id') <div class="text-danger small">{{ $message }}</div> @enderror
+                </div>
+
+                <div class="col-md-3">
+                    <label>{{ __('main.blood_type') }} <span class="text-danger">*</span></label>
+                    <select name="blood_type_id" class="form-control select2 @error('blood_type_id') is-invalid @enderror">
+                        <option value="" selected disabled>{{ __('main.choose') }}...</option>
+                        @foreach($bloodTypes as $type)
+                            <option value="{{ $type->id }}" @selected(old('blood_type_id') == $type->id)>{{ $type->name }}</option>
+                        @endforeach
+                    </select>
+                    @error('blood_type_id') <div class="text-danger small">{{ $message }}</div> @enderror
+                </div>
+
+                <div class="col-md-3">
                     <label>{{ __('main.date_of_birth') }}</label>
                     <input type="date" name="date_of_birth" class="form-control @error('date_of_birth') is-invalid @enderror" value="{{ old('date_of_birth') }}">
                 </div>
+            </div>
 
-                <div class="col-md-6">
+            <div class="row mt-3">
+                <div class="col-md-12">
                     <label>{{ __('main.parent') }} <span class="text-danger">*</span></label>
                     <select name="parent_id" class="form-control select2">
                         <option value="" selected disabled>{{ __('main.choose') }}...</option>
@@ -68,27 +99,25 @@
             <hr class="mt-4 mb-4">
             <h3 class="text-primary mb-3">{{ __('main.academic_information') }}</h3>
 
-            {{-- الصف الثالث: الربط (Grade -> Class -> Section) --}}
             <div class="row mt-3">
                 <div class="col-md-4">
-                    <label>{{ __('main.grade') }}</label>
-                    <select name="grade_id" class="form-control @error('grade_id') is-invalid @enderror" id="grade_select">
+                    <label>{{ __('main.grade') }} <span class="text-danger">*</span></label>
+                    <select name="grade_id" class="form-control select2 @error('grade_id') is-invalid @enderror" id="grade_select">
                         <option value="" selected disabled>{{ __('main.choose') }}...</option>
                         @foreach($grades as $grade)
                             <option value="{{ $grade->id }}" @selected(old('grade_id') == $grade->id)>{{ $grade->name }}</option>
                         @endforeach
-                        @error('grade_id') <div class="text-danger small">{{ $message }}</div> @enderror
                     </select>
+                    @error('grade_id') <div class="text-danger small">{{ $message }}</div> @enderror
                 </div>
 
                 <div class="col-md-4">
-                    <label>{{ __('main.classroom') }}</label>
-                    <select name="classroom_id" class="form-control @error('classroom_id') is-invalid @enderror" id="classroom_select">
-                        @if($errors->any()))
+                    <label>{{ __('main.classroom') }} <span class="text-danger">*</span></label>
+                    <select name="classroom_id" class="form-control select2 @error('classroom_id') is-invalid @enderror" id="classroom_select">
+                        <option value="" selected disabled>{{ __('main.choose') }}...</option>
+                        @if($errors->any())
                             @foreach ($classrooms as $classroom)
-                                <option value="{{ $classroom->id }}" @selected($classroom->id == old('classroom_id'))>
-                                    {{ $classroom->name }}
-                                </option>
+                                <option value="{{ $classroom->id }}" @selected(old('classroom_id') == $classroom->id)>{{ $classroom->name }}</option>
                             @endforeach
                         @endif
                     </select>
@@ -96,13 +125,12 @@
                 </div>
 
                 <div class="col-md-4">
-                    <label>{{ __('main.section') }}</label>
-                    <select name="section_id" class="form-control @error('section_id') is-invalid @enderror" id="section_select">
-                         @if($errors->any()))
+                    <label>{{ __('main.section') }} <span class="text-danger">*</span></label>
+                    <select name="section_id" class="form-control select2 @error('section_id') is-invalid @enderror" id="section_select">
+                        <option value="" selected disabled>{{ __('main.choose') }}...</option>
+                        @if($errors->any())
                             @foreach ($sections as $section)
-                                <option value="{{ $section->id }}" @selected($section->id == old('section_id'))>
-                                    {{ $section->name }}
-                                </option>
+                                <option value="{{ $section->id }}" @selected(old('section_id') == $section->id)>{{ $section->name }} - {{ $section->classroom->name }}</option>
                             @endforeach
                         @endif
                     </select>
@@ -111,9 +139,21 @@
             </div>
 
             <div class="row mt-3">
-                <div class="col-md-4">
+                <div class="col-md-6">
+                    <label>{{ __('main.academic_year') }} <span class="text-danger">*</span></label>
+                    <select name="academic_year" class="form-control select2 @error('academic_year') is-invalid @enderror">
+                        <option value="" selected disabled>{{ __('main.choose') }}...</option>
+                        @php $current_year = date('Y'); @endphp
+                        @for($year=$current_year; $year<=$current_year +1; $year++)
+                            <option value="{{ $year }}" @selected(old('academic_year') == $year)>{{ $year }}</option>
+                        @endfor
+                    </select>
+                    @error('academic_year') <div class="text-danger small">{{ $message }}</div> @enderror
+                </div>
+
+                <div class="col-md-6">
                     <label>{{ __('main.joining_date') }}</label>
-                    <input type="date" name="joining_date" class="form-control @error('joining_date') is-invalid @enderror" value="{{ date('Y-m-d') }}">
+                    <input type="date" name="joining_date" class="form-control @error('joining_date') is-invalid @enderror" value="{{ old('joining_date', date('Y-m-d')) }}">
                     @error('joining_date') <div class="text-danger small">{{ $message }}</div> @enderror
                 </div>
             </div>
@@ -131,7 +171,13 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('.select2').select2({ dir: "rtl" });
+         $('.select2').select2({
+            dir: "rtl",
+            width: '100%',
+            placeholder: "اختر...",
+            allowClear: true
+        });
+
         $('#grade_select').on('change', function() {
             var grade_id = $(this).val();
             if (grade_id) {
@@ -144,12 +190,12 @@
                         $.each(data, function(key, value) {
                             $('#classroom_select').append('<option value="' + key + '">' + value + '</option>');
                         });
+                        $('#classroom_select').trigger('change');
                     },
                 });
             }
         });
 
-        // أجاكس لجلب الأقسام بناءً على الصف
         $('#classroom_select').on('change', function() {
             var classroom_id = $(this).val();
             if (classroom_id) {
@@ -162,6 +208,7 @@
                         $.each(data, function(key, value) {
                             $('#section_select').append('<option value="' + key + '">' + value + '</option>');
                         });
+                        $('#section_select').trigger('change');
                     },
                 });
             }

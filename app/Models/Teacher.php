@@ -10,6 +10,7 @@ class Teacher extends Model
 {
 
     use LogsActivity;
+
     protected $fillable = [
         'user_id',
         'specialization_id',

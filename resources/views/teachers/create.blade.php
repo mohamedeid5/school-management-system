@@ -101,7 +101,7 @@
             @foreach($sections as $section)
                 <option value="{{ $section->id }}"
                     @selected(is_array(old('section_ids')) && in_array($section->id, old('section_ids')))>
-                    {{ $section->name }}
+                    {{ $section->name }} - {{ $section->classroom->name }}
                 </option>
             @endforeach
         </select>
