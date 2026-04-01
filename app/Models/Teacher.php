@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use App\Enums\Gender;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Teacher extends Model
 {
 
-    use LogsActivity;
+    use LogsActivity, SoftDeletes;
 
     protected $fillable = [
         'user_id',

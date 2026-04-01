@@ -95,6 +95,19 @@
                             <li><a href="{{ route('students.index') }}">{{ __('main.students_list') }}</a></li>
                         </ul>
                     </li>
+                     <!-- menu item Promotions -->
+                    <li>
+                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#promotions">
+                            <div class="pull-left"><i class="ti-palette"></i><span
+                                    class="right-nav-text">{{ __('main.promotions') }}</span></div>
+                            <div class="pull-right"><i class="ti-plus"></i></div>
+                            <div class="clearfix"></div>
+                        </a>
+                        <ul id="promotions" class="collapse" data-parent="#sidebarnav">
+                            <li><a href="{{ route('promotions.index') }}">{{ __('main.promotions') }}</a></li>
+                        </ul>
+                    </li>
+                      
                     <!-- menu item calendar-->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#calendar-menu">

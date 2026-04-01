@@ -18,10 +18,12 @@ class StudentService
 {
 
     public StudentRepository $studentRepository;
+    public FileService $fileUploadService;
 
-    public function __construct(StudentRepository $studentRepository)
+    public function __construct(StudentRepository $studentRepository, FileService $fileUploadService)
     {
         $this->studentRepository = $studentRepository;
+        $this->fileUploadService = $fileUploadService;
     }
 
     public function getAllStudents()
@@ -61,7 +63,15 @@ class StudentService
                 'password' => Hash::make($data['password'])
             ]);
 
-            $this->studentRepository->createStudent($data, $user->id, $studentCode);
+           $student = $this->studentRepository->createStudent($data, $user->id, $studentCode);
+
+           if (request()->hasFile('photos')) {
+                $this->fileUploadService->upload(
+                    request()->file('photos'),
+                    $student,
+                    'students',
+                );
+            }
         });
     }
 
@@ -111,7 +121,15 @@ class StudentService
                 ]);
             }
             $user->update($userData);
-            return $this->studentRepository->updateStudent($data, $student);
+            $this->studentRepository->updateStudent($data, $student);
+
+            if (request()->hasFile('photos')) {
+                $this->fileUploadService->upload(
+                    request()->file('photos'),
+                    $student,
+                    'students',
+                );
+            }
         });
 
     }

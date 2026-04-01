@@ -139,4 +139,20 @@ return [
     'deleted_successfully' => 'Deleted successfully',
     'something_went_wrong' => 'Something went wrong, please try again',
 
+    'choose_files' => 'Choose files',
+    'attachments' => 'Attachments',
+    'files' => 'Files',
+    'file_name' => 'File Name',
+    'download' => 'Download',
+    'delete' => 'Delete',
+    'no_attachments' => 'No attachments found',
+    'confirm_delete_attachment' => 'Are you sure you want to delete this attachment?',
+    'attachment_deleted_successfully' => 'Attachment deleted successfully',
+    'created_at' => 'Created At',
+
+    'old_grade' => 'Old Grade',
+    'new_grade' => 'New Grade',
+    'students_promotion' => 'Students Promotion',
+    'promoted_successfully' => 'Students promoted successfully',
+
 ];

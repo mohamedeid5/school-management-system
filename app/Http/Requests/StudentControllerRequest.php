@@ -36,7 +36,9 @@ class StudentControllerRequest extends FormRequest
             'gender' => 'required|in:male,female',
             'nationality_id' => 'required|exists:nationalities,id',
             'blood_type_id' => 'required|exists:blood_types,id',
-            'academic_year' => 'required|string|max:255'
+            'academic_year' => 'required|string|max:255',
+            'photos' => 'nullable|array',
+            'photos.*' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048'
         ];
     }
 }

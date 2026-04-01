@@ -10,6 +10,8 @@ use App\Http\Controllers\Classrooms\ClassroomController;
 use App\Http\Controllers\Sections\SectionController;
 use App\Http\Controllers\Teachers\TeacherController;
 use App\Http\Controllers\Students\StudentController;
+use App\Http\Controllers\FileController;
+use App\Http\Controllers\Promotions\PromotionsController;
 
 Route::group(
 [
@@ -33,6 +35,11 @@ function()
 
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+         Route::middleware(['auth'])->group(function () {
+            Route::get('get-classrooms/{id}', [AjaxController::class, 'getClassrooms']);
+            Route::get('get-sections/{id}', [AjaxController::class, 'getSections']);
+        });
+
         // grades routes
         Route::resource('grades', GradeController::class)->except('create', 'edit', 'show');
 
@@ -52,11 +59,14 @@ function()
 
         // students routes
         Route::resource('students', StudentController::class);
+        Route::get('student/{id}/download-attachment', [FileController::class, 'download'])->name('students.download_attachment');
+        Route::delete('student/{id}/delete-attachment', [FileController::class, 'delete'])->name('students.delete_attachment');
 
-        Route::middleware(['auth'])->group(function () {
-            Route::get('get-classrooms/{id}', [AjaxController::class, 'getClassrooms']);
-            Route::get('get-sections/{id}', [AjaxController::class, 'getSections']);
-        });
+        // promotions routes
+        Route::get('promotions', [PromotionsController::class, 'index'])->name('promotions.index');
+        Route::post('promotions', [PromotionsController::class, 'store'])->name('promotions.store');
+        Route::get('promotions/management', [PromotionsController::class, 'management'])->name('promotions.management');
+        Route::delete('promotions/{id}', [PromotionsController::class, 'destroy'])->name('promotions.destroy');
 
     });
 });

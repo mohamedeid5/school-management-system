@@ -22,7 +22,8 @@
     </div>
 
     <div class="card-body">
-        <table id="teachers-table" class="table table-bordered table-striped">
+        <div class="table-responsive">
+            <table id="datatable" class="table table-bordered table-hover align-middle text-center mb-0">
             <thead>
                 <tr>
                     <th>#</th>
@@ -81,6 +82,7 @@
             </tbody>
 
         </table>
+        </div>
     </div>
 </div>
 @endsection

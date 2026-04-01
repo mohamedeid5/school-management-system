@@ -24,7 +24,15 @@
         <h3 class="card-title">{{ __('main.personal_information') }}</h3>
     </div>
 
-    <form action="{{ route('students.update', $student->id) }}" method="POST" autocomplete="off">
+    @if($errors->any())
+       @foreach($errors->all() as $error)
+            <div class="alert alert-danger m-3">
+                {{ $error }}
+            </div>
+       @endforeach
+    @endif
+
+    <form action="{{ route('students.update', $student->id) }}" method="POST" autocomplete="off" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -141,7 +149,7 @@
                     <select name="section_id" class="form-control select2 @error('section_id') is-invalid @enderror" id="section_select">
                         @foreach ($sections as $section)
                             <option value="{{ $section->id }}"
-                                @selected(old('section_id') == $student->section_id) >
+                                {{ old('section_id', $student->section_id) == $section->id }} >
                                 {{ $section->name }} - {{ $section->classroom->name }}
                             </option>
                         @endforeach
@@ -171,6 +179,16 @@
                            value="{{ old('joining_date', $student->joining_date->format('Y-m-d')) }}">
                     @error('joining_date') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
+
+                <div class="col-md-6">
+                    <label>{{ __('main.attachments') }}</label>
+                    <div class="custom-file">
+                        <input type="file" name="photos[]" multiple class="custom-file-input" id="customFile" accept="image/*,application/pdf">
+                        <label class="custom-file-label" for="customFile">{{ __('main.choose_files') }}</label>
+                    </div>
+                    <small class="text-muted">يمكنك رفع أكثر من ملف (صور أو PDF)</small>
+                </div>
+                @error('photos.*') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
         </div>
 

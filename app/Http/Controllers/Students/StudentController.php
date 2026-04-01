@@ -47,6 +47,7 @@ class StudentController extends Controller
             toastr()->success(__('main.created_successfully'));
             return redirect()->route('students.index');
         } catch (\Exception $e) {
+            dd($e->getMessage());
             $this->logError('Section creation failed', $e);
             toastr()->error(__('main.something_went_wrong'));
             return redirect()->back();

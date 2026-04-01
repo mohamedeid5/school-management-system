@@ -156,6 +156,14 @@
                     <input type="date" name="joining_date" class="form-control @error('joining_date') is-invalid @enderror" value="{{ old('joining_date', date('Y-m-d')) }}">
                     @error('joining_date') <div class="text-danger small">{{ $message }}</div> @enderror
                 </div>
+                <div class="col-md-6">
+                    <label>{{ __('main.attachments') }}</label>
+                    <div class="custom-file">
+                        <input type="file" name="photos[]" value="{{ old('photos') }}" multiple class="custom-file-input" id="customFile" accept="image/*,application/pdf">
+                        <label class="custom-file-label" for="customFile">{{ __('main.choose_files') }}</label>
+                    </div>
+                    <small class="text-muted">يمكنك رفع أكثر من ملف (صور أو PDF)</small>
+                </div>
             </div>
         </div>
 

@@ -139,4 +139,18 @@ return [
     'deleted_successfully' => 'تم الحذف بنجاح',
     'something_went_wrong' => 'حدث خطأ ما، يرجى المحاولة مرة أخرى',
 
+    'choose_files' => 'اختر الملفات',
+    'attachments' => 'المرفقات',
+    'files' => 'الملفات',
+    'file_name' => 'اسم الملف',
+    'download' => 'تحميل',
+    'delete' => 'حذف',
+    'no_attachments' => 'لا توجد مرفقات',
+    'confirm_delete_attachment' => 'هل أنت متأكد أنك تريد حذف هذا المرفق',
+    'created_at' => 'تاريخ الإنشاء',
+
+    'old_grade' => 'المرحلة الدراسية القديمة',
+    'new_grade' => 'المرحلة الدراسية الجديدة',
+    'students_promotion' => 'ترقية الطلاب',
+    'promoted_successfully' => 'تم ترقية الطلاب بنجاح',
 ];
