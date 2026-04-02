@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Permission\Traits\HasRoles;
 use Spatie\Translatable\HasTranslations;
 
 class MyParent extends Model
 {
-    use HasTranslations, SoftDeletes, LogsActivity;
+    use HasTranslations, SoftDeletes, LogsActivity, HasRoles;
 
     protected $fillable = [
         'name_father',
