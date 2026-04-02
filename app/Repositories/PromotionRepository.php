@@ -7,6 +7,7 @@ use App\Models\Promotion;
 use App\Models\Grade;
 use App\Models\Classroom;
 use App\Models\Section;
+use Illuminate\Support\Str;
 
 class PromotionRepository
 {
@@ -27,7 +28,8 @@ class PromotionRepository
 
     public function getAllPromotions()
     {
-        return Promotion::with(['student', 'fromGrade', 'fromClassroom', 'fromSection', 'toGrade', 'toClassroom', 'toSection'])->get();
+        return Promotion::with(['student', 'fromGrade', 'fromClassroom', 'fromSection', 'toGrade', 'toClassroom', 'toSection'])
+                ->get()->groupBy('batch_id');
     }
 
     public function promote($request)
@@ -50,6 +52,7 @@ class PromotionRepository
         ]);
 
         $promotionsData = [];
+        $batchId = Str::uuid()->toString();
 
         foreach ($studentIds as $student) {
 
@@ -65,6 +68,7 @@ class PromotionRepository
                 'academic_year_new' => $request->academic_year_new,
                 'created_at' => now(),
                 'updated_at' => now(),
+                'batch_id' => $batchId,
             ];
         }
 
@@ -74,9 +78,13 @@ class PromotionRepository
 
     public function restore($request)
     {
-        $query = $request->page_id == 'all'
-                ? Promotion::query()
-                : Promotion::where('id', $request->id);
+        $query = Promotion::query();
+
+        if($request->page_id == 'batch') {
+            $query->where('batch_id', $request->batch_id);
+        } elseif($request->page_id == 'single') {
+            $query->where('id', $request->id);
+        }
 
         $query->chunkById(100, function($promotions) {
 
@@ -84,7 +92,8 @@ class PromotionRepository
                 return $item->from_grade_id . '-' .
                     $item->from_classroom_id . '-' .
                     $item->from_section_id . '-' .
-                    $item->academic_year;
+                    $item->academic_year . '-' .
+                    $item->batch_id;
             });
 
             foreach($groupped as $group)
@@ -101,10 +110,6 @@ class PromotionRepository
             }
          });
 
-        if ($request->page_id == 'all') {
-            Promotion::query()->delete();
-        } else {
-            Promotion::destroy($request->id);
-        }
+        $query->delete();
     }
 }

@@ -26,24 +26,39 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($promotions as $promotion)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $promotion->student->user->name }}</td>
-                            <td>{{ $promotion->fromGrade->name }} - {{ $promotion->fromClassroom->name }}</td>
-                            <td>{{ $promotion->academic_year }}</td>
-                            <td>{{ $promotion->toGrade->name }} - {{ $promotion->toClassroom->name }}</td>
-                            <td>{{ $promotion->academic_year_new }}</td>
-                            <td>
-                                <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#rollback_single{{ $promotion->id }}">
-                                    <i class="fa fa-redo"></i> إرجاع الطالب
-                                </button>
+                        @foreach($promotions as $batchId => $group)
+                        <tr class="table-info">
+                            <td colspan="6" class="text-center font-weight-bold">
+                                دفعة ترقية رقم: {{ substr($batchId, 0, 8) }}...
+                                (عدد الطلاب: {{ $group->count() }})
                             </td>
+                            <td>
+                            <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#rollback_batch{{ $batchId }}">
+                                <i class="fa fa-undo"></i> تراجع عن الدفعة
+                            </button>
+                        </td>
                         </tr>
-                        @include('promotions.rollback_single')
+                            @foreach($group as $promotion)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $promotion->student->user->name }}</td>
+                                <td>{{ $promotion->fromGrade->name }} - {{ $promotion->fromClassroom->name }}</td>
+                                <td>{{ $promotion->academic_year }}</td>
+                                <td>{{ $promotion->toGrade->name }} - {{ $promotion->toClassroom->name }}</td>
+                                <td>{{ $promotion->academic_year_new }}</td>
+                                <td>
+                                    <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#rollback_single{{ $promotion->id }}">
+                                        <i class="fa fa-redo"></i> إرجاع الطالب
+                                    </button>
+                                </td>
+                            </tr>
+                            @include('promotions.rollback_single')
 
+                            @endforeach
+                            @include('promotions.rollback_batch', ['batchId' => $batchId, 'count' => $group->count()])
                         @endforeach
                         @include('promotions.rollback_all')
+
                     </tbody>
                 </table>
             </div>

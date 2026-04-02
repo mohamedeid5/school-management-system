@@ -12,9 +12,7 @@
             <form action="{{ route('promotions.destroy', 'test') }}" method="post">
                 @csrf
                 @method('DELETE')
-
                 <input type="hidden" name="page_id" value="all">
-
                 <div class="modal-body">
                     <div class="text-center">
                         <h4 class="text-danger font-weight-bold">هل أنت متأكد؟</h4>

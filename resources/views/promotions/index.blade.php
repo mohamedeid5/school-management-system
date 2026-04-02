@@ -12,7 +12,6 @@
                     </h3>
                 </div>
                 <div class="card-body">
-                    {{-- عرض الأخطاء إن وجدت --}}
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
@@ -25,7 +24,6 @@
 
                     <form method="post" action="{{ route('promotions.store') }}">
                         @csrf
-                        {{-- الجزء الأول: من أين (الحالي) --}}
                         <h5 class="text-danger font-weight-bold mb-3 border-bottom pb-2">{{ __('main.old_grade') }}</h5>
                         <div class="form-row">
                             <div class="form-group col-md-3">
