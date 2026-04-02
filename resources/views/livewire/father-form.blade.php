@@ -17,14 +17,9 @@
 
             <div class="form-row">
                 <div class="col">
-                    <label>{{ __('main.name_father_ar') }}</label>
+                    <label>{{ __('main.name_father') }}</label>
                     <input type="text" wire:model.live="form.name_father" class="form-control">
                     @error('form.name_father') <span class="text-danger">{{ $message }}</span> @enderror
-                </div>
-                <div class="col">
-                    <label>{{ __('main.name_father_en') }}</label>
-                    <input type="text" wire:model.live="form.name_father_en" class="form-control">
-                    @error('form.name_father_en') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
             </div>
 

@@ -63,6 +63,10 @@ return [
     'academic_year' => 'السنة الدراسية',
     'personal_information' => 'المعلومات الشخصية',
 
+    'promotions' => 'ترقيات الطلاب',
+    'teacher' => 'المعلم',
+    'teachers' => 'المعلمين',
+
     // Common Actions & Labels
     'processes' => 'العمليات',
     'submit' => 'تأكيد',
@@ -96,4 +100,20 @@ return [
     'rollback_all_promotions' => 'تراجع عن جميع الترقيات',
     'rollback_all_warning_text' => 'هذا الإجراء سيعيد جميع الطلاب إلى صفوفهم القديمة وسيحذف سجلات الترقية بالكامل.',
     'confirm_full_rollback' => 'تأكيد التراجع الشامل',
+
+    // Graduations
+    'graduations' => 'التخرجات',
+    'graduated_students' => 'الطلاب المتخرجون',
+    'graduated_students_list' => 'قائمة الطلاب المتخرجين',
+    'add_graduation' => 'إضافة تخرج',
+    'add_new_graduation' => 'إضافة تخرج جديد',
+    'confirm_graduation' => 'تأكيد التخرج',
+    'restore_student' => 'استرجاع الطالب',
+    'confirm_restore_student' => 'هل أنت متأكد من استرجاع الطالب',
+    'permanent_delete' => 'حذف نهائي',
+    'confirm' => 'تأكيد',
+
+    // General Messages
+    'created_successfully' => 'تمت العملية بنجاح',
+    'something_went_wrong' => 'حدث خطأ ما، يرجى المحاولة مرة أخرى',
 ];

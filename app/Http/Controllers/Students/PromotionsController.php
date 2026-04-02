@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Promotions;
+namespace App\Http\Controllers\Students;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PromtionControllerRequest;

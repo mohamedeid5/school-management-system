@@ -11,7 +11,8 @@ use App\Http\Controllers\Sections\SectionController;
 use App\Http\Controllers\Teachers\TeacherController;
 use App\Http\Controllers\Students\StudentController;
 use App\Http\Controllers\FileController;
-use App\Http\Controllers\Promotions\PromotionsController;
+use App\Http\Controllers\Students\PromotionsController;
+use App\Http\Controllers\Students\GraduationController;
 
 Route::group(
 [
@@ -67,6 +68,12 @@ function()
         Route::post('promotions', [PromotionsController::class, 'store'])->name('promotions.store');
         Route::get('promotions/management', [PromotionsController::class, 'management'])->name('promotions.management');
         Route::delete('promotions/{id}', [PromotionsController::class, 'destroy'])->name('promotions.destroy');
+
+        // graduations routes
+        Route::get('graduations', [GraduationController::class, 'index'])->name('graduations.index');
+        Route::get('graduations/create', [GraduationController::class, 'create'])->name('graduations.create');
+        Route::post('graduations', [GraduationController::class, 'store'])->name('graduations.store');
+        Route::put('graduations/restore/{id}', [GraduationController::class, 'restore'])->name('graduations.restore');
 
     });
 });

@@ -7,6 +7,7 @@ use App\Models\MyParent;
 use App\Models\ParentAttachment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class UpdateParentAction
 {
@@ -14,10 +15,18 @@ class UpdateParentAction
     {
         return DB::transaction(function () use ($parent, $form) {
 
-            $parent->update([
-                'email' => $form->email,
+           $parent = MyParent::findOrFail($form->id);
+           $user = User::findOrFail($parent->user_id);
 
-                'name_father' => ['en' => $form->name_father_en, 'ar' => $form->name_father],
+            $user->name = $form->name_father;
+            $user->email = $form->email;
+
+            if (!empty($form->password)) {
+                $user->password = Hash::make($form->password);
+            }
+            $user->update();
+
+            $parent->update([
                 'job_father' => ['en' => $form->job_father_en, 'ar' => $form->job_father],
 
                 'national_id_father' => $form->national_id_father,
@@ -40,11 +49,6 @@ class UpdateParentAction
                 'address_mother' => $form->address_mother,
             ]);
 
-            if (!empty($form->password)) {
-                $parent->update([
-                    'password' => Hash::make($form->password)
-                ]);
-            }
 
             $this->storeAttachments($parent, $form);
 

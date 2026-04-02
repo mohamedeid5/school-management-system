@@ -13,10 +13,7 @@ return new class extends Migration
     {
         Schema::create('my_parents', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->unique();
-            $table->string('password');
-
-            $table->string('name_father');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('national_id_father');
             $table->string('passport_id_father');
             $table->string('phone_father');

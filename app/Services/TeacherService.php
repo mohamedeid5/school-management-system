@@ -37,6 +37,8 @@ class TeacherService {
                 'password' => Hash::make($data['password'])
             ]);
 
+            $user->assignRole('teacher');
+
             $data['user_id'] = $user['id'];
             $this->teacherRepository->createTeacher($data);
         });

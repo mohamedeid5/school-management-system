@@ -13,7 +13,6 @@ class ParentForm extends Form
     public string $password = '';
 
     public string $name_father = '';
-    public string $name_father_en = '';
     public string $national_id_father = '';
     public string $passport_id_father = '';
     public string $phone_father = '';
@@ -50,7 +49,6 @@ class ParentForm extends Form
             'password' => __('main.password'),
 
             'name_father' => __('main.name_father_ar'),
-            'name_father_en' => __('main.name_father_en'),
             'national_id_father' => __('main.national_id_father'),
             'passport_id_father' => __('main.passport_id_father'),
             'phone_father' => __('main.phone_father'),
@@ -79,17 +77,20 @@ class ParentForm extends Form
 
     public function fatherRules(): array
     {
+        $userId = null;
+
+        if($this->id) {
+            $userId = \App\Models\MyParent::find($this->id)->user_id;
+        }
         return [
             'email' => [
                 'required',
                 'email',
-                Rule::unique('my_parents', 'email')
-                    ->whereNull('deleted_at')
-                    ->ignore($this->id),
+                Rule::unique('users', 'email')
+                    ->ignore($userId),
             ],
             'password' => $this->id ? 'nullable|string|min:8' : 'required|string|min:8',
             'name_father' => 'required|string|max:255',
-            'name_father_en' => 'required|string|max:255',
             'national_id_father' => 'required|digits:14',
             'passport_id_father' => 'nullable|string|max:50',
             'phone_father' => 'required|regex:/^01[0125][0-9]{8}$/',

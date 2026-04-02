@@ -26,8 +26,8 @@
             @forelse ($parents as $parent)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $parent->name_father }}</td>
-                    <td>{{ $parent->email }}</td>
+                    <td>{{ $parent->user->name }}</td>
+                    <td>{{ $parent->user->email }}</td>
                     <td>{{ $parent->job_father }}</td>
                     <td>{{ $parent->national_id_father }}</td>
                     <td>{{ $parent->phone_father }}</td>

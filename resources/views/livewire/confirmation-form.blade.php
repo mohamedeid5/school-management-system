@@ -18,7 +18,7 @@
                             </tr>
                             <tr>
                                 <td>{{ __('main.father_name_ar_en') }}</td>
-                                <td>{{ $form->name_father }} / {{ $form->name_father_en }}</td>
+                                <td>{{ $form->name_father }} </td>
                             </tr>
                             <tr>
                                 <td>{{ __('main.national_id_and_phone') }}</td>

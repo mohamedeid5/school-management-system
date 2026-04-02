@@ -67,21 +67,22 @@ class AddParent extends Component
         $this->currentStep = $step;
     }
 
+
     public function edit($id)
     {
 
         $this->prepareForEdit($id);
 
         $parent = MyParent::findOrFail($id);
+        $user = $parent->user;
 
-        $this->form->email = $parent->email;
-        $this->form->name_father = $parent->getTranslation('name_father', 'ar');
-        $this->form->name_father_en = $parent->getTranslation('name_father', 'en');
+        $this->form->email = $user->email;
+        $this->form->name_father = $user->name;
         $this->form->national_id_father = $parent->national_id_father;
         $this->form->passport_id_father = $parent->passport_id_father;
         $this->form->phone_father = $parent->phone_father;
         $this->form->job_father = $parent->getTranslation('job_father', 'ar');
-        $this->form->job_father_en = $parent->getTranslation('job_father', 'en');
+        $this->form->job_father = $parent->getTranslation('job_father', 'en');
         $this->form->nationality_father_id = $parent->nationality_father_id;
         $this->form->blood_type_father_id = $parent->blood_type_father_id;
         $this->form->religion_father_id = $parent->religion_father_id;
@@ -99,6 +100,7 @@ class AddParent extends Component
         $this->form->religion_mother_id = $parent->religion_mother_id;
         $this->form->address_mother = $parent->address_mother;
     }
+
 
     public function delete($id, DeleteParentAction $deleteAction)
     {

@@ -8,6 +8,7 @@ use App\Models\ParentAttachment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Events\ParentCreated;
+use App\Models\User;
 
 class CreateParentAction
 {
@@ -15,7 +16,13 @@ class CreateParentAction
     {
         return DB::transaction(function () use ($form) {
 
-            $parent = MyParent::create($this->parentData($form));
+            $user = User::create([
+                'name' => $form->name_father,
+                'email' => $form->email,
+                'password' => Hash::make($form->password)
+            ]);
+
+            $parent = MyParent::create($this->parentData($form, $user->id));
 
             $this->storeAttachments($parent, $form);
 
@@ -26,16 +33,9 @@ class CreateParentAction
 
     }
 
-    protected function parentData(ParentForm $form): array
+    protected function parentData(ParentForm $form, $userId): array
     {
         return [
-            'email' => $form->email,
-            'password' => Hash::make($form->password),
-
-            'name_father' => [
-                'ar' => $form->name_father,
-                'en' => $form->name_father_en,
-            ],
             'national_id_father' => $form->national_id_father,
             'passport_id_father' => $form->passport_id_father,
             'phone_father' => $form->phone_father,
@@ -63,6 +63,7 @@ class CreateParentAction
             'blood_type_mother_id' => $form->blood_type_mother_id,
             'religion_mother_id' => $form->religion_mother_id,
             'address_mother' => $form->address_mother,
+            'user_id' => $userId
 
         ];
     }

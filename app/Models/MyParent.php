@@ -13,10 +13,8 @@ class MyParent extends Model
     use HasTranslations, SoftDeletes, LogsActivity;
 
     protected $fillable = [
-        'email',
-        'password',
-
         'name_father',
+        'user_id',
         'national_id_father',
         'passport_id_father',
         'phone_father',
@@ -50,5 +48,10 @@ class MyParent extends Model
              ->logOnly(['name', 'grade_id'])
              ->logOnlyDirty()
              ->dontSubmitEmptyLogs();
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

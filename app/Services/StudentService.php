@@ -63,6 +63,8 @@ class StudentService
                 'password' => Hash::make($data['password'])
             ]);
 
+            $user->assignRole('student');
+
            $student = $this->studentRepository->createStudent($data, $user->id, $studentCode);
 
            if (request()->hasFile('photos')) {
@@ -82,6 +84,7 @@ class StudentService
         $lastStudent = Student::whereYear('created_at', $year)
                 ->lockForUpdate()
                 ->latest('id')
+                ->withTrashed()
                 ->first();
 
         $nextStudent = $lastStudent ? (int) substr($lastStudent->student_code, -4) + 1 : 1;
