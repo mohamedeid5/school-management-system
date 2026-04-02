@@ -87,7 +87,6 @@ class PromotionRepository
         }
 
         $query->chunkById(100, function($promotions) {
-
             $groupped = $promotions->groupBy(function($item) {
                 return $item->from_grade_id . '-' .
                     $item->from_classroom_id . '-' .

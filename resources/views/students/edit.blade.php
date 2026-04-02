@@ -162,15 +162,13 @@
                 <div class="col-md-6">
                     <label>{{ __('main.academic_year') }} <span class="text-danger">*</span></label>
                     <select name="academic_year" class="form-control select2 @error('academic_year') is-invalid @enderror">
+                        <option value="" selected disabled>{{ __('main.choose') }}...</option>
                         @php $current_year = date('Y'); @endphp
-                        @for($year=$current_year - 1; $year<=$current_year + 1; $year++)
-                            @php $year_val = $year . '/' . ($year + 1); @endphp
-                            <option value="{{ $year_val }}" @selected(old('academic_year', $student->academic_year) == $year_val)>
-                                {{ $year_val }}
-                            </option>
+                        @for($year=$current_year; $year<=$current_year +1; $year++)
+                            <option value="{{ $year }}" @selected(old('academic_year', $student->academic_year) == $year)>{{ $year }}</option>
                         @endfor
                     </select>
-                    @error('academic_year') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    @error('academic_year') <div class="text-danger small">{{ $message }}</div> @enderror
                 </div>
 
                 <div class="col-md-6">

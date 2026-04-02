@@ -1,14 +1,16 @@
 @extends('layouts.master')
-@section('title', 'إدارة ترقيات الطلاب')
+@section('title', __('main.students_promotion_management'))
 
 @section('content')
 <div class="container-fluid">
     <div class="card shadow-sm">
         <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-            <h5 class="mb-0" style="color: white;"><i class="fa fa-list mr-2"></i> سجلات ترقيات الطلاب</h5>
+            <h5 class="mb-0" style="color: white;">
+                <i class="fa fa-list mr-2"></i> {{ __('main.students_promotion_records') }}
+            </h5>
 
             <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#rollback_all">
-                <i class="fa fa-undo-alt"></i> تراجع عن الكل
+                <i class="fa fa-undo-alt"></i> {{ __('main.rollback_all') }}
             </button>
         </div>
         <div class="card-body">
@@ -17,26 +19,27 @@
                     <thead class="table-secondary">
                         <tr>
                             <th>#</th>
-                            <th>اسم الطالب</th>
-                            <th class="text-danger">المرحلة السابقة</th>
-                            <th>السنة الدراسية</th>
-                            <th class="text-success">المرحلة الحالية</th>
-                            <th>السنة الحالية</th>
-                            <th>العمليات</th>
+                            <th>{{ __('main.student_name') }}</th>
+                            <th class="text-danger">{{ __('main.old_grade') }}</th>
+                            <th>{{ __('main.academic_year') }}</th>
+                            <th class="text-success">{{ __('main.new_grade') }}</th>
+                            <th>{{ __('main.new_academic_year') }}</th>
+                            <th>{{ __('main.processes') }}</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($promotions as $batchId => $group)
                         <tr class="table-info">
-                            <td colspan="6" class="text-center font-weight-bold">
-                                دفعة ترقية رقم: {{ substr($batchId, 0, 8) }}...
-                                (عدد الطلاب: {{ $group->count() }})
+                            <td colspan="6" class="text-right font-weight-bold">
+                                {{ __('main.batch_number') }}:
+                                <span class="badge badge-dark">{{ substr($batchId, 0, 8) }}...</span>
+                                ({{ __('main.students_count') }}: {{ $group->count() }})
                             </td>
                             <td>
-                            <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#rollback_batch{{ $batchId }}">
-                                <i class="fa fa-undo"></i> تراجع عن الدفعة
-                            </button>
-                        </td>
+                                <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#rollback_batch{{ $batchId }}">
+                                    <i class="fa fa-undo"></i> {{ __('main.rollback_batch') }}
+                                </button>
+                            </td>
                         </tr>
                             @foreach($group as $promotion)
                             <tr>
@@ -48,7 +51,7 @@
                                 <td>{{ $promotion->academic_year_new }}</td>
                                 <td>
                                     <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#rollback_single{{ $promotion->id }}">
-                                        <i class="fa fa-redo"></i> إرجاع الطالب
+                                        <i class="fa fa-redo"></i> {{ __('main.rollback_student') }}
                                     </button>
                                 </td>
                             </tr>

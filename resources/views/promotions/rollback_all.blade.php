@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header bg-danger text-white">
                 <h5 class="modal-title" id="exampleModalLabel">
-                    <i class="fa fa-exclamation-triangle"></i> تراجع عن جميع الترقيات
+                    <i class="fa fa-exclamation-triangle"></i> {{ __('main.rollback_all_promotions') }}
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -13,15 +13,18 @@
                 @csrf
                 @method('DELETE')
                 <input type="hidden" name="page_id" value="all">
+
                 <div class="modal-body">
                     <div class="text-center">
-                        <h4 class="text-danger font-weight-bold">هل أنت متأكد؟</h4>
-                        <p class="text-muted">هذا الإجراء سيعيد جميع الطلاب إلى صفوفهم القديمة وسيحذف سجلات الترقية بالكامل.</p>
+                        <h4 class="text-danger font-weight-bold">{{ __('main.are_you_sure') }}</h4>
+                        <p class="text-muted">
+                            {{ __('main.rollback_all_warning_text') }}
+                        </p>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">إلغاء</button>
-                    <button type="submit" class="btn btn-danger shadow">تأكيد التراجع الشامل</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('main.cancel') }}</button>
+                    <button type="submit" class="btn btn-danger shadow">{{ __('main.confirm_full_rollback') }}</button>
                 </div>
             </form>
         </div>
