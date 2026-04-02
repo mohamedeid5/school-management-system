@@ -74,6 +74,7 @@ function()
         Route::get('graduations/create', [GraduationController::class, 'create'])->name('graduations.create');
         Route::post('graduations', [GraduationController::class, 'store'])->name('graduations.store');
         Route::put('graduations/restore/{id}', [GraduationController::class, 'restore'])->name('graduations.restore');
+        Route::delete('graduations/destroy/{id}', [GraduationController::class, 'destroy'])->name('graduations.destroy');
 
     });
 });

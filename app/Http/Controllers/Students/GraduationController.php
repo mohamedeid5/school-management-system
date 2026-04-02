@@ -48,10 +48,9 @@ class GraduationController extends Controller
     {
         try {
             $this->graduationRepository->restore($id);
-            toastr()->success(__('main.created_successfully'));
+            toastr()->success(__('main.restored_successfully'));
             return redirect()->route('graduations.index');
         } catch (\Exception $e) {
-            dd($e->getMessage());
             $this->logError('graduation restore failed', $e, ['student_id' => $id]);
             toastr()->error(__('main.something_went_wrong'));
             return redirect()->back();
@@ -65,8 +64,7 @@ class GraduationController extends Controller
             toastr()->success(__('main.created_successfully'));
             return redirect()->route('graduations.index');
         } catch (\Exception $e) {
-            dd($e->getMessage());
-            $this->logError('graduation deleteion failed', $e, ['student_id' => $id]);
+            $this->logError('graduation deletion failed', $e, ['student_id' => $id]);
             toastr()->error(__('main.something_went_wrong'));
             return redirect()->back();
         }

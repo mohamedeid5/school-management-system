@@ -47,8 +47,7 @@ class StudentController extends Controller
             toastr()->success(__('main.created_successfully'));
             return redirect()->route('students.index');
         } catch (\Exception $e) {
-            dd($e->getMessage());
-            $this->logError('Section creation failed', $e);
+            $this->logError('Student creation failed', $e);
             toastr()->error(__('main.something_went_wrong'));
             return redirect()->back();
         }
@@ -83,7 +82,7 @@ class StudentController extends Controller
             toastr()->success(__('main.updated_successfully'));
             return redirect()->route('students.index');
         } catch (\Exception $e) {
-            $this->logError('Section update failed', $e);
+            $this->logError('Student update failed', $e);
             toastr()->error(__('main.something_went_wrong'));
             return redirect()->back();
         }
@@ -100,7 +99,7 @@ class StudentController extends Controller
             toastr()->success(__('main.deleted_successfully'));
             return redirect()->route('students.index');
         } catch (\Exception $e) {
-            $this->logError('Section deletion failed', $e);
+            $this->logError('Student deletion failed', $e);
             toastr()->error(__('main.something_went_wrong'));
             return redirect()->back();
         }

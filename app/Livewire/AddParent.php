@@ -82,12 +82,12 @@ class AddParent extends Component
 
             $this->resetFormState();
             toastr()->success(__('main.created_successfully'));
+            $this->hideForm();
         } catch (\Exception $e) {
             $this->logError('Parent creation failed', $e);
             toastr()->error(__('main.error_message'));
         }
 
-        $this->hideForm();
     }
 
 
@@ -105,7 +105,7 @@ class AddParent extends Component
         $this->form->passport_id_father = $parent->passport_id_father;
         $this->form->phone_father = $parent->phone_father;
         $this->form->job_father = $parent->getTranslation('job_father', 'ar');
-        $this->form->job_father = $parent->getTranslation('job_father', 'en');
+        $this->form->job_father_en = $parent->getTranslation('job_father', 'en');
         $this->form->nationality_father_id = $parent->nationality_father_id;
         $this->form->blood_type_father_id = $parent->blood_type_father_id;
         $this->form->religion_father_id = $parent->religion_father_id;
@@ -157,7 +157,7 @@ class AddParent extends Component
             $parent = MyParent::withTrashed()->findOrFail($id);
             $parent->restore();
         } catch (\Exception $e) {
-            $this->logError('Parent delete failed', $e, ['parent_id' => $parent->id]);
+            $this->logError('Parent delete failed', $e, ['parent_id' => $id]);
             toastr()->error(__('main.error_message'));
         }
     }

@@ -89,7 +89,7 @@
                     <select name="parent_id" class="form-control select2">
                         <option value="" selected disabled>{{ __('main.choose') }}...</option>
                         @foreach($parents as $parent)
-                            <option value="{{ $parent->id }}" @selected(old('parent_id') == $parent->id)>{{ $parent->name_father }}</option>
+                            <option value="{{ $parent->id }}" @selected(old('parent_id') == $parent->id)>{{ $parent->user->name }}</option>
                         @endforeach
                     </select>
                     @error('parent_id') <div class="text-danger small">{{ $message }}</div> @enderror

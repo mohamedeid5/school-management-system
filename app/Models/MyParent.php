@@ -46,7 +46,7 @@ class MyParent extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-             ->logOnly(['name', 'grade_id'])
+             ->logOnly(['user_id', 'grade_id'])
              ->logOnlyDirty()
              ->dontSubmitEmptyLogs();
     }

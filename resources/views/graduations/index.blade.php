@@ -39,6 +39,7 @@
                             </td>
                         </tr>
                         @include('graduations.restore_modal')
+                        @include('graduations.force_delete_modal')
                         @endforeach
                     </tbody>
                 </table>

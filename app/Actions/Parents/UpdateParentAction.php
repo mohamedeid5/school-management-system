@@ -15,7 +15,6 @@ class UpdateParentAction
     {
         return DB::transaction(function () use ($parent, $form) {
 
-           $parent = MyParent::findOrFail($form->id);
            $user = User::findOrFail($parent->user_id);
 
             $user->name = $form->name_father;
