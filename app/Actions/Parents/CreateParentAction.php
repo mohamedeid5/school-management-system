@@ -22,6 +22,8 @@ class CreateParentAction
                 'password' => Hash::make($form->password)
             ]);
 
+            $user->assignRole('parent');
+
             $parent = MyParent::create($this->parentData($form, $user->id));
 
             $this->storeAttachments($parent, $form);
