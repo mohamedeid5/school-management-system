@@ -67,6 +67,29 @@ class AddParent extends Component
         $this->currentStep = $step;
     }
 
+    public function submitForm(CreateParentAction $createAction, UpdateParentAction $updateAction): void
+    {
+        $this->form->validate($this->form->allRules());
+
+        try {
+            if($this->updateMode)
+            {
+                $parent = MyParent::findOrFail($this->parent_id);
+                $updateAction->handle($parent, $this->form);
+            } else {
+                $createAction->handle($this->form);
+            }
+
+            $this->resetFormState();
+            toastr()->success(__('main.created_successfully'));
+        } catch (\Exception $e) {
+            $this->logError('Parent creation failed', $e);
+            toastr()->error(__('main.error_message'));
+        }
+
+        $this->hideForm();
+    }
+
 
     public function edit($id)
     {
@@ -153,28 +176,6 @@ class AddParent extends Component
         $this->form->id = $id;
     }
 
-    public function submitForm(CreateParentAction $createAction, UpdateParentAction $updateAction): void
-    {
-        $this->form->validate($this->form->allRules());
-
-        try {
-            if($this->updateMode)
-            {
-                $parent = MyParent::findOrFail($this->parent_id);
-                $updateAction->handle($parent, $this->form);
-            } else {
-                $createAction->handle($this->form);
-            }
-
-            $this->resetFormState();
-            toastr()->success(__('main.created_successfully'));
-        } catch (\Exception $e) {
-            $this->logError('Parent creation failed', $e);
-            toastr()->error(__('main.error_message'));
-        }
-
-        $this->hideForm();
-    }
 
     public function removePhoto($index): void
     {
