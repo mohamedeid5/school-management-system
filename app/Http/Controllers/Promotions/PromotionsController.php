@@ -31,7 +31,6 @@ class PromotionsController extends Controller
             toastr()->success(__('main.promoted_successfully'));
             return redirect()->back();
         } catch (\Exception $e) {
-            dd($e->getMessage());
             $this->logError('Error promoting students', $e);
             toastr()->error(__('main.error_occurred'));
 
