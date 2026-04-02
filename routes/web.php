@@ -36,10 +36,8 @@ function()
 
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-         Route::middleware(['auth'])->group(function () {
-            Route::get('get-classrooms/{id}', [AjaxController::class, 'getClassrooms']);
-            Route::get('get-sections/{id}', [AjaxController::class, 'getSections']);
-        });
+        Route::get('get-classrooms/{id}', [AjaxController::class, 'getClassrooms']);
+        Route::get('get-sections/{id}', [AjaxController::class, 'getSections']);
 
         // grades routes
         Route::resource('grades', GradeController::class)->except('create', 'edit', 'show');

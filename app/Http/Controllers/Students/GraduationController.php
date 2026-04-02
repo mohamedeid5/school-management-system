@@ -7,6 +7,8 @@ use App\Http\Requests\GraduationControllerRequest;
 use App\Repositories\GraduationRepository;
 use App\Services\GraduationService;
 
+use function Flasher\Toastr\Prime\toastr;
+
 class GraduationController extends Controller
 {
     protected GraduationService $graduationService;
@@ -61,7 +63,7 @@ class GraduationController extends Controller
     {
         try {
             $this->graduationRepository->forceDelete($id);
-            toastr()->success(__('main.created_successfully'));
+            toastr()->success(__('main.deleted_successfully'));
             return redirect()->route('graduations.index');
         } catch (\Exception $e) {
             $this->logError('graduation deletion failed', $e, ['student_id' => $id]);
