@@ -1,6 +1,12 @@
 @extends('layouts.master')
 @section('title', __('main.add_graduation'))
 
+@section('breadcrumb')
+    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('main.dashboard') }}</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('graduations.index') }}">{{ __('main.graduations') }}</a></li>
+    <li class="breadcrumb-item active">{{ __('main.add_graduation') }}</li>
+@endsection
+
 @section('content')
 <div class="container-fluid">
     <div class="row">

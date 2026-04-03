@@ -51,7 +51,6 @@ class TeacherController extends Controller
             toastr()->error(__('main.created_failed'));
             return redirect()->back()->withInput();
         }
-
     }
 
     /**

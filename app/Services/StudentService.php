@@ -95,14 +95,17 @@ class StudentService
     public function getEditPageData($student)
     {
         $gradeId = old('grade_id', $student->grade_id);
+        $classrooms = Classroom::where('grade_id', $gradeId)->get();
+
         $classroomId = old('classroom_id', $student->classroom_id);
+        $sections = Section::where('classroom_id', $classroomId)->get();
 
         return [
             'student' => $student->load('user'),
             'parents' => MyParent::all(),
             'grades' => Grade::all(),
-            'classrooms' => Classroom::where('grade_id', $gradeId)->get(),
-            'sections' => Section::where('classroom_id', $classroomId)->get(),
+            'classrooms' => $classrooms,
+            'sections' => $sections,
             'nationalities' => Nationality::all(),
             'bloodTypes' => BloodType::all(),
         ];

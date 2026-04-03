@@ -95,7 +95,7 @@
                             <li><a href="{{ route('students.index') }}">{{ __('main.students_list') }}</a></li>
                         </ul>
                     </li>
-                     <!-- menu item Promotions -->
+                    <!-- menu item Promotions -->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#promotions">
                             <div class="pull-left"><i class="ti-palette"></i><span
@@ -107,7 +107,31 @@
                             <li><a href="{{ route('promotions.index') }}">{{ __('main.promotions') }}</a></li>
                         </ul>
                     </li>
-                      
+                    <!-- menu item Fees -->
+                    <li>
+                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#fees">
+                            <div class="pull-left"><i class="ti-money"></i><span
+                                    class="right-nav-text">{{ __('main.fees') }}</span></div>
+                            <div class="pull-right"><i class="ti-plus"></i></div>
+                            <div class="clearfix"></div>
+                        </a>
+                        <ul id="fees" class="collapse" data-parent="#sidebarnav">
+                            <li><a href="{{ route('fees.index') }}">{{ __('main.fees_list') }}</a></li>
+                        </ul>
+                    </li>
+                     <!-- menu item Graduations -->
+                    <li>
+                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#graduations">
+                            <div class="pull-left"><i class="ti-palette"></i><span
+                                    class="right-nav-text">{{ __('main.graduations') }}</span></div>
+                            <div class="pull-right"><i class="ti-plus"></i></div>
+                            <div class="clearfix"></div>
+                        </a>
+                        <ul id="graduations" class="collapse" data-parent="#sidebarnav">
+                            <li><a href="{{ route('graduations.index') }}">{{ __('main.graduations') }}</a></li>
+                        </ul>
+                    </li>
+
                     <!-- menu item calendar-->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#calendar-menu">

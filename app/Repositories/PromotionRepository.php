@@ -35,46 +35,55 @@ class PromotionRepository
 
     public function promote($request)
     {
-        $studentIds = Student::where('grade_id', $request->from_grade_id)
-                    ->where('classroom_id', $request->from_classroom_id)
-                    ->where('section_id', $request->from_section_id)
-                    ->where('academic_year', $request->academic_year)
-                    ->pluck('id');
 
-        if ($studentIds->isEmpty()) {
+        $batchId = Str::uuid()->toString();
+
+        if (!Student::where('grade_id', $request->from_grade_id)
+                ->where('classroom_id', $request->from_classroom_id)
+                ->where('section_id', $request->from_section_id)
+                ->where('academic_year', $request->academic_year)
+                ->exists()) {
             throw new \Exception('No students found for the specified criteria.');
         }
 
-        Student::whereIn('id', $studentIds)->update([
-            'grade_id' => $request->to_grade_id,
-            'classroom_id' => $request->to_classroom_id,
-            'section_id' => $request->to_section_id,
-            'academic_year' => $request->academic_year_new,
-        ]);
+        Student::where('grade_id', $request->from_grade_id)
+            ->where('classroom_id', $request->from_classroom_id)
+            ->where('section_id', $request->from_section_id)
+            ->where('academic_year', $request->academic_year)
+            ->chunkById(100, function($students) use ($request, $batchId) {
+                DB::transaction(function() use ($students, $batchId, $request){
 
-        $promotionsData = [];
-        $batchId = Str::uuid()->toString();
+                    $studentIds = $students->pluck('id');
 
-        foreach ($studentIds as $student) {
+                    Student::whereIn('id', $studentIds)->update([
+                        'grade_id' => $request->to_grade_id,
+                        'classroom_id' => $request->to_classroom_id,
+                        'section_id' => $request->to_section_id,
+                        'academic_year' => $request->academic_year_new,
+                    ]);
 
-            $promotionsData[] = [
-                'student_id' => $student,
-                'from_grade_id' => $request->from_grade_id,
-                'from_classroom_id' => $request->from_classroom_id,
-                'from_section_id' => $request->from_section_id,
-                'to_grade_id' => $request->to_grade_id,
-                'to_classroom_id' => $request->to_classroom_id,
-                'to_section_id' => $request->to_section_id,
-                'academic_year' => $request->academic_year,
-                'academic_year_new' => $request->academic_year_new,
-                'created_at' => now(),
-                'updated_at' => now(),
-                'batch_id' => $batchId,
-            ];
-        }
+                    $promotionsData = [];
 
-        Promotion::insert($promotionsData);
+                    foreach ($students as $student) {
 
+                        $promotionsData[] = [
+                            'student_id' => $student->id,
+                            'from_grade_id' => $request->from_grade_id,
+                            'from_classroom_id' => $request->from_classroom_id,
+                            'from_section_id' => $request->from_section_id,
+                            'to_grade_id' => $request->to_grade_id,
+                            'to_classroom_id' => $request->to_classroom_id,
+                            'to_section_id' => $request->to_section_id,
+                            'academic_year' => $request->academic_year,
+                            'academic_year_new' => $request->academic_year_new,
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                            'batch_id' => $batchId,
+                        ];
+                    }
+                    Promotion::insert($promotionsData);
+                });
+            });
     }
 
     public function restore($request)

@@ -1,6 +1,12 @@
 @extends('layouts.master')
 @section('title', __('main.students_promotion_management'))
 
+@section('breadcrumb')
+    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('main.dashboard') }}</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('promotions.index') }}">{{ __('main.students_promotion') }}</a></li>
+    <li class="breadcrumb-item active">{{ __('main.students_promotion_management') }}</li>
+@endsection
+
 @section('content')
 <div class="container-fluid">
     <div class="card shadow-sm">

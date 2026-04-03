@@ -13,6 +13,7 @@ use App\Http\Controllers\Students\StudentController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\Students\PromotionsController;
 use App\Http\Controllers\Students\GraduationController;
+use App\Http\Controllers\Fees\FeesController;
 
 Route::group(
 [
@@ -73,6 +74,9 @@ function()
         Route::post('graduations', [GraduationController::class, 'store'])->name('graduations.store');
         Route::put('graduations/restore/{id}', [GraduationController::class, 'restore'])->name('graduations.restore');
         Route::delete('graduations/destroy/{id}', [GraduationController::class, 'destroy'])->name('graduations.destroy');
+
+        // fees routes
+        Route::resource('fees', FeesController::class);
 
     });
 });

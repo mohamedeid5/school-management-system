@@ -1,12 +1,32 @@
 @extends('layouts.master')
 @section('title', __('main.students_promotion'))
 
+@section('breadcrumb')
+    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('main.dashboard') }}</a></li>
+    <li class="breadcrumb-item active">{{ __('main.students_promotion') }}</li>
+@endsection
+
 @section('content')
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
             <div class="card card-primary card-outline shadow-sm">
                 <div class="card-header">
+                    <div class="card-header">
+                        <h3 class="card-title text-success font-weight-bold">
+                            <i class="fa fa-user-graduate"></i> {{ __('main.students_list') }}
+                        </h3>
+
+                        <div class="card-tools">
+                            <a href="{{ route('promotions.management') }}" class="btn btn-outline-primary btn-sm shadow-sm">
+                                <i class="fa fa-level-up-alt"></i> {{ __('main.manage_promotions') }}
+                            </a>
+
+                            <a href="{{ route('graduations.create') }}" class="btn btn-success btn-sm shadow-sm">
+                                <i class="fa fa-plus"></i> {{ __('main.add_graduation') }}
+                            </a>
+                        </div>
+                    </div>
                     <h3 class="card-title text-primary font-weight-bold">
                         <i class="fa fa-graduation-cap"></i> {{ __('main.students_promotion') }}
                     </h3>

@@ -1,6 +1,11 @@
 @extends('layouts.master')
 @section('title', __('main.graduated_students'))
 
+@section('breadcrumb')
+    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('main.dashboard') }}</a></li>
+    <li class="breadcrumb-item active">{{ __('main.graduations') }}</li>
+@endsection
+
 @section('content')
 <div class="container-fluid">
     <div class="card shadow-sm">
@@ -8,6 +13,11 @@
             <h5 class="mb-0"><i class="fa fa-user-graduate"></i> {{ __('main.graduated_students_list') }}</h5>
         </div>
         <div class="card-body">
+                <div class="card-tools">
+                    <a href="{{ route('graduations.create') }}" class="btn btn-success btn-sm shadow-sm">
+                        <i class="fa fa-plus"></i> {{ __('main.add_graduation') }}
+                    </a>
+                </div>
             <div class="table-responsive">
                 <table id="datatable" class="table table-bordered table-hover text-center">
                     <thead class="table-light">

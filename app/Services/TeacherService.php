@@ -79,7 +79,7 @@ class TeacherService {
         });
     }
 
-    public function deleteTeacher(Teacher $teacher) {
+    public function deleteTeacher($teacher) {
         DB::transaction(function() use ($teacher) {
             $user = $teacher->user;
             $this->teacherRepository->deleteTeacher($teacher);
