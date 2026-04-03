@@ -88,7 +88,7 @@ class PromotionRepository
         }
 
         $query->chunkById(100, function($promotions) {
-                DB::transaction(function () use ($promotions) {
+            DB::transaction(function () use ($promotions) {
                 $groupped = $promotions->groupBy(function($item) {
                     return $item->from_grade_id . '-' .
                         $item->from_classroom_id . '-' .
@@ -109,10 +109,8 @@ class PromotionRepository
                         'academic_year' => $destination->academic_year,
                     ]);
                 }
-
                 Promotion::whereIn('id', $promotions->pluck('id'))->delete();
             });
-
          });
     }
 }
