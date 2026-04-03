@@ -60,8 +60,6 @@ class PromotionService
 
     public function rollbackPromotion($request)
     {
-        return DB::transaction(function () use ($request) {
-            return $this->promotionRepository->restore($request);
-        });
+        return $this->promotionRepository->restore($request);
     }
 }

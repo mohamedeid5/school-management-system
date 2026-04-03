@@ -8,6 +8,7 @@ use App\Models\Grade;
 use App\Models\Classroom;
 use App\Models\Section;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class PromotionRepository
 {
@@ -87,28 +88,31 @@ class PromotionRepository
         }
 
         $query->chunkById(100, function($promotions) {
-            $groupped = $promotions->groupBy(function($item) {
-                return $item->from_grade_id . '-' .
-                    $item->from_classroom_id . '-' .
-                    $item->from_section_id . '-' .
-                    $item->academic_year . '-' .
-                    $item->batch_id;
+                DB::transaction(function () use ($promotions) {
+                $groupped = $promotions->groupBy(function($item) {
+                    return $item->from_grade_id . '-' .
+                        $item->from_classroom_id . '-' .
+                        $item->from_section_id . '-' .
+                        $item->academic_year . '-' .
+                        $item->batch_id;
+                });
+
+                foreach($groupped as $group)
+                {
+                    $studentIds = $group->pluck('student_id')->unique();
+                    $destination = $group->first();
+
+                    Student::whereIn('id', $studentIds)->update([
+                        'grade_id' => $destination->from_grade_id,
+                        'classroom_id' => $destination->from_classroom_id,
+                        'section_id' => $destination->from_section_id,
+                        'academic_year' => $destination->academic_year,
+                    ]);
+                }
+
+                Promotion::whereIn('id', $promotions->pluck('id'))->delete();
             });
 
-            foreach($groupped as $group)
-            {
-                $studentIds = $group->pluck('student_id');
-                $destination = $group->first();
-
-                Student::whereIn('id', $studentIds)->update([
-                    'grade_id' => $destination->from_grade_id,
-                    'classroom_id' => $destination->from_classroom_id,
-                    'section_id' => $destination->from_section_id,
-                    'academic_year' => $destination->academic_year,
-                ]);
-            }
          });
-
-        $query->delete();
     }
 }
