@@ -33,14 +33,44 @@
                         </div>
 
                         <div class="form-row">
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
+                                <label>{{ __('main.fee_type') }}</label>
+                                <select class="form-control @error('fee_type') is-invalid @enderror" name="fee_type">
+                                    <option value="" disabled>{{ __('main.choose') }}...</option>
+                                    @foreach(\App\Enums\FeeType::cases() as $type)
+                                        <option value="{{ $type->value }}" @selected(old('fee_type', $fee->fee_type->value) == $type->value)>
+                                            {{ $type->label() }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('fee_type') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+
+                            <div class="form-group col-md-4">
                                 <label>{{ __('main.amount') }}</label>
                                 <input type="number" step="0.01" name="amount" class="form-control @error('amount') is-invalid @enderror"
                                        value="{{ old('amount', $fee->amount) }}">
                                 @error('amount') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
+                                <label>{{ __('main.academic_year') }}</label>
+                                <select class="form-control @error('academic_year') is-invalid @enderror" name="academic_year">
+                                    <option value="" disabled>{{ __('main.choose') }}...</option>
+                                    @php $current_year = date("Y"); @endphp
+                                    @for($year=$current_year; $year<=$current_year +1 ; $year++)
+                                        <option value="{{ $year }}" @selected(old('academic_year', $fee->academic_year) == $year)>
+                                            {{ $year }}
+                                        </option>
+                                    @endfor
+                                </select>
+                                @error('academic_year') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+                        </div>
+
+                        {{-- الصف الثالث: المرحلة والفصل --}}
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
                                 <label>{{ __('main.grade') }}</label>
                                 <select class="form-control @error('grade_id') is-invalid @enderror" name="grade_id" id="grade_id">
                                     <option value="" disabled>{{ __('main.choose') }}...</option>
@@ -53,7 +83,7 @@
                                 @error('grade_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-6">
                                 <label>{{ __('main.classroom') }}</label>
                                 <select class="form-control @error('classroom_id') is-invalid @enderror" name="classroom_id" id="classroom_id">
                                         @foreach ($classrooms as $classroom)
@@ -63,20 +93,6 @@
                                         @endforeach
                                 </select>
                                 @error('classroom_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                            </div>
-
-                            <div class="form-group col-md-3">
-                                <label>{{ __('main.academic_year') }}</label>
-                                <select class="form-control @error('academic_year') is-invalid @enderror" name="academic_year">
-                                    <option value="" disabled>{{ __('main.choose') }}...</option>
-                                    @php $current_year = date("Y"); @endphp
-                                    @for($year=$current_year; $year<=$current_year +1 ; $year++)
-                                        <option value="{{ $year }}" @selected(old('academic_year', $fee->academic_year) == $year)>
-                                            {{ $year }}
-                                        </option>
-                                    @endfor
-                                </select>
-                                @error('academic_year') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
                         </div>
 

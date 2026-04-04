@@ -17,17 +17,27 @@ class Fee extends Model
         'grade_id',
         'classroom_id',
         'academic_year',
-        'description'
+        'fee_type',
+        'description',
     ];
 
     public array $translatable = ['name'];
 
-     public function getActivitylogOptions(): LogOptions
+    protected $casts = [
+        'fee_type' => \App\Enums\FeeType::class,
+    ];
+
+    public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-             ->logOnly(['name'])
-             ->logOnlyDirty()
-             ->dontSubmitEmptyLogs();
+            ->useLogName('fee')
+            ->logOnly(['name', 'amount', 'grade_id', 'classroom_id', 'academic_year', 'fee_type', 'description'])
+            ->setDescriptionForEvent(fn(string $eventName) => "Fee has been {$eventName}");
+    }
+
+     public function feeInvoices()
+    {
+        return $this->hasMany(FeeInvoice::class);
     }
 
     public function grade()

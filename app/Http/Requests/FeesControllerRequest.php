@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
+use App\Enums\FeeType;
 use Illuminate\Validation\Rule;
 
 class FeesControllerRequest extends FormRequest
@@ -43,7 +45,8 @@ class FeesControllerRequest extends FormRequest
             'grade_id' => 'required|exists:grades,id',
             'classroom_id' => 'required|exists:classrooms,id',
             'academic_year' => 'required',
-            'description' => 'nullable'
+            'description' => 'nullable',
+            'fee_type' => ['required', new Enum(FeeType::class)]
 
         ];
     }

@@ -11,17 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('fees', function (Blueprint $table) {
+        Schema::create('fee_invoices', function (Blueprint $table) {
             $table->id();
-            $table->json('name');
+            $table->date('invoice_date');
+            $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
+            $table->foreignId('fee_id')->constrained('fees')->cascadeOnDelete();
             $table->decimal('amount', 8, 2);
-            $table->foreignId('grade_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('classroom_id')->constrained()->cascadeOnDelete();
-            $table->string('academic_year');
             $table->string('description')->nullable();
-            $table->tinyInteger('fee_type')->default(1);
             $table->timestamps();
-            $table->softDeletes();
+
+            $table->unique(['student_id', 'fee_id']);
         });
     }
 
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('fees');
+        Schema::dropIfExists('fee_invoices');
     }
 };
