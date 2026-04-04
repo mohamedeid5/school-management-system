@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('type');
             $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
             $table->foreignId('fee_invoice_id')->nullable()->constrained('fee_invoices')->cascadeOnDelete();
-            $table->decimal('debit', 8, 2)->nullable();
-            $table->decimal('credit', 8, 2)->nullable();
+            $table->foreignId('receipt_student_id')->nullable()->constrained('receipt_students')->cascadeOnDelete();
+            $table->decimal('debit', 8, 2)->nullable()->default(0.00);
+            $table->decimal('credit', 8, 2)->nullable()->default(0.00);
             $table->string('description')->nullable();
             $table->timestamps();
         });

@@ -205,6 +205,25 @@ return [
     'permanent_delete_warning_text' => 'هذا الإجراء سيحذف البيانات نهائياً ولا يمكن التراجع عنه.',
     'confirm' => 'تأكيد',
 
+    // Fee Invoices
+    'fee_invoices' => 'فواتير الرسوم',
+    'fee_invoice' => 'فاتورة رسوم',
+    'fee_invoices_list' => 'قائمة فواتير الرسوم',
+    'add_fee_invoice' => 'إصدار فاتورة رسوم',
+    'add_new_fee_invoice' => 'إضافة فاتورة جديدة',
+    'add_new_invoice_for' => 'إضافة فاتورة جديدة لـ',
+    'edit_fee_invoice' => 'تعديل فاتورة رسوم',
+    'edit_student_invoice' => 'تعديل فاتورة الطالب',
+    'invoice_date' => 'تاريخ الفاتورة',
+    'statement' => 'البيان',
+    'save_invoice' => 'حفظ الفاتورة',
+    'update_invoice_data' => 'تحديث بيانات الفاتورة',
+    'print_invoice' => 'طباعة الفاتورة',
+    'delete_fee_invoice' => 'حذف فاتورة رسوم',
+    'choose_available_fees' => 'اختر من الرسوم المتاحة',
+    'delete_invoice_warning' => 'هل أنت متأكد من عملية الحذف؟',
+    'invoice_deleted_account_note' => 'بمجرد الحذف، سيتم إزالة المطالبة المالية من حساب الطالب تلقائياً.',
+
     // Fees
     'fees' => 'الرسوم الدراسية',
     'fee' => 'رسوم',

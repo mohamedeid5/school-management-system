@@ -1,6 +1,11 @@
 @extends('layouts.master')
 @section('title', __('main.fees_list'))
 
+@section('breadcrumb')
+    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('main.dashboard') }}</a></li>
+    <li class="breadcrumb-item active">{{ __('main.fees_list') }}</li>
+@endsection
+
 @section('content')
 <div class="container-fluid">
     <div class="row">

@@ -117,6 +117,8 @@
                         </a>
                         <ul id="fees" class="collapse" data-parent="#sidebarnav">
                             <li><a href="{{ route('fees.index') }}">{{ __('main.fees_list') }}</a></li>
+                            <li><a href="{{ route('fee-invoices.index') }}">{{ __('main.fee_invoices') }}</a></li>
+                            <li><a href="{{ route('receipt-students.index') }}">{{ __('main.receipt_students') }}</a></li>
                         </ul>
                     </li>
                      <!-- menu item Graduations -->

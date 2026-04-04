@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use App\Traits\HasAttachments;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 class Student extends Model
 {
     use SoftDeletes, LogsActivity, HasAttachments;
@@ -93,6 +94,18 @@ class Student extends Model
     public function feeInvoices()
     {
         return $this->hasMany(FeeInvoice::class);
+    }
+
+    public function studentAccounts()
+    {
+        return $this->hasMany(StudentAccount::class);
+    }
+
+    public function currentBalance(): Attribute
+    {
+        return Attribute::get(function() {
+            return $this->studentAccounts->sum('debit') - $this->studentAccounts->sum('credit');
+        });
     }
 
 }

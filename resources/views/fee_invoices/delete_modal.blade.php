@@ -3,29 +3,29 @@
         <div class="modal-content">
             <div class="modal-header bg-danger text-white">
                 <h5 class="modal-title" id="exampleModalLabel">
-                    <i class="fa fa-exclamation-triangle"></i> حذر: حذف فاتورة رسوم
+                    <i class="fa fa-exclamation-triangle"></i> {{ __('main.delete_fee_invoice') }}
                 </h5>
                 <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('fee_invoices.destroy', $invoice->id) }}" method="post">
+                <form action="{{ route('fee-invoices.destroy', $invoice->id) }}" method="post">
                     @csrf
                     @method('DELETE')
 
                     <div class="text-center">
-                        <p class="h5 mb-3">هل أنت متأكد من عملية الحذف؟</p>
+                        <p class="h5 mb-3">{{ __('main.delete_invoice_warning') }}</p>
                         <div class="alert alert-warning border-left-danger">
-                            <strong>اسم الطالب:</strong> {{ $invoice->student->name }} <br>
-                            <strong>المبلغ:</strong> <span class="text-danger font-weight-bold">{{ number_format($invoice->amount, 2) }} ج.م</span>
+                            <strong>{{ __('main.student_name') }}:</strong> {{ $invoice->student->name }} <br>
+                            <strong>{{ __('main.amount') }}:</strong> <span class="text-danger font-weight-bold">{{ number_format($invoice->amount, 2) }} {{ __('main.currency_egp') }}</span>
                         </div>
-                        <p class="text-muted small">بمجرد الحذف، سيتم إزالة المطالبة المالية من حساب الطالب تلقائياً.</p>
+                        <p class="text-muted small">{{ __('main.invoice_deleted_account_note') }}</p>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">إلغاء</button>
-                        <button type="submit" class="btn btn-danger shadow-sm">تأكيد الحذف النهائي</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('main.cancel') }}</button>
+                        <button type="submit" class="btn btn-danger shadow-sm">{{ __('main.confirm_permanent_delete') }}</button>
                     </div>
                 </form>
             </div>

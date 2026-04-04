@@ -17,7 +17,8 @@ class StudentAccount extends Model
         'fee_invoice_id',
         'debit',
         'credit',
-        'description'
+        'description',
+        'receipt_student_id',
     ];
 
     public function getActivitylogOptions(): LogOptions

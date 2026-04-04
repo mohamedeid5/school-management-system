@@ -8,7 +8,7 @@ class StudentRepository
 {
     public function getAllStudents()
     {
-        return Student::with(['user', 'grade', 'classroom', 'section', 'parent'])->get();
+        return Student::with(['user', 'grade', 'classroom', 'section', 'parent', 'studentAccounts'])->get();
     }
 
     public function createStudent($data, $userId, $studentCode)

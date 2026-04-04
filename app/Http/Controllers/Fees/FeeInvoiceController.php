@@ -22,7 +22,7 @@ class FeeInvoiceController extends Controller
     public function index()
     {
         $feeInvoices = FeeInvoice::with('student.user', 'fee')->get();
-        
+
         return view('fee_invoices.index', compact('feeInvoices'));
     }
 
@@ -43,7 +43,7 @@ class FeeInvoiceController extends Controller
             $this->feeInvoiceService->createInvoice($request->validated());
 
             toastr()->success(__('main.created_successfully'));
-            return redirect()->route('fee_invoices.index');
+            return redirect()->route('fee-invoices.index');
         } catch (\Exception $e) {
             $this->logError('fee invoice creation failed', $e);
             toastr()->error(__('main.created_failed'));
@@ -68,7 +68,7 @@ class FeeInvoiceController extends Controller
             $this->feeInvoiceService->updateInvoice($request->validated(), $feeInvoice);
 
             toastr()->success(__('main.updated_successfully'));
-            return redirect()->route('fee_invoices.index');
+            return redirect()->route('fee-invoices.index');
         } catch (\Exception $e) {
             $this->logError('fee invoice update failed', $e);
             toastr()->error(__('main.updated_failed'));
@@ -82,7 +82,7 @@ class FeeInvoiceController extends Controller
             $this->feeInvoiceService->deleteInvoice($feeInvoice);
 
             toastr()->success(__('main.deleted_successfully'));
-            return redirect()->route('fee_invoices.index');
+            return redirect()->route('fee-invoices.index');
         } catch (\Exception $e) {
             $this->logError('fee invoice deletion failed', $e);
             toastr()->error(__('main.deleted_failed'));

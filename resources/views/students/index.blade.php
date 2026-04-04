@@ -65,9 +65,15 @@
                                 <a href="{{ route('students.edit', $student->id) }}" class="btn btn-outline-info btn-sm" title="{{ __('main.edit') }}">
                                     <i class="fa fa-edit"></i>
                                 </a>
-                               <a href="{{ route('fee_invoices.show', $student->id) }}" class="btn btn-info btn-sm" title="إصدار فاتورة">
+                               <a href="{{ route('fee-invoices.show', $student->id) }}" class="btn btn-info btn-sm" title="إصدار فاتورة">
                                     <i class="fa fa-file-invoice-dollar"></i>
                                     <span class="d-none d-md-inline ml-1">إصدار فاتورة</span>
+                                </a>
+                                <a href="{{ route('receipt-students.show', $student->id) }}"
+                                    class="btn btn-outline-success btn-sm rounded-pill shadow-sm ml-1 action-btn"
+                                    title="إصدار سند قبض (تحصيل مالي)">
+                                        <i class="fas fa-money-bill-wave text-success icon-default"></i>
+                                        <span class="d-none d-md-inline ml-1">إصدار سند قبض</span>
                                 </a>
                                 <form action="{{ route('students.destroy', $student->id) }}" method="POST" class="d-inline delete-form">
                                     @csrf

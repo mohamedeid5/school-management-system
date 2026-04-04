@@ -15,6 +15,7 @@ use App\Http\Controllers\Students\PromotionsController;
 use App\Http\Controllers\Students\GraduationController;
 use App\Http\Controllers\Fees\FeesController;
 use App\Http\Controllers\Fees\FeeInvoiceController;
+use App\Http\Controllers\Fees\ReceiptStudentController;
 
 Route::group(
 [
@@ -80,7 +81,10 @@ function()
         Route::resource('fees', FeesController::class);
 
         // fee invoices routes
-        Route::resource('fee_invoices', FeeInvoiceController::class);
+        Route::resource('fee-invoices', FeeInvoiceController::class);
+
+        // receipt students routes
+        Route::resource('receipt-students', ReceiptStudentController::class);
 
     });
 });

@@ -207,6 +207,25 @@ return [
     'permanent_delete_warning_text' => 'This action will permanently delete the data and cannot be undone.',
     'confirm' => 'Confirm',
 
+    // Fee Invoices
+    'fee_invoices' => 'Fee Invoices',
+    'fee_invoice' => 'Fee Invoice',
+    'fee_invoices_list' => 'Fee Invoices List',
+    'add_fee_invoice' => 'Issue Fee Invoice',
+    'add_new_fee_invoice' => 'Add New Invoice',
+    'add_new_invoice_for' => 'Add New Invoice for',
+    'edit_fee_invoice' => 'Edit Fee Invoice',
+    'edit_student_invoice' => 'Edit Student Invoice',
+    'invoice_date' => 'Invoice Date',
+    'statement' => 'Statement',
+    'save_invoice' => 'Save Invoice',
+    'update_invoice_data' => 'Update Invoice Data',
+    'print_invoice' => 'Print Invoice',
+    'delete_fee_invoice' => 'Delete Fee Invoice',
+    'choose_available_fees' => 'Choose from Available Fees',
+    'delete_invoice_warning' => 'Are you sure you want to delete this invoice?',
+    'invoice_deleted_account_note' => 'Once deleted, the financial claim will be automatically removed from the student\'s account.',
+
     // Fees
     'fees' => 'Fees',
     'fee' => 'Fee',
