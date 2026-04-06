@@ -108,4 +108,9 @@ class Student extends Model
         });
     }
 
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
 }

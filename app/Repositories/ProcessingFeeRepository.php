@@ -24,7 +24,7 @@ class ProcessingFeeRepository
                 'type' => AccountType::PROCESSING_FEE,
                 'student_id' => $data['student_id'],
                 'processing_fee_id' => $processingFee->id,
-                'debit' => 0,
+                'debit' => 0.00,
                 'credit' => $data['amount'],
                 'description' => $data['description']
             ]);
@@ -45,7 +45,7 @@ class ProcessingFeeRepository
 
             if($account) {
                 $account->update([
-                    'debit' => $data['amount'],
+                    'credit' => $data['amount'],
                     'description' => $data['description']
                 ]);
             }
