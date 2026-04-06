@@ -25,7 +25,7 @@
                     <!-- menu item Grades-->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#grades">
-                            <div class="pull-left"><i class="ti-palette"></i><span
+                            <div class="pull-left"><i class="ti-bookmark-alt"></i><span
                                     class="right-nav-text">{{ __('main.grades') }}</span></div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
@@ -37,7 +37,7 @@
                     <!-- menu item Classrooms-->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#classrooms">
-                            <div class="pull-left"><i class="ti-palette"></i><span
+                            <div class="pull-left"><i class="ti-blackboard"></i><span
                                     class="right-nav-text">{{ __('main.classrooms') }}</span></div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
@@ -50,7 +50,7 @@
                      <!-- menu item Sections -->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#sections">
-                            <div class="pull-left"><i class="ti-palette"></i><span
+                            <div class="pull-left"><i class="ti-layout-tab"></i><span
                                     class="right-nav-text">{{ __('main.sections') }}</span></div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
@@ -62,7 +62,7 @@
                      <!-- menu item Parents -->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#parents">
-                            <div class="pull-left"><i class="ti-palette"></i><span
+                            <div class="pull-left"><i class="ti-user"></i><span
                                     class="right-nav-text">{{ __('main.parents') }}</span></div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
@@ -74,7 +74,7 @@
                      <!-- menu item Teachers -->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#teachers">
-                            <div class="pull-left"><i class="ti-palette"></i><span
+                            <div class="pull-left"><i class="ti-pencil-alt"></i><span
                                     class="right-nav-text">{{ __('main.teachers') }}</span></div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
@@ -83,10 +83,10 @@
                             <li><a href="{{ route('teachers.index') }}">{{ __('main.teachers_list') }}</a></li>
                         </ul>
                     </li>
-                     <!-- menu item Teachers -->
+                     <!-- menu item Students -->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#students">
-                            <div class="pull-left"><i class="ti-palette"></i><span
+                            <div class="pull-left"><i class="ti-id-badge"></i><span
                                     class="right-nav-text">{{ __('main.students') }}</span></div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
@@ -98,7 +98,7 @@
                     <!-- menu item Promotions -->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#promotions">
-                            <div class="pull-left"><i class="ti-palette"></i><span
+                            <div class="pull-left"><i class="ti-arrow-circle-up"></i><span
                                     class="right-nav-text">{{ __('main.promotions') }}</span></div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
@@ -119,12 +119,14 @@
                             <li><a href="{{ route('fees.index') }}">{{ __('main.fees_list') }}</a></li>
                             <li><a href="{{ route('fee-invoices.index') }}">{{ __('main.fee_invoices') }}</a></li>
                             <li><a href="{{ route('receipt-students.index') }}">{{ __('main.receipt_students') }}</a></li>
+                            <li><a href="{{ route('processing-fees.index') }}">{{ __('main.processing_fees') }}</a></li>
+                            <li><a href="{{ route('payment-students.index') }}">{{ __('main.payment_students') }}</a></li>
                         </ul>
                     </li>
                      <!-- menu item Graduations -->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#graduations">
-                            <div class="pull-left"><i class="ti-palette"></i><span
+                            <div class="pull-left"><i class="ti-crown"></i><span
                                     class="right-nav-text">{{ __('main.graduations') }}</span></div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>

@@ -16,6 +16,8 @@ use App\Http\Controllers\Students\GraduationController;
 use App\Http\Controllers\Fees\FeesController;
 use App\Http\Controllers\Fees\FeeInvoiceController;
 use App\Http\Controllers\Fees\ReceiptStudentController;
+use App\Http\Controllers\Fees\ProcessingFeeController;
+use App\Http\Controllers\Fees\PaymentStudentController;
 
 Route::group(
 [
@@ -85,6 +87,12 @@ function()
 
         // receipt students routes
         Route::resource('receipt-students', ReceiptStudentController::class);
+
+        // processing fees routes
+        Route::resource('processing-fees', ProcessingFeeController::class);
+
+        // payment students routes
+        Route::resource('payment-students', PaymentStudentController::class);
 
     });
 });

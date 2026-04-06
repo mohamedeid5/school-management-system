@@ -67,5 +67,5 @@ class FeeInvoiceRepository
 
             StudentAccount::where('fee_invoice_id', $feeInvoice->id)->delete();
         });
-    }
+    }    
 }

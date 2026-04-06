@@ -130,7 +130,6 @@
                         </div>
                     </div>
 
-                    {{-- 4. المرفقات --}}
                     <div class="tab-pane" id="attachments">
                         <div class="table-responsive">
                             <table class="table table-bordered table-sm text-center">

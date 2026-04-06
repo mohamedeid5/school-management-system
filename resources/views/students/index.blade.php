@@ -58,30 +58,38 @@
                         </td>
                         <td><span class="text-primary font-weight-bold">{{ $student->academic_year }}</span></td>
                         <td>
-                            <div class="btn-group">
-                                <a href="{{ route('students.show', $student->id) }}" class="btn btn-outline-warning btn-sm" title="{{ __('main.show') }}">
-                                    <i class="fa fa-eye"></i>
-                                </a>
-                                <a href="{{ route('students.edit', $student->id) }}" class="btn btn-outline-info btn-sm" title="{{ __('main.edit') }}">
-                                    <i class="fa fa-edit"></i>
-                                </a>
-                               <a href="{{ route('fee-invoices.show', $student->id) }}" class="btn btn-info btn-sm" title="إصدار فاتورة">
-                                    <i class="fa fa-file-invoice-dollar"></i>
-                                    <span class="d-none d-md-inline ml-1">إصدار فاتورة</span>
-                                </a>
-                                <a href="{{ route('receipt-students.show', $student->id) }}"
-                                    class="btn btn-outline-success btn-sm rounded-pill shadow-sm ml-1 action-btn"
-                                    title="إصدار سند قبض (تحصيل مالي)">
-                                        <i class="fas fa-money-bill-wave text-success icon-default"></i>
-                                        <span class="d-none d-md-inline ml-1">إصدار سند قبض</span>
-                                </a>
-                                <form action="{{ route('students.destroy', $student->id) }}" method="POST" class="d-inline delete-form">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="button" class="btn btn-outline-danger btn-sm confirm-delete" title="{{ __('main.delete') }}">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </form>
+                            <div class="dropdown">
+                                <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" id="studentActions{{ $student->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{ __('main.processes') }}
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right text-left" aria-labelledby="studentActions{{ $student->id }}">
+                                    <a href="{{ route('students.show', $student->id) }}" class="dropdown-item">
+                                        <i class="fa fa-eye text-warning mr-1"></i> {{ __('main.show') }}
+                                    </a>
+                                    <a href="{{ route('students.edit', $student->id) }}" class="dropdown-item">
+                                        <i class="fa fa-edit text-info mr-1"></i> {{ __('main.edit') }}
+                                    </a>
+                                    <a href="{{ route('fee-invoices.show', $student->id) }}" class="dropdown-item">
+                                        <i class="fa fa-file-invoice-dollar text-primary mr-1"></i> إصدار فاتورة
+                                    </a>
+                                    <a href="{{ route('receipt-students.show', $student->id) }}" class="dropdown-item">
+                                        <i class="fas fa-money-bill-wave text-success mr-1"></i> إصدار سند قبض
+                                    </a>
+                                    <a href="{{ route('payment-students.show', $student->id) }}" class="dropdown-item">
+                                        <i class="fas fa-hand-holding-usd text-success mr-1"></i> {{ __('main.add_payment') }}
+                                    </a>
+                                    <a href="{{ route('processing-fees.show', $student->id) }}" class="dropdown-item">
+                                        <i class="fa fa-money-bill-wave text-secondary mr-1"></i> {{ __('main.processing_fees') }}
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <form action="{{ route('students.destroy', $student->id) }}" method="POST" class="delete-form">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" class="dropdown-item text-danger confirm-delete">
+                                            <i class="fa fa-trash mr-1"></i> {{ __('main.delete') }}
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </td>
                     </tr>

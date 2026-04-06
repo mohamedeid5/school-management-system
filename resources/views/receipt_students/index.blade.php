@@ -1,12 +1,17 @@
 @extends('layouts.master')
-@section('title', 'قائمة سندات القبض')
+@section('title', __('main.receipt_students_list'))
+
+@section('breadcrumb')
+    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('main.dashboard') }}</a></li>
+    <li class="breadcrumb-item active">{{ __('main.receipt_students_list') }}</li>
+@endsection
 
 @section('content')
 <div class="container-fluid">
     <div class="card card-success card-outline shadow">
         <div class="card-header">
             <h3 class="card-title text-success font-weight-bold">
-                <i class="fas fa-receipt"></i> سجل تحصيلات الطلاب (سندات القبض)
+                <i class="fas fa-receipt"></i> {{ __('main.receipt_students_records') }}
             </h3>
         </div>
         <div class="card-body">
@@ -15,11 +20,11 @@
                     <thead>
                         <tr class="bg-light">
                             <th>#</th>
-                            <th>اسم الطالب</th>
-                            <th>المبلغ المحصل</th>
-                            <th>تاريخ السند</th>
-                            <th>البيان</th>
-                            <th>العمليات</th>
+                            <th>{{ __('main.student_name') }}</th>
+                            <th>{{ __('main.collected_amount') }}</th>
+                            <th>{{ __('main.receipt_date') }}</th>
+                            <th>{{ __('main.statement') }}</th>
+                            <th>{{ __('main.processes') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -27,18 +32,18 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td class="font-weight-bold">{{ $receipt->student->user->name }}</td>
-                            <td class="text-success font-weight-bold">{{ number_format($receipt->amount, 2) }} ج.م</td>
+                            <td class="text-success font-weight-bold">{{ number_format($receipt->amount, 2) }} {{ __('main.currency_egp') }}</td>
                             <td>{{ $receipt->date }}</td>
                             <td>{{ Str::limit($receipt->description, 30) }}</td>
                             <td>
                                 <div class="btn-group">
-                                    <a href="{{ route('receipt-students.edit', $receipt->id) }}" class="btn btn-warning btn-sm" title="تعديل">
+                                    <a href="{{ route('receipt-students.edit', $receipt->id) }}" class="btn btn-warning btn-sm" title="{{ __('main.edit') }}">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete_receipt{{ $receipt->id }}" title="حذف">
+                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete_receipt{{ $receipt->id }}" title="{{ __('main.delete') }}">
                                         <i class="fa fa-trash"></i>
                                     </button>
-                                    <a href="#" class="btn btn-secondary btn-sm" title="طباعة إيصال">
+                                    <a href="#" class="btn btn-secondary btn-sm" title="{{ __('main.print_receipt') }}">
                                         <i class="fa fa-print"></i>
                                     </a>
                                 </div>
