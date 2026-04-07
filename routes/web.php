@@ -20,6 +20,7 @@ use App\Http\Controllers\Fees\ProcessingFeeController;
 use App\Http\Controllers\Fees\PaymentStudentController;
 use App\Http\Controllers\Attendances\AttendanceController;
 use App\Http\Controllers\Subjects\SubjectController;
+use App\Http\Controllers\Exams\ExamController;
 
 Route::group(
 [
@@ -101,6 +102,9 @@ function()
 
         // subjects routes
         Route::resource('subjects', SubjectController::class);
+
+        // exams routes
+        Route::resource('exams', ExamController::class);
 
     });
 });

@@ -309,6 +309,24 @@ return [
     'update_payment' => 'Update Payment',
     'delete_payment_warning' => 'Are you sure you want to delete this payment?',
 
+    // Exams
+    'exams' => 'Exams',
+    'exam' => 'Exam',
+    'exams_list' => 'Exams List',
+    'add_exam' => 'Add Exam',
+    'edit_exam' => 'Edit Exam',
+    'delete_exam' => 'Delete Exam',
+    'exam_name_ar' => 'Exam Name in Arabic',
+    'exam_name_en' => 'Exam Name in English',
+    'exam_type' => 'Exam Type',
+    'exam_date' => 'Exam Date',
+    'max_score' => 'Max Score',
+    'exam_type_quiz' => 'Quiz',
+    'exam_type_midterm' => 'Midterm',
+    'exam_type_final' => 'Final',
+    'exam_type_other' => 'Other',
+    'warning_exam' => 'Are you sure you want to delete this exam?',
+
     // General Messages
     'created_successfully' => 'Operation completed successfully',
     'something_went_wrong' => 'Something went wrong, please try again',

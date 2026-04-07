@@ -308,6 +308,24 @@ return [
     'update_payment' => 'تحديث الدفعة',
     'delete_payment_warning' => 'هل أنت متأكد من حذف هذه الدفعة؟',
 
+    // Exams
+    'exams' => 'الاختبارات',
+    'exam' => 'الاختبار',
+    'exams_list' => 'قائمة الاختبارات',
+    'add_exam' => 'إضافة اختبار',
+    'edit_exam' => 'تعديل الاختبار',
+    'delete_exam' => 'حذف الاختبار',
+    'exam_name_ar' => 'اسم الاختبار بالعربية',
+    'exam_name_en' => 'اسم الاختبار بالإنجليزية',
+    'exam_type' => 'نوع الاختبار',
+    'exam_date' => 'تاريخ الاختبار',
+    'max_score' => 'الدرجة الكاملة',
+    'exam_type_quiz' => 'اختبار قصير',
+    'exam_type_midterm' => 'امتحان نصف الفصل',
+    'exam_type_final' => 'الامتحان النهائي',
+    'exam_type_other' => 'أخرى',
+    'warning_exam' => 'هل أنت متأكد من حذف هذا الاختبار؟',
+
     // General Messages
     'created_successfully' => 'تمت العملية بنجاح',
     'something_went_wrong' => 'حدث خطأ ما، يرجى المحاولة مرة أخرى',

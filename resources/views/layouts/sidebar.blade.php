@@ -133,6 +133,18 @@
                             <li><a href="{{ route('subjects.index') }}">{{ __('main.subjects') }}</a></li>
                         </ul>
                     </li>
+                    <!-- menu item Exams -->
+                    <li>
+                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#exams">
+                            <div class="pull-left"><i class="ti-write"></i><span
+                                    class="right-nav-text">{{ __('main.exams') }}</span></div>
+                            <div class="pull-right"><i class="ti-plus"></i></div>
+                            <div class="clearfix"></div>
+                        </a>
+                        <ul id="exams" class="collapse" data-parent="#sidebarnav">
+                            <li><a href="{{ route('exams.index') }}">{{ __('main.exams_list') }}</a></li>
+                        </ul>
+                    </li>
                     <!-- menu item Fees -->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#fees">
