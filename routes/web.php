@@ -21,6 +21,7 @@ use App\Http\Controllers\Fees\PaymentStudentController;
 use App\Http\Controllers\Attendances\AttendanceController;
 use App\Http\Controllers\Subjects\SubjectController;
 use App\Http\Controllers\Exams\ExamController;
+use App\Http\Controllers\Questions\QuestionController;
 
 Route::group(
 [
@@ -105,6 +106,9 @@ function()
 
         // exams routes
         Route::resource('exams', ExamController::class);
+
+        // questions routes
+        Route::resource('questions', QuestionController::class);
 
     });
 });

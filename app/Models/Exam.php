@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Translatable\HasTranslations;
+use App\Models\Question;
 
 class Exam extends Model
 {
@@ -44,5 +45,10 @@ class Exam extends Model
     public function classroom()
     {
         return $this->belongsTo(Classroom::class);
+    }
+
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
     }
 }

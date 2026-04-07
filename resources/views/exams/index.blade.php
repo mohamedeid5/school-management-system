@@ -50,6 +50,9 @@
                         <td>{{ \Carbon\Carbon::parse($exam->exam_date)->format('Y-m-d') }}</td>
                         <td><span class="badge badge-primary">{{ $exam->max_score }}</span></td>
                         <td>
+                            <a href="{{ route('exams.show', $exam->id) }}" class="btn btn-primary btn-sm">
+                                <i class="fa fa-eye"></i>
+                            </a>
                             <a href="{{ route('exams.edit', $exam->id) }}" class="btn btn-info btn-sm">
                                 <i class="fa fa-edit"></i>
                             </a>

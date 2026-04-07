@@ -38,6 +38,13 @@ class ExamController extends Controller
         return redirect()->route('exams.index');
     }
 
+    public function show(Exam $exam)
+    {
+        $exam->load('questions', 'subject', 'grade', 'classroom');
+
+        return view('exams.show', compact('exam'));
+    }
+
     public function edit(Exam $exam)
     {
         $grades     = Grade::with('classrooms')->get();

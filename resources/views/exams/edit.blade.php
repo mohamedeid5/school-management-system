@@ -104,13 +104,6 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <label>{{ __('main.description') }}</label>
-                <textarea name="description" rows="3"
-                          class="form-control @error('description') is-invalid @enderror">{{ old('description', $exam->description) }}</textarea>
-                @error('description')<div class="text-danger small">{{ $message }}</div>@enderror
-            </div>
-
             <hr>
             <button type="submit" class="btn btn-primary btn-lg px-5 shadow">{{ __('main.update') }}</button>
             <a href="{{ route('exams.index') }}" class="btn btn-secondary btn-lg px-4">{{ __('main.back') }}</a>
