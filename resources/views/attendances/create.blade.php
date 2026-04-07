@@ -1,5 +1,11 @@
 @extends('layouts.master')
-@section('title', 'تسجيل حضور الطلاب')
+@section('title', __('main.record_attendance'))
+
+@section('breadcrumb')
+    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('main.dashboard') }}</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('attendances.index') }}">{{ __('main.attendances') }}</a></li>
+    <li class="breadcrumb-item active">{{ __('main.record_attendance') }}</li>
+@endsection
 
 @section('content')
 <div class="container-fluid">
@@ -8,18 +14,18 @@
     </h5>
 
     @if ($errors->any())
-    <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
-        <h5><i class="icon fas fa-ban"></i> فيه مشكلة يا هندسة!</h5>
-        <ul class="mb-0">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-@endif
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+            <h5><i class="icon fas fa-ban"></i> فيه مشكلة يا هندسة!</h5>
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
 
     <form action="{{ route('attendances.store') }}" method="POST">
         @csrf

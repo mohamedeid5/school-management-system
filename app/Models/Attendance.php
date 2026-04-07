@@ -16,6 +16,7 @@ class Attendance extends Model
         'grade_id',
         'classroom_id',
         'section_id',
+        'user_id',
         'attendance_date',
         'attendance_status',
         'description'
@@ -29,7 +30,7 @@ class Attendance extends Model
     {
         return LogOptions::defaults()
             ->useLogName('attendance')
-            ->logOnly(['student_id', 'classroom_id', 'section_id', 'attendance_date', 'attendance_status', 'description'])
+            ->logOnly(['student_id', 'classroom_id', 'section_id', 'user_id', 'attendance_date', 'attendance_status', 'description'])
             ->setDescriptionForEvent(fn(string $eventName) => "Attendance has been {$eventName}");
     }
 
@@ -46,5 +47,10 @@ class Attendance extends Model
     public function section()
     {
         return $this->belongsTo(Section::class);
+    }
+
+    public function teacher()
+    {
+        return $this->belongsTo(User::class, 'teacher_id');
     }
 }

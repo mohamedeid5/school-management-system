@@ -50,6 +50,7 @@ return [
     'father_information' => 'بيانات الأب',
     'mother_information' => 'بيانات الأم',
     'name_father_ar' => 'اسم الأب بالعربية',
+    'name_father_en' => 'اسم الأب بالإنجليزية',
     'name_father' => 'اسم الأب',
     'father_name_ar_en' => 'اسم الأب بالعربية والإنجليزية',
     'name_mother_ar' => 'اسم الأم بالعربية',
@@ -123,6 +124,7 @@ return [
     'submit' => 'تأكيد',
     'save' => 'حفظ',
     'cancel' => 'إلغاء',
+    'add_new' => 'إضافة جديد',
     'choose' => 'اختيار...',
     'are_you_sure' => 'هل أنت متأكد؟',
     'actions' => 'الإجراءات',
@@ -135,9 +137,11 @@ return [
     'close' => 'إغلاق',
     'next' => 'التالي',
     'previous' => 'السابق',
+    'back' => 'رجوع',
     'back_to_list' => 'العودة إلى القائمة',
     'back_to_table' => 'العودة إلى الجدول',
     'name' => 'الاسم',
+    'code' => 'الكود',
     'status' => 'الحالة',
     'active' => 'نشط',
     'inactive' => 'غير نشط',
@@ -253,6 +257,22 @@ return [
     'save_data' => 'حفظ البيانات',
     'update_data' => 'تحديث البيانات',
     'processing_fees' => 'استبعاد الرسوم',
+
+    // Subjects
+    'subjects' => 'المواد الدراسية',
+    'subject' => 'المادة الدراسية',
+    'subjects_list' => 'قائمة المواد الدراسية',
+    'add_subject' => 'إضافة مادة دراسية',
+    'edit_subject' => 'تعديل مادة دراسية',
+    'delete_subject' => 'حذف مادة دراسية',
+    'subject_name_ar' => 'اسم المادة بالعربية',
+    'subject_name_en' => 'اسم المادة بالإنجليزية',
+    'warning_subject' => 'هل أنت متأكد من حذف هذه المادة الدراسية؟',
+    'subject_delete_note' => 'حذف المادة قد يؤدي لحذف جميع الدرجات والاختبارات المرتبطة بها!',
+
+    // Attendances
+    'attendances' => 'الغياب والحضور',
+    'record_attendance' => 'تسجيل الحضور',
 
     // Receipt Students (سندات القبض)
     'receipt_students' => 'سندات القبض',

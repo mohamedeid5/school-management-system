@@ -1,5 +1,10 @@
 @extends('layouts.master')
-@section('title', 'قائمة الفصول - الحضور والغياب')
+@section('title', __('main.attendances'))
+
+@section('breadcrumb')
+    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('main.dashboard') }}</a></li>
+    <li class="breadcrumb-item active">{{ __('main.attendances') }}</li>
+@endsection
 
 @section('content')
 <div class="container-fluid">

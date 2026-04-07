@@ -107,6 +107,32 @@
                             <li><a href="{{ route('promotions.index') }}">{{ __('main.promotions') }}</a></li>
                         </ul>
                     </li>
+
+                    <!-- menu item Attendances -->
+                    <li>
+                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#attendances">
+                            <div class="pull-left"><i class="ti-check-box"></i><span
+                                    class="right-nav-text">{{ __('main.attendances') }}</span></div>
+                            <div class="pull-right"><i class="ti-plus"></i></div>
+                            <div class="clearfix"></div>
+                        </a>
+                        <ul id="attendances" class="collapse" data-parent="#sidebarnav">
+                            <li><a href="{{ route('attendances.index') }}">{{ __('main.attendances') }}</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- menu item Subjects -->
+                    <li>
+                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#subjects">
+                            <div class="pull-left"><i class="ti-book"></i><span
+                                    class="right-nav-text">{{ __('main.subjects') }}</span></div>
+                            <div class="pull-right"><i class="ti-plus"></i></div>
+                            <div class="clearfix"></div>
+                        </a>
+                        <ul id="subjects" class="collapse" data-parent="#sidebarnav">
+                            <li><a href="{{ route('subjects.index') }}">{{ __('main.subjects') }}</a></li>
+                        </ul>
+                    </li>
                     <!-- menu item Fees -->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#fees">

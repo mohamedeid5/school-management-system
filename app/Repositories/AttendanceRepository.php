@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Attendance;
 use App\Models\Grade;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class AttendanceRepository
@@ -30,6 +31,7 @@ class AttendanceRepository
                         'grade_id'          => $data->grade_id,
                         'classroom_id'      => $data->classroom_id,
                         'section_id'        => $data->section_id,
+                        'user_id'        => Auth::id(),
                         'attendance_status' => $status,
                     ]
                 );

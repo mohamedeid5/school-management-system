@@ -19,6 +19,7 @@ use App\Http\Controllers\Fees\ReceiptStudentController;
 use App\Http\Controllers\Fees\ProcessingFeeController;
 use App\Http\Controllers\Fees\PaymentStudentController;
 use App\Http\Controllers\Attendances\AttendanceController;
+use App\Http\Controllers\Subjects\SubjectController;
 
 Route::group(
 [
@@ -97,6 +98,9 @@ function()
 
         // attendance routes
         Route::resource('attendances', AttendanceController::class);
+
+        // subjects routes
+        Route::resource('subjects', SubjectController::class);
 
     });
 });

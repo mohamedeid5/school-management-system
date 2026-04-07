@@ -125,6 +125,7 @@ return [
     'submit' => 'Submit',
     'save' => 'Save',
     'cancel' => 'Cancel',
+    'add_new' => 'Add New',
     'choose' => 'Choose...',
     'are_you_sure' => 'Are you sure?',
     'actions' => 'Actions',
@@ -137,9 +138,11 @@ return [
     'close' => 'Close',
     'next' => 'Next',
     'previous' => 'Previous',
+    'back' => 'Back',
     'back_to_list' => 'Back to List',
     'back_to_table' => 'Back to Table',
     'name' => 'Name',
+    'code' => 'Code',
     'status' => 'Status',
     'active' => 'Active',
     'inactive' => 'Inactive',
@@ -255,6 +258,22 @@ return [
     'save_data' => 'Save Data',
     'update_data' => 'Update Data',
     'processing_fees' => 'Processing Fees',
+
+    // Subjects
+    'subjects' => 'Subjects',
+    'subject' => 'Subject',
+    'subjects_list' => 'Subjects List',
+    'add_subject' => 'Add Subject',
+    'edit_subject' => 'Edit Subject',
+    'delete_subject' => 'Delete Subject',
+    'subject_name_ar' => 'Subject Name in Arabic',
+    'subject_name_en' => 'Subject Name in English',
+    'warning_subject' => 'Are you sure you want to delete this subject?',
+    'subject_delete_note' => 'Deleting this subject may delete all related grades and exams!',
+
+    // Attendances
+    'attendances' => 'Attendances',
+    'record_attendance' => 'Record Attendance',
 
     // Receipt Students
     'receipt_students' => 'Receipt Vouchers',

@@ -14,6 +14,7 @@ return new class extends Migration
             $table->foreignId('grade_id')->constrained('grades')->cascadeOnDelete();
             $table->foreignId('classroom_id')->constrained('classrooms')->cascadeOnDelete();
             $table->foreignId('section_id')->constrained('sections')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->date('attendance_date');
             $table->enum('attendance_status', ['present', 'absent', 'late', 'early_out'])->default('present');
             $table->string('description')->nullable();
