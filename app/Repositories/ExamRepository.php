@@ -11,7 +11,7 @@ class ExamRepository
     {
         return [
             'grades' => Grade::all(),
-            'exams'  => Exam::with(['subject', 'grade', 'classroom'])->latest()->paginate(20),
+            'exams'  => Exam::with(['subject', 'grade', 'classroom'])->latest()->get(),
         ];
     }
 

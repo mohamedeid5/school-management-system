@@ -7,12 +7,7 @@ use App\Repositories\FeesRepository;
 
 class FeesService
 {
-    public FeesRepository $feesRepository;
-
-    public function __construct(FeesRepository $feesRepository)
-    {
-        $this->feesRepository = $feesRepository;
-    }
+    public function __construct(protected FeesRepository $feesRepository) {}
 
     public function getCreatePageData()
     {
@@ -39,14 +34,14 @@ class FeesService
         ];
     }
 
-    public function storeFee($request)
+    public function storeFee($data)
     {
-        return $this->feesRepository->createFee($request);
+        return $this->feesRepository->createFee($data);
     }
 
-    public function updateFee($request, $fee)
+    public function updateFee($data, $fee)
     {
-        return $this->feesRepository->updateFee($request, $fee);
+        return $this->feesRepository->updateFee($data, $fee);
     }
 
     public function deleteFee($fee)

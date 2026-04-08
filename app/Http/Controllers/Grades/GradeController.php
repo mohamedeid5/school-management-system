@@ -5,17 +5,20 @@ namespace App\Http\Controllers\Grades;
 use App\Http\Controllers\Controller;
 use App\Models\Grade;
 use App\Http\Requests\GradeRequest;
+use App\Services\GradeService;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 
 class GradeController extends Controller
 {
+    public function __construct(protected GradeService $gradeService) {}
+
     /**
      * Display a listing of the resource.
      */
     public function index(): View
     {
-        $grades = Grade::all();
+        $grades = $this->gradeService->getAll();
         return view('grades.index', compact('grades'));
     }
 
@@ -25,7 +28,7 @@ class GradeController extends Controller
     public function store(GradeRequest $request): RedirectResponse
     {
         try {
-            Grade::create($request->validated());
+            $this->gradeService->create($request->validated());
 
             toastr()->success(__('main.created_successfully'));
             return redirect()->route('grades.index');
@@ -44,7 +47,7 @@ class GradeController extends Controller
     public function update(GradeRequest $request, Grade $grade): RedirectResponse
     {
         try {
-            $grade->update($request->validated());
+            $this->gradeService->update($grade, $request->validated());
             toastr()->success(__('main.updated_successfully'));
 
             return redirect()->route('grades.index');
@@ -56,15 +59,16 @@ class GradeController extends Controller
             return redirect()->route('grades.index');
         }
     }
+
     public function destroy(Grade $grade): RedirectResponse
     {
         try {
-            if($grade->classrooms()->exists()) {
+            if($this->gradeService->hasClassrooms($grade)) {
                 toastr()->error('لا يمكن حذف المرحلة الدراسية لأنها تحتوي على صفوف');
                 return redirect()->route('grades.index');
             }
 
-            $grade->delete();
+            $this->gradeService->delete($grade);
             toastr()->success(__('main.deleted_successfully'));
 
             return redirect()->route('grades.index');

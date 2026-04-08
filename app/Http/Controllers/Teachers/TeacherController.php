@@ -10,13 +10,7 @@ use App\Services\TeacherService;
 class TeacherController extends Controller
 {
 
-    public TeacherService $teacherService;
-
-    public function __construct(TeacherService $teacherService)
-    {
-        $this->teacherService = $teacherService;
-    }
-
+    public function __construct(protected TeacherService $teacherService) {}
     /**
      * Display a listing of the resource.
      */

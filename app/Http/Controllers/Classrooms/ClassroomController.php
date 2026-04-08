@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Classrooms;
 
-use App\Actions\Classrooms\CreateClassroomAction;
 use App\Http\Controllers\Controller;
 use App\Models\Classroom;
-use App\Models\Grade;
 use App\Http\Requests\ClassroomRequest;
 use App\Http\Requests\DeleteSelectedClassroomsRequest;
 use App\Http\Requests\UpdateClassroomRequest;
+use App\Services\ClassroomService;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -16,23 +15,19 @@ use Illuminate\Http\Request;
 
 class ClassroomController extends Controller
 {
+    public function __construct(protected ClassroomService $classroomService) {}
+
     public function index(Request $request): View
     {
-        $grades = Grade::all();
-        $classrooms = Classroom::with('grade')
-            ->when($request->grade_id, function($query) use ($request) {
-                $query->where('grade_id', $request->grade_id);
-            })
-            ->latest()
-            ->get();
+        $data = $this->classroomService->getIndexData($request->only('grade_id'));
 
-        return view('classrooms.index', compact('classrooms', 'grades'));
+        return view('classrooms.index', $data);
     }
 
-    public function store(ClassroomRequest $request, CreateClassroomAction $createClassroomAction): RedirectResponse
+    public function store(ClassroomRequest $request): RedirectResponse
     {
         try {
-            $createClassroomAction->handle($request);
+            $this->classroomService->create($request->list_classrooms);
             toastr()->success(__('main.created_successfully'));
 
             return redirect()->route('classrooms.index');
@@ -48,7 +43,7 @@ class ClassroomController extends Controller
     public function update(UpdateClassroomRequest $request, Classroom $classroom): RedirectResponse
     {
         try {
-            $classroom->update($request->validated());
+            $this->classroomService->update($classroom, $request->validated());
             toastr()->success(__('main.updated_successfully'));
 
             return redirect()->route('classrooms.index');
@@ -63,7 +58,7 @@ class ClassroomController extends Controller
     public function destroy(Classroom $classroom): RedirectResponse
     {
         try {
-            $classroom->delete();
+            $this->classroomService->delete($classroom);
             toastr()->success(__('main.deleted_successfully'));
 
             return redirect()->route('classrooms.index');
@@ -80,7 +75,7 @@ class ClassroomController extends Controller
         $request->validated();
 
         try {
-            Classroom::destroy($request->ids);
+            $this->classroomService->destroySelected($request->ids);
 
             toastr()->success(__('main.deleted_successfully'));
             return redirect()->route('classrooms.index');

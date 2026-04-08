@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Models\Library;
 use App\Models\Grade;
-use Illuminate\Support\Facades\Auth;
 
 class LibraryRepository
 {
@@ -18,7 +17,6 @@ class LibraryRepository
 
     public function create(array $data): Library
     {
-        $data['user_id'] = Auth::id();
         return Library::create($data);
     }
 

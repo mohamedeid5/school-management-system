@@ -36,6 +36,8 @@ class AttendanceRepository
                     ]
                 );
             }
+
+            return true;
         });
     }
 }

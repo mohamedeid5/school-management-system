@@ -41,7 +41,7 @@ class OnlineClassController extends Controller
             return redirect()->route('online-classes.index');
         } catch (\Exception $e) {
             toastr()->error(__('main.something_went_wrong'));
-            $this->logError('Classroom creation failed', $e);
+            $this->logError('Online class creation failed', $e);
             return redirect()->back()->withInput();
         }
     }
@@ -73,7 +73,7 @@ class OnlineClassController extends Controller
             return redirect()->route('online-classes.index');
         } catch (\Exception $e) {
             toastr()->error(__('main.something_went_wrong'));
-           $this->logError('Classroom creation failed', $e, ['online_class_id' => $onlineClass->id]);
+           $this->logError('Online class update failed', $e, ['online_class_id' => $onlineClass->id]);
             return redirect()->back()->withInput();
         }
 
@@ -88,7 +88,7 @@ class OnlineClassController extends Controller
             return redirect()->route('online-classes.index');
         } catch (\Exception $e) {
             toastr()->error(__('main.something_went_wrong'));
-           $this->logError('Classroom creation failed', $e, ['online_class_id' => $onlineClass->id]);
+           $this->logError('Online class deletion failed', $e, ['online_class_id' => $onlineClass->id]);
             return redirect()->back();
         }
     }

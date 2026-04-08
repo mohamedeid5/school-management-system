@@ -11,14 +11,8 @@ use function Flasher\Toastr\Prime\toastr;
 
 class GraduationController extends Controller
 {
-    protected GraduationService $graduationService;
-    protected GraduationRepository $graduationRepository;
-
-    public function __construct(GraduationService $graduationService, GraduationRepository $graduationRepository)
-    {
-        $this->graduationService = $graduationService;
-        $this->graduationRepository = $graduationRepository;
-    }
+ 
+    public function __construct(protected GraduationService $graduationService, protected GraduationRepository $graduationRepository) {}
 
     public function index()
     {

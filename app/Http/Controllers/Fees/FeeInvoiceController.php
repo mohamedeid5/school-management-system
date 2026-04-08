@@ -12,12 +12,8 @@ use App\Services\FeeInvoiceService;
 class FeeInvoiceController extends Controller
 {
 
-    public FeeInvoiceService $feeInvoiceService;
 
-    public function __construct(FeeInvoiceService $feeInvoiceService)
-    {
-        $this->feeInvoiceService = $feeInvoiceService;
-    }
+    public function __construct(protected FeeInvoiceService $feeInvoiceService) {}
 
     public function index()
     {

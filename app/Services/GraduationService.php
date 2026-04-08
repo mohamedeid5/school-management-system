@@ -8,12 +8,8 @@ use App\Models\Student;
 
 class GraduationService
 {
-    protected GraduationRepository $graduationRepository;
 
-    public function __construct(GraduationRepository $graduationRepository)
-    {
-        $this->graduationRepository = $graduationRepository;
-    }
+    public function __construct(protected GraduationRepository $graduationRepository){}
 
     public function getGraduationPageData()
     {

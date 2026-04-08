@@ -10,12 +10,8 @@ use Illuminate\Support\Facades\Hash;
 
 class TeacherService {
 
-    public TeacherRepository $teacherRepository;
 
-    public function __construct(TeacherRepository $teacherRepository)
-    {
-        $this->teacherRepository = $teacherRepository;
-    }
+    public function __construct(protected TeacherRepository $teacherRepository) {}
 
     public function getIndexPageData() {
         return $this->teacherRepository->getAllTeachers();

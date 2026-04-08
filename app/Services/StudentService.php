@@ -16,15 +16,7 @@ use Illuminate\Support\Facades\Hash;
 
 class StudentService
 {
-
-    public StudentRepository $studentRepository;
-    public FileService $fileUploadService;
-
-    public function __construct(StudentRepository $studentRepository, FileService $fileUploadService)
-    {
-        $this->studentRepository = $studentRepository;
-        $this->fileUploadService = $fileUploadService;
-    }
+    public function __construct(protected StudentRepository $studentRepository, protected FileService $fileUploadService) {}
 
     public function getAllStudents()
     {
@@ -67,9 +59,9 @@ class StudentService
 
            $student = $this->studentRepository->createStudent($data, $user->id, $studentCode);
 
-           if (request()->hasFile('photos')) {
+           if ($data['photos']) {
                 $this->fileUploadService->upload(
-                    request()->file('photos'),
+                    $data['photos'],
                     $student,
                     'students',
                 );

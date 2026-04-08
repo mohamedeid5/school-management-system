@@ -13,7 +13,7 @@ class OnlineClassRepository
     public function getIndexData(): array
     {
         return [
-            'onlineClasses' => OnlineClass::with(['subject', 'grade', 'classroom', 'user'])->latest()->paginate(20),
+            'onlineClasses' => OnlineClass::with(['subject', 'grade', 'classroom', 'user'])->latest()->get(),
             'grades'        => Grade::all(),
         ];
     }

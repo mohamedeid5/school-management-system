@@ -8,7 +8,7 @@ use App\Models\Attachment;
 
 class FileService
 {
-    public static function upload($files, $model, $folderName, $disk = 'attachments')
+    public function upload($files, $model, $folderName, $disk = 'attachments')
     {
         $filesArray = is_array($files) ? $files : [$files];
 
@@ -40,7 +40,7 @@ class FileService
         return Storage::disk('attachments')->download($relativePath);
     }
 
-    public static function delete($id)
+    public function delete($id)
     {
         $attachment = Attachment::findOrFail($id);
 
@@ -54,18 +54,18 @@ class FileService
 
     }
 
-    public static function deleteOldAttachments($model)
+    public function deleteOldAttachments($model)
     {
         foreach($model->attachments as $attachment) {
-            if(Storage::disk('attachments')->exists(self::getFilePath($attachment))) {
-                Storage::disk('attachments')->delete(self::getFilePath($attachment));
+            if(Storage::disk('attachments')->exists($this->getFilePath($attachment))) {
+                Storage::disk('attachments')->delete($this->getFilePath($attachment));
             }
 
             $attachment->delete();
         }
     }
 
-    private static function getFilePath($attachment)
+    private function getFilePath($attachment)
     {
         $folder = Str::plural(Str::lower(class_basename($attachment->attachable_type)));
 

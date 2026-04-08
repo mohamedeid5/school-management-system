@@ -10,14 +10,9 @@ use App\Services\FeesService;
 
 class FeesController extends Controller
 {
-    public FeesService $feesService;
-    public FeesRepository $feesRepository;
 
-    public function __construct(FeesService $feesService, FeesRepository $feesRepository)
-    {
-        $this->feesService = $feesService;
-        $this->feesRepository = $feesRepository;
-    }
+
+    public function __construct(protected FeesService $feesService, protected FeesRepository $feesRepository) {}
 
     public function index()
     {

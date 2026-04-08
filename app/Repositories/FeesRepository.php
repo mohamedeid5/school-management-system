@@ -23,14 +23,14 @@ class FeesRepository
         return Classroom::all();
     }
 
-    public function createFee($request)
+    public function createFee($data)
     {
-        return Fee::create($request);
+        return Fee::create($data);
     }
 
-    public function updateFee($request, $fee)
+    public function updateFee($data, $fee)
     {
-        return $fee->update($request);
+        return $fee->update($data);
     }
 
     public function deleteFee($fee)

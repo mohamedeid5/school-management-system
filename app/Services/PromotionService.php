@@ -7,12 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 class PromotionService
 {
-    public PromotionRepository $promotionRepository;
 
-    public function __construct(PromotionRepository $promotionRepository)
-    {
-        $this->promotionRepository = $promotionRepository;
-    }
+    public function __construct(protected PromotionRepository $promotionRepository) {}
 
     public function getPromotionPageData()
     {
