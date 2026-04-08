@@ -8,9 +8,11 @@ use App\Models\Attachment;
 
 class FileService
 {
-    public function upload($files, $model, $folderName, $disk = 'attachments')
+    public static function upload($files, $model, $folderName, $disk = 'attachments')
     {
-        foreach ($files as $file) {
+        $filesArray = is_array($files) ? $files : [$files];
+
+        foreach ($filesArray as $file) {
 
             $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $extension = $file->getClientOriginalExtension();
@@ -38,11 +40,11 @@ class FileService
         return Storage::disk('attachments')->download($relativePath);
     }
 
-    public function delete($id)
+    public static function delete($id)
     {
         $attachment = Attachment::findOrFail($id);
 
-        $relativePath = $this->getFilePath($attachment);
+        $relativePath = self::getFilePath($attachment);
 
         if (Storage::disk('attachments')->exists($relativePath)) {
             Storage::disk('attachments')->delete($relativePath);
@@ -52,9 +54,20 @@ class FileService
 
     }
 
-    private function getFilePath($attachment)
+    public static function deleteOldAttachments($model)
     {
-        $folder = strtolower(class_basename($attachment->attachable_type)) . 's';
+        foreach($model->attachments as $attachment) {
+            if(Storage::disk('attachments')->exists(self::getFilePath($attachment))) {
+                Storage::disk('attachments')->delete(self::getFilePath($attachment));
+            }
+
+            $attachment->delete();
+        }
+    }
+
+    private static function getFilePath($attachment)
+    {
+        $folder = Str::plural(Str::lower(class_basename($attachment->attachable_type)));
 
         return "{$folder}/{$attachment->attachable_id}/" . $attachment->file_name;
     }

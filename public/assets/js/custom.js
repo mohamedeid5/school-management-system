@@ -116,7 +116,7 @@ var $window = $(window),
 *************************/ 
     POTENZA.pniceScroll = function () { 
         loadScript(plugin_path + 'nicescroll/jquery.nicescroll.js', function() {
-        $(".scrollbar").niceScroll({
+        $(".scrollbar:not(.side-menu-bg)").niceScroll({
           scrollspeed: 150,
           mousescrollstep: 38,
           cursorwidth: 5,

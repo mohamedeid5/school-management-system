@@ -18,11 +18,6 @@ class AttendanceController extends Controller
         return view('attendances.index', $data);
     }
 
-    public function create()
-    {
-        return view('attendances.create');
-    }
-
     public function store(AttendanceRequest $request)
     {
         try {

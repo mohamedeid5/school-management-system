@@ -157,6 +157,32 @@
                             <li><a href="{{ route('questions.index') }}">{{ __('main.questions_list') }}</a></li>
                         </ul>
                     </li>
+                    <!-- menu item Online Classes -->
+                    <li>
+                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#online-classes">
+                            <div class="pull-left"><i class="ti-video-camera"></i><span
+                                    class="right-nav-text">{{ __('main.online_classes') }}</span></div>
+                            <div class="pull-right"><i class="ti-plus"></i></div>
+                            <div class="clearfix"></div>
+                        </a>
+                        <ul id="online-classes" class="collapse" data-parent="#sidebarnav">
+                            <li><a href="{{ route('online-classes.index') }}">{{ __('main.online_classes_list') }}</a></li>
+                            <li><a href="{{ route('online-classes.create') }}">{{ __('main.add_online_class') }}</a></li>
+                        </ul>
+                    </li>
+                    <!-- menu item Library -->
+                    <li>
+                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#library">
+                            <div class="pull-left"><i class="ti-book"></i><span
+                                    class="right-nav-text">{{ __('main.library') }}</span></div>
+                            <div class="pull-right"><i class="ti-plus"></i></div>
+                            <div class="clearfix"></div>
+                        </a>
+                        <ul id="library" class="collapse" data-parent="#sidebarnav">
+                            <li><a href="{{ route('libraries.index') }}">{{ __('main.libraries_list') }}</a></li>
+                            <li><a href="{{ route('libraries.create') }}">{{ __('main.add_library') }}</a></li>
+                        </ul>
+                    </li>
                     <!-- menu item Fees -->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#fees">

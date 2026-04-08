@@ -21,7 +21,9 @@ use App\Http\Controllers\Fees\PaymentStudentController;
 use App\Http\Controllers\Attendances\AttendanceController;
 use App\Http\Controllers\Subjects\SubjectController;
 use App\Http\Controllers\Exams\ExamController;
+use App\Http\Controllers\Libraries\LibraryController;
 use App\Http\Controllers\Questions\QuestionController;
+use App\Http\Controllers\OnlineClasses\OnlineClassController;
 
 Route::group(
 [
@@ -109,6 +111,12 @@ function()
 
         // questions routes
         Route::resource('questions', QuestionController::class);
+
+        // online classes routes
+        Route::resource('online-classes', OnlineClassController::class);
+
+        // libraries routes
+        Route::resource('libraries', LibraryController::class);
 
     });
 });

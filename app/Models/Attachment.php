@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class Attachment extends Model
 {
@@ -16,7 +17,7 @@ class Attachment extends Model
 
     public function getFullPathAttribute()
     {
-        $folder = strtolower(class_basename($this->attachable_type)) . 's';
+        $folder = Str::plural(Str::lower(class_basename($this->attachable_type)));
         return $folder . '/' . $this->attachable_id . '/' . $this->file_name;
     }
 

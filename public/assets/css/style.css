@@ -47,6 +47,43 @@
     display: none !important;
 }
 
+/* Fix footer stuck to bottom */
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.content-wrapper footer {
+    margin-top: auto;
+}
+
+/* Fix sidebar independent scrolling */
+.side-menu-fixed .side-menu-bg {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100%;
+    -webkit-overflow-scrolling: touch; /* smooth momentum scrolling on iOS */
+    scroll-behavior: smooth;
+    will-change: scroll-position;
+}
+
+.side-menu-fixed .side-menu-bg::-webkit-scrollbar {
+    width: 4px;
+}
+
+.side-menu-fixed .side-menu-bg::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.side-menu-fixed .side-menu-bg::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+}
+
+.side-menu-fixed .side-menu-bg::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
 .btn-default {
     background-color: #eeeeee;
     border-color: #ccc;
