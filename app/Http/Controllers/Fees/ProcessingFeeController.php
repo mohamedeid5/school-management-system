@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Fees;
 use App\Http\Controllers\Controller;
 use App\Services\ProcessingFeeService;
 use App\Models\Student;
-use App\Http\Requests\ProcessingFeeControllerRequest;
+use App\Http\Requests\ProcessingFeeRequest;
 use App\Models\ProcessingFee;
 
 class ProcessingFeeController extends Controller
@@ -32,7 +32,7 @@ class ProcessingFeeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ProcessingFeeControllerRequest $request)
+    public function store(ProcessingFeeRequest $request)
     {
         try {
             $this->processingFeeService->createProcessingFee($request->validated());
@@ -65,7 +65,7 @@ class ProcessingFeeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ProcessingFeeControllerRequest $request, ProcessingFee $processingFee)
+    public function update(ProcessingFeeRequest $request, ProcessingFee $processingFee)
     {
         try {
             $this->processingFeeService->updateProcessingFee($request->validated(), $processingFee);

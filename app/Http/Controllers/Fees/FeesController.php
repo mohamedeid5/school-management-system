@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Fees;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\FeesControllerRequest;
+use App\Http\Requests\FeesRequest;
 use App\Models\Fee;
 use App\Repositories\FeesRepository;
 use App\Services\FeesService;
@@ -28,7 +28,7 @@ class FeesController extends Controller
         return view('fees.create', $data);
     }
 
-    public function store(FeesControllerRequest $request)
+    public function store(FeesRequest $request)
     {
          try {
             $this->feesService->storeFee($request->validated());
@@ -48,7 +48,7 @@ class FeesController extends Controller
         return view('fees.edit', $data);
     }
 
-    public function update(FeesControllerRequest $request, Fee $fee)
+    public function update(FeesRequest $request, Fee $fee)
     {
         try {
             $this->feesService->updateFee($request->validated(), $fee);

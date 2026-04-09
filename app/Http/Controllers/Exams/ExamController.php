@@ -9,6 +9,8 @@ use App\Models\Exam;
 use App\Models\Grade;
 use App\Models\Subject;
 use App\Services\ExamService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class ExamController extends Controller
 {
@@ -21,7 +23,7 @@ class ExamController extends Controller
         return view('exams.index', $data);
     }
 
-    public function create()
+    public function create(): View
     {
         $grades     = Grade::with('classrooms')->get();
         $subjects   = Subject::all();
@@ -30,7 +32,7 @@ class ExamController extends Controller
         return view('exams.create', compact('grades', 'subjects', 'classrooms'));
     }
 
-    public function store(ExamRequest $request)
+    public function store(ExamRequest $request): RedirectResponse
     {
         $this->examService->createExam($request->validated());
         toastr()->success(__('main.created_successfully'));
@@ -38,14 +40,14 @@ class ExamController extends Controller
         return redirect()->route('exams.index');
     }
 
-    public function show(Exam $exam)
+    public function show(Exam $exam): View
     {
         $exam->load('questions', 'subject', 'grade', 'classroom');
 
         return view('exams.show', compact('exam'));
     }
 
-    public function edit(Exam $exam)
+    public function edit(Exam $exam): View
     {
         $grades     = Grade::with('classrooms')->get();
         $subjects   = Subject::all();
@@ -55,7 +57,7 @@ class ExamController extends Controller
         return view('exams.edit', compact('exam', 'grades', 'subjects', 'classrooms'));
     }
 
-    public function update(ExamRequest $request, Exam $exam)
+    public function update(ExamRequest $request, Exam $exam): RedirectResponse
     {
         $this->examService->updateExam($exam, $request->validated());
         toastr()->success(__('main.updated_successfully'));
@@ -63,7 +65,7 @@ class ExamController extends Controller
         return redirect()->route('exams.index');
     }
 
-    public function destroy(Exam $exam)
+    public function destroy(Exam $exam): RedirectResponse
     {
         $this->examService->deleteExam($exam);
         toastr()->success(__('main.deleted_successfully'));

@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class FeeInvoiceControllerRequest extends FormRequest
+class ProcessingFeeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,15 +22,9 @@ class FeeInvoiceControllerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'fee_id' => [
-                'required',
-                'exists:fees,id',
-                Rule::unique('fee_invoices')->where(function ($query) {
-                    return $query->where('student_id', $this->input('student_id'));
-                })->ignore($this->route('fee_invoice'))
-            ],
             'student_id' => 'required|exists:students,id',
-            'description' => 'nullable|string|max:500'
+            'amount' => 'required|numeric|min:0',
+            'description' => 'nullable|string|max:1000'
         ];
     }
 }

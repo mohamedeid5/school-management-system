@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Sections;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SectionControllerRequest;
+use App\Http\Requests\SectionRequest;
 use App\Models\Classroom;
 use App\Models\Grade;
 use App\Models\Section;
@@ -27,7 +27,7 @@ class SectionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(SectionControllerRequest $request)
+    public function store(SectionRequest $request)
     {
         try {
             Section::create($request->validated());
@@ -45,7 +45,7 @@ class SectionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(SectionControllerRequest $request, Section $section)
+    public function update(SectionRequest $request, Section $section)
     {
         try {
             $section->update($request->validated());

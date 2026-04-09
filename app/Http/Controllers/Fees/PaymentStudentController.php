@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Fees;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PaymentStudentControllerRequest;
+use App\Http\Requests\PaymentStudentRequest;
 use App\Models\PaymentStudent;
 use App\Models\Student;
 use App\Services\PaymentStudentService;
@@ -23,7 +23,7 @@ class PaymentStudentController extends Controller
         //
     }
 
-    public function store(PaymentStudentControllerRequest $request)
+    public function store(PaymentStudentRequest $request)
     {
         try {
             $this->paymentStudentService->storePayment($request->validated());
@@ -50,7 +50,7 @@ class PaymentStudentController extends Controller
         return view('payment_students.edit', compact('payment_student'));
     }
 
-    public function update(PaymentStudentControllerRequest $request, PaymentStudent $payment_student)
+    public function update(PaymentStudentRequest $request, PaymentStudent $payment_student)
     {
         try {
             $this->paymentStudentService->updatePayment($request->validated(), $payment_student);

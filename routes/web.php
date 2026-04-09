@@ -24,6 +24,7 @@ use App\Http\Controllers\Exams\ExamController;
 use App\Http\Controllers\Libraries\LibraryController;
 use App\Http\Controllers\Questions\QuestionController;
 use App\Http\Controllers\OnlineClasses\OnlineClassController;
+use App\Http\Controllers\SettingController;
 
 Route::group(
 [
@@ -117,6 +118,9 @@ function()
 
         // libraries routes
         Route::resource('libraries', LibraryController::class);
+
+        Route::get('settings/edit', [SettingController::class, 'edit'])->name('settings.edit');
+        Route::put('settings', [SettingController::class, 'update'])->name('settings.update');
 
     });
 });

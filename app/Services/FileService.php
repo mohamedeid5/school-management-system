@@ -44,7 +44,7 @@ class FileService
     {
         $attachment = Attachment::findOrFail($id);
 
-        $relativePath = self::getFilePath($attachment);
+        $relativePath = $this->getFilePath($attachment);
 
         if (Storage::disk('attachments')->exists($relativePath)) {
             Storage::disk('attachments')->delete($relativePath);

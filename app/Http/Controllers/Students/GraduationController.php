@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Students;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\GraduationControllerRequest;
+use App\Http\Requests\GraduationRequest;
 use App\Repositories\GraduationRepository;
 use App\Services\GraduationService;
 
@@ -27,7 +27,7 @@ class GraduationController extends Controller
         return view('graduations.create', $data);
     }
 
-    public function store(GraduationControllerRequest $request)
+    public function store(GraduationRequest $request)
     {
         try {
             $this->graduationService->graduate($request);

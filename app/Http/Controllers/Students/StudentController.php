@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Students;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StudentControllerRequest;
+use App\Http\Requests\StudentRequest;
 use App\Models\Student;
 use App\Services\StudentService;
 
@@ -40,7 +40,7 @@ class StudentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StudentControllerRequest $request)
+    public function store(StudentRequest $request)
     {
         try {
             $this->studentService->storeStudent($request->validated());
@@ -74,7 +74,7 @@ class StudentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StudentControllerRequest $request, Student $student)
+    public function update(StudentRequest $request, Student $student)
     {
         try {
             $this->studentService->updateStudent($request->validated(), $student);

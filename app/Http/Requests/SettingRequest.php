@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ReceiptStudentControllerRequest extends FormRequest
+class SettingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,11 @@ class ReceiptStudentControllerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'student_id' => 'required|exists:students,id',
-            'amount' => 'required|numeric|min:0',
-            'description' => 'nullable|string|max:1000'
+            'school_name' => 'required|string|max:255',
+            'school_email' => 'required|email|max:255',
+            'school_phone' => 'required|string|max:20',
+            'school_address' => 'required|string|max:500',
+            'school_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ];
     }
 }

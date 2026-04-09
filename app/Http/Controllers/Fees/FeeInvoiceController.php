@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Fees;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\FeeInvoiceControllerRequest;
+use App\Http\Requests\FeeInvoiceRequest;
 use App\Models\Fee;
 use App\Models\FeeInvoice;
 use App\Models\Student;
@@ -33,7 +33,7 @@ class FeeInvoiceController extends Controller
         return view('fee_invoices.create', compact('student', 'fees'));
     }
 
-    public function store(FeeInvoiceControllerRequest $request)
+    public function store(FeeInvoiceRequest $request)
     {
         try {
             $this->feeInvoiceService->createInvoice($request->validated());
@@ -58,7 +58,7 @@ class FeeInvoiceController extends Controller
         return view('fee_invoices.edit', compact('feeInvoice', 'student', 'fees'));
     }
 
-    public function update(FeeInvoiceControllerRequest $request, FeeInvoice $feeInvoice)
+    public function update(FeeInvoiceRequest $request, FeeInvoice $feeInvoice)
     {
         try {
             $this->feeInvoiceService->updateInvoice($request->validated(), $feeInvoice);

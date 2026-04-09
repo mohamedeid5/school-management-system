@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Fees;
 
 use App\Http\Controllers\Controller;
 use App\Services\ReceiptStudentService;
-use App\Http\Requests\ReceiptStudentControllerRequest;
+use App\Http\Requests\ReceiptStudentRequest;
 use App\Models\ReceiptStudent;
 use App\Models\Student;
 
@@ -24,7 +24,7 @@ class ReceiptStudentController extends Controller
         return view('receipt_students.create', compact('student'));
     }
 
-    public function store(ReceiptStudentControllerRequest $request)
+    public function store(ReceiptStudentRequest $request)
     {
         try {
             $this->receiptStudentService->storeReceipt($request->validated());
@@ -45,7 +45,7 @@ class ReceiptStudentController extends Controller
         return view('receipt_students.edit', compact('receipt_student'));
     }
 
-    public function update(ReceiptStudentControllerRequest $request, ReceiptStudent $receipt_student)
+    public function update(ReceiptStudentRequest $request, ReceiptStudent $receipt_student)
     {
         try {
             $this->receiptStudentService->updateReceipt($request->validated(), $receipt_student);

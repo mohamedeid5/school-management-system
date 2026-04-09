@@ -7,6 +7,8 @@ use App\Http\Requests\AttendanceRequest;
 use App\Models\Attendance;
 use App\Services\AttendanceService;
 use App\Models\Student;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class AttendanceController extends Controller
 {
@@ -18,7 +20,7 @@ class AttendanceController extends Controller
         return view('attendances.index', $data);
     }
 
-    public function store(AttendanceRequest $request)
+    public function store(AttendanceRequest $request): RedirectResponse
     {
         try {
             $this->attendanceService->createAttendance($request);
@@ -34,11 +36,12 @@ class AttendanceController extends Controller
         }
     }
 
-    public function show($id)
+    public function show($id): View
     {
         $students = Student::with(['grade', 'section', 'attendances' => function($query) {
             $query->where('attendance_date', date('Y-m-d'));
         }])->where('section_id', $id)->get();
+
         return view('attendances.create', compact('students'));
     }
 

@@ -7,7 +7,7 @@ use Illuminate\Validation\Rules\Enum;
 use App\Enums\FeeType;
 use Illuminate\Validation\Rule;
 
-class FeesControllerRequest extends FormRequest
+class FeesRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

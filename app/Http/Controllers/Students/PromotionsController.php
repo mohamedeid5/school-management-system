@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Students;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PromtionControllerRequest;
+use App\Http\Requests\PromotionRequest;
 use App\Services\PromotionService;
 use Illuminate\Http\Request;
 
@@ -23,7 +23,7 @@ class PromotionsController extends Controller
         return view('promotions.index', $data);
     }
 
-    public function store(PromtionControllerRequest $request)
+    public function store(PromotionRequest $request)
     {
         try {
             $this->promotionService->promoteStudents($request);

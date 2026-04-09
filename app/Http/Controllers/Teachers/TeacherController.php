@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Teachers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TeacherControllerRequest;
+use App\Http\Requests\TeacherRequest;
 use App\Models\Teacher;
 use App\Services\TeacherService;
 
@@ -33,7 +33,7 @@ class TeacherController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(TeacherControllerRequest $request)
+    public function store(TeacherRequest $request)
     {
         try {
             $this->teacherService->storeTeacher($request->validated());
@@ -68,7 +68,7 @@ class TeacherController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(TeacherControllerRequest $request, Teacher $teacher)
+    public function update(TeacherRequest $request, Teacher $teacher)
     {
         try {
             $this->teacherService->updateTeacher($request->validated(), $teacher);
