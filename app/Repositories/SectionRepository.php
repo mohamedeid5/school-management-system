@@ -13,7 +13,7 @@ class SectionRepository
     {
         $user = Auth::user();
 
-        $grades = Grade::forTeacher($user);
+        $grades = Grade::authorizedForUser($user)->get();
 
         $classrooms = old('grade_id')
             ? Classroom::where('grade_id', old('grade_id'))->get()
