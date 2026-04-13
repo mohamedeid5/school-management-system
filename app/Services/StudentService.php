@@ -59,7 +59,7 @@ class StudentService
 
            $student = $this->studentRepository->createStudent($data, $user->id, $studentCode);
 
-           if ($data['photos']) {
+           if (!empty($data['photos'])) {
                 $this->fileUploadService->upload(
                     $data['photos'],
                     $student,

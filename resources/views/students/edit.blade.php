@@ -106,7 +106,7 @@
                     <select name="parent_id" class="form-control select2 @error('parent_id') is-invalid @enderror">
                         @foreach($parents as $parent)
                             <option value="{{ $parent->id }}" @selected(old('parent_id', $student->parent_id) == $parent->id)>
-                                {{ $parent->name_father }}
+                                {{ $parent->user->name }}
                             </option>
                         @endforeach
                     </select>

@@ -9,9 +9,14 @@ class ExamRepository
 {
     public function getExamIndexData(): array
     {
+
+        $user = auth()->user();
+
+        $exams = Exam::authorizedForUser($user)->with(['subject', 'grade', 'classroom', 'teacher'])->latest()->get();
+
         return [
             'grades' => Grade::all(),
-            'exams'  => Exam::with(['subject', 'grade', 'classroom'])->latest()->get(),
+            'exams'  => $exams,
         ];
     }
 

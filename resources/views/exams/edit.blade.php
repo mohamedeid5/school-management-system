@@ -43,7 +43,7 @@
                         <option value="quiz" @selected(old('type', $exam->type) == 'quiz')>{{ __('main.exam_type_quiz') }}</option>
                         <option value="midterm" @selected(old('type', $exam->type) == 'midterm')>{{ __('main.exam_type_midterm') }}</option>
                         <option value="final" @selected(old('type', $exam->type) == 'final')>{{ __('main.exam_type_final') }}</option>
-                        <option value="other" @selected(old('type', $exam->type) == 'other')>{{ __('main.exam_type_other') }}</option>
+                        <option value="assignment" @selected(old('type', $exam->type) == 'assignment')>{{ __('main.exam_type_assignment') }}</option>
                     </select>
                     @error('type')<div class="text-danger small">{{ $message }}</div>@enderror
                 </div>
@@ -60,6 +60,26 @@
                     <input type="number" name="max_score" value="{{ old('max_score', $exam->max_score) }}" min="1" max="9999" step="0.01"
                            class="form-control @error('max_score') is-invalid @enderror">
                     @error('max_score')<div class="text-danger small">{{ $message }}</div>@enderror
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label>{{ __('main.academic_year') }} <span class="text-danger">*</span></label>
+                    <input type="text" name="academic_year" value="{{ old('academic_year', $exam->academic_year) }}" placeholder="2025-2026"
+                           class="form-control @error('academic_year') is-invalid @enderror">
+                    @error('academic_year')<div class="text-danger small">{{ $message }}</div>@enderror
+                </div>
+
+                <div class="col-md-4 form-group">
+                    <label>{{ __('main.term') }} <span class="text-danger">*</span></label>
+                    <select name="term" class="form-control select2 @error('term') is-invalid @enderror">
+                        <option value="" selected disabled>{{ __('main.choose') }}</option>
+                        <option value="1" @selected(old('term', $exam->term) == 1)>{{ __('main.term_1') }}</option>
+                        <option value="2" @selected(old('term', $exam->term) == 2)>{{ __('main.term_2') }}</option>
+                        <option value="3" @selected(old('term', $exam->term) == 3)>{{ __('main.term_3') }}</option>
+                    </select>
+                    @error('term')<div class="text-danger small">{{ $message }}</div>@enderror
                 </div>
             </div>
 

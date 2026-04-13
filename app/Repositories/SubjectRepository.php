@@ -4,14 +4,20 @@ namespace App\Repositories;
 
 use App\Models\Subject;
 use App\Models\Grade;
+use Illuminate\Support\Facades\Auth;
 
 class SubjectRepository
 {
     public function getSubjectIndexData()
     {
+
+        $user = Auth::user();
+
+       $subjects = Subject::authorizedForUser($user)->get();
+       
         return [
             'grades' => Grade::all(),
-            'subjects' => Subject::with(['grade', 'classroom'])->latest()->paginate(20),
+            'subjects' => $subjects,
         ];
     }
 

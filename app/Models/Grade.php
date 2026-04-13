@@ -33,4 +33,20 @@ class Grade extends Model
     {
         return $this->hasMany(Section::class);
     }
+
+    public function scopeForTeacher($query, $user)
+    {
+        if ($user->hasRole('teacher')) {
+            $teacher    = $user->teacher;
+            $sectionIds = $teacher ? $teacher->sections()->pluck('sections.id') : collect();
+
+            return $query->with(['sections' => fn($q) => $q->whereIn('id', $sectionIds)->with('classroom')])
+                ->whereHas('sections', fn($q) => $q->whereIn('id', $sectionIds))
+                ->get();
+        }
+
+        return $query->with(['sections.classroom'])->get();
+
+    }
+
 }

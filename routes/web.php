@@ -1,23 +1,28 @@
 <?php
 
-use App\Http\Controllers\AjaxController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
+
+use App\Http\Controllers\AjaxController;
+use App\Http\Controllers\FileController;
+
 use App\Http\Controllers\Grades\GradeController;
 use App\Http\Controllers\Classrooms\ClassroomController;
 use App\Http\Controllers\Sections\SectionController;
 use App\Http\Controllers\Teachers\TeacherController;
 use App\Http\Controllers\Students\StudentController;
-use App\Http\Controllers\FileController;
 use App\Http\Controllers\Students\PromotionsController;
 use App\Http\Controllers\Students\GraduationController;
+
 use App\Http\Controllers\Fees\FeesController;
 use App\Http\Controllers\Fees\FeeInvoiceController;
 use App\Http\Controllers\Fees\ReceiptStudentController;
 use App\Http\Controllers\Fees\ProcessingFeeController;
 use App\Http\Controllers\Fees\PaymentStudentController;
+
 use App\Http\Controllers\Attendances\AttendanceController;
 use App\Http\Controllers\Subjects\SubjectController;
 use App\Http\Controllers\Exams\ExamController;
@@ -26,102 +31,125 @@ use App\Http\Controllers\Questions\QuestionController;
 use App\Http\Controllers\OnlineClasses\OnlineClassController;
 use App\Http\Controllers\SettingController;
 
-Route::group(
-[
-    'prefix' => LaravelLocalization::setLocale(),
-    'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
-],
-function()
-{
-    Route::get('/', function () {
-        return redirect()->route('dashboard');
+Route::group([
+    'prefix'     => LaravelLocalization::setLocale(),
+    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath'],
+], function () {
+
+    Route::get('/', fn () => redirect()->route('dashboard'));
+
+    Route::middleware('auth')->get('/dashboard', [DashboardController::class, 'redirect'])->name('dashboard');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Guest
+    |--------------------------------------------------------------------------
+    */
+    Route::middleware('guest')->group(function () {
+        Route::get('/login',  [LoginController::class, 'showLoginForm'])->name('login');
+        Route::post('/login', [LoginController::class, 'login'])
+            ->middleware('throttle:login')
+            ->name('login.submit');
     });
 
-    Route::middleware('guest')->group(function () {
-        Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-        Route::post('/login', [LoginController::class, 'login'])->middleware('throttle:login')->name('login.submit');
-    });
 
     Route::middleware('auth')->group(function () {
 
+        // Ajax
+        Route::get('get-classrooms/{id}', [AjaxController::class, 'getClassrooms']);
+        Route::get('get-sections/{id}',   [AjaxController::class, 'getSections']);
+
         Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-        Route::get('get-classrooms/{id}', [AjaxController::class, 'getClassrooms']);
-        Route::get('get-sections/{id}', [AjaxController::class, 'getSections']);
+        Route::prefix('admin')->middleware('role:admin')->group(function () {
+            Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+        });
 
-        // grades routes
-        Route::resource('grades', GradeController::class)->except('create', 'edit', 'show');
+        Route::prefix('teacher')->middleware('role:teacher')->group(function () {
+            Route::get('/dashboard', [DashboardController::class, 'teacherDashboard'])->name('teacher.dashboard');
+        });
 
-        // classrooms routes
-        Route::delete('/classrooms/delete-selected', [ClassroomController::class, 'destroySelected'])
-            ->name('classrooms.destroySelected');
-        Route::resource('classrooms', ClassroomController::class)->except('create', 'edit', 'show');
+        Route::prefix('student')->middleware('role:student')->group(function () {
+           // Route::get('/dashboard', [DashboardController::class, 'student'])->name('student.dashboard');
+        });
 
-        // sections routes
-        Route::resource('sections', SectionController::class)->except('create', 'edit', 'show');
+        Route::prefix('parent')->middleware('role:parent')->group(function () {
+            Route::get('/dashboard', [DashboardController::class, 'parentDashboard'])->name('parent.dashboard');
+        });
 
 
-        Route::view('add-parent', 'livewire.parents')->name('add_parent');
+        Route::middleware('role:admin|teacher|student|parent')->group(function () {
+            Route::resource('sections', SectionController::class)->only(['index', 'show']);
+            Route::resource('subjects', SubjectController::class)->only(['index', 'show']);
+            Route::resource('students', StudentController::class)->only(['index', 'show']);
+            Route::resource('exams', ExamController::class)->only(['index', 'show']);
+            Route::resource('libraries', LibraryController::class)->only(['index', 'show']);
+        });
 
-        // teachers routes
-        Route::resource('teachers', TeacherController::class);
+        Route::middleware('role:admin|teacher')->group(function () {
+            Route::resource('attendances', AttendanceController::class)->only(['index','show', 'create', 'store']);
+            Route::resource('online-classes', OnlineClassController::class)->only(['index','show', 'create', 'store', 'edit', 'update']);
+            Route::resource('questions', QuestionController::class)->only(['index','show']);
+            Route::resource('libraries', LibraryController::class)->only(['index', 'show', 'create', 'store', 'edit', 'update', 'destroy']);
+        });
 
-        // students routes
-        Route::resource('students', StudentController::class);
-        Route::get('student/{id}/download-attachment', [FileController::class, 'download'])->name('students.download_attachment');
-        Route::delete('student/{id}/delete-attachment', [FileController::class, 'delete'])->name('students.delete_attachment');
 
-        // promotions routes
-        Route::get('promotions', [PromotionsController::class, 'index'])->name('promotions.index');
-        Route::post('promotions', [PromotionsController::class, 'store'])->name('promotions.store');
-        Route::get('promotions/management', [PromotionsController::class, 'management'])->name('promotions.management');
-        Route::delete('promotions/{id}', [PromotionsController::class, 'destroy'])->name('promotions.destroy');
 
-        // graduations routes
-        Route::get('graduations', [GraduationController::class, 'index'])->name('graduations.index');
-        Route::get('graduations/create', [GraduationController::class, 'create'])->name('graduations.create');
-        Route::post('graduations', [GraduationController::class, 'store'])->name('graduations.store');
-        Route::put('graduations/restore/{id}', [GraduationController::class, 'restore'])->name('graduations.restore');
-        Route::delete('graduations/destroy/{id}', [GraduationController::class, 'destroy'])->name('graduations.destroy');
+        Route::prefix('admin')->middleware('role:admin')->group(function () {
 
-        // fees routes
-        Route::resource('fees', FeesController::class);
+            // Full Resources
+            Route::resource('teachers', TeacherController::class);
+            Route::resource('sections', SectionController::class)->except(['create','edit']);
+            Route::delete('/classrooms/delete-selected', [ClassroomController::class, 'destroySelected'])
+                ->name('classrooms.destroySelected');
+            Route::resource('classrooms', ClassroomController::class)->except(['show']);
+            Route::resource('students', StudentController::class)->except(['index','show']);
 
-        // fee invoices routes
-        Route::resource('fee-invoices', FeeInvoiceController::class);
+            Route::view('add-parent', 'livewire.parents')->name('add_parent');
 
-        // receipt students routes
-        Route::resource('receipt-students', ReceiptStudentController::class);
+            // Files
+            Route::get('student/{id}/download-attachment', [FileController::class, 'download'])
+                ->name('students.download_attachment');
+            Route::delete('student/{id}/delete-attachment', [FileController::class, 'delete'])
+                ->name('students.delete_attachment');
 
-        // processing fees routes
-        Route::resource('processing-fees', ProcessingFeeController::class);
+            // Promotions
+            Route::controller(PromotionsController::class)->group(function () {
+                Route::get('promotions', 'index')->name('promotions.index');
+                Route::post('promotions', 'store')->name('promotions.store');
+                Route::get('promotions/management', 'management')->name('promotions.management');
+                Route::delete('promotions/{id}', 'destroy')->name('promotions.destroy');
+            });
 
-        // payment students routes
-        Route::resource('payment-students', PaymentStudentController::class);
+            // Graduations
+            Route::controller(GraduationController::class)->group(function () {
+                Route::get('graduations', 'index')->name('graduations.index');
+                Route::get('graduations/create', 'create')->name('graduations.create');
+                Route::post('graduations', 'store')->name('graduations.store');
+                Route::put('graduations/restore/{id}', 'restore')->name('graduations.restore');
+                Route::delete('graduations/destroy/{id}', 'destroy')->name('graduations.destroy');
+            });
 
-        // attendance routes
-        Route::resource('attendances', AttendanceController::class);
+            // Financial
+            Route::resource('fees', FeesController::class);
+            Route::resource('fee-invoices', FeeInvoiceController::class);
+            Route::resource('receipt-students', ReceiptStudentController::class);
+            Route::resource('processing-fees', ProcessingFeeController::class);
+            Route::resource('payment-students', PaymentStudentController::class);
 
-        // subjects routes
-        Route::resource('subjects', SubjectController::class);
+            // Extra Admin Controls
+            Route::resource('subjects', SubjectController::class)->except(['index','show']);
+            Route::resource('exams', ExamController::class)->except(['index','show']);
+            Route::resource('questions', QuestionController::class)->except(['index','show']);
+            Route::resource('libraries', LibraryController::class)->except(['index','show']);
+            Route::resource('online-classes', OnlineClassController::class)->only(['destroy']);
+            Route::resource('attendances', AttendanceController::class)->only(['destroy']);
+            Route::resource('grades', GradeController::class);
 
-        // exams routes
-        Route::resource('exams', ExamController::class);
-
-        // questions routes
-        Route::resource('questions', QuestionController::class);
-
-        // online classes routes
-        Route::resource('online-classes', OnlineClassController::class);
-
-        // libraries routes
-        Route::resource('libraries', LibraryController::class);
-
-        Route::get('settings/edit', [SettingController::class, 'edit'])->name('settings.edit');
-        Route::put('settings', [SettingController::class, 'update'])->name('settings.update');
-
+            // Settings
+            Route::get('settings/edit', [SettingController::class, 'edit'])->name('settings.edit');
+            Route::put('settings',      [SettingController::class, 'update'])->name('settings.update');
+        });
     });
 });
-

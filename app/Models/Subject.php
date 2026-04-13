@@ -44,5 +44,25 @@ class Subject extends Model
     {
         return $this->belongsTo(Teacher::class);
     }
+
+    public function scopeAuthorizedForUser($query, $user) {
+
+
+         $query->with(['grade', 'classroom', 'teacher']);
+
+        if($user->hasRole('teacher')) {
+            return $query->where('teacher_id', $user->teacher->id);
+        }
+
+        if ($user->hasRole('student')) {
+            return $query->where('grade_id', $user->student->grade_id)
+                  ->where('classroom_id', $user->student->classroom_id);
+        }
+
+        return $query;
+    }
+
 }
+
+
 

@@ -72,9 +72,6 @@
                     @endforelse
                 </tbody>
             </table>
-            <div class="mt-3">
-                {{ $questions->links() }}
-            </div>
         </div>
     </div>
 </div>

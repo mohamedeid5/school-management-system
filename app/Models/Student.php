@@ -113,4 +113,14 @@ class Student extends Model
         return $this->hasMany(Attendance::class);
     }
 
+    public function scopeAuthorizedForUser($query, $user)
+    {
+        if ($user->hasRole('teacher') && $user->teacher) {
+            $sectionIds = $user->teacher->sections()->pluck('sections.id');
+            return $query->whereIn('section_id', $sectionIds);
+        }
+
+        return $query;
+    }
+
 }

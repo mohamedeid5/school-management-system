@@ -34,11 +34,15 @@
                     <span class="text-muted small">{{ __('main.exam_type') }}</span>
                     <div class="font-weight-bold">
                         @php
-                            $typeColors = ['quiz' => 'primary', 'midterm' => 'warning', 'final' => 'danger', 'other' => 'secondary'];
-                            $color = $typeColors[$exam->type] ?? 'secondary';
+                            $typeColors = ['quiz' => 'primary', 'midterm' => 'warning', 'final' => 'danger', 'assignment' => 'success'];
+                            $color = $typeColors[$exam->type->value] ?? 'secondary';
                         @endphp
-                        <span class="badge badge-{{ $color }}">{{ __('main.exam_type_' . $exam->type) }}</span>
+                        <span class="badge badge-{{ $color }}">{{ __('main.exam_type_' . $exam->type->value) }}</span>
                     </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-2">
+                    <span class="text-muted small">{{ __('main.teacher') }}</span>
+                    <div class="font-weight-bold">{{ $exam->teacher->name ?? '-' }}</div>
                 </div>
                 <div class="col-md-3 col-sm-6 mb-2">
                     <span class="text-muted small">{{ __('main.subject') }}</span>
@@ -47,6 +51,14 @@
                 <div class="col-md-3 col-sm-6 mb-2">
                     <span class="text-muted small">{{ __('main.grade') }} / {{ __('main.classroom') }}</span>
                     <div class="font-weight-bold">{{ $exam->grade->name ?? '-' }} / {{ $exam->classroom->name ?? '-' }}</div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-2">
+                    <span class="text-muted small">{{ __('main.academic_year') }}</span>
+                    <div class="font-weight-bold">{{ $exam->academic_year }}</div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-2">
+                    <span class="text-muted small">{{ __('main.term') }}</span>
+                    <div class="font-weight-bold">{{ __('main.term_' . $exam->term) }}</div>
                 </div>
                 <div class="col-md-3 col-sm-6 mb-2">
                     <span class="text-muted small">{{ __('main.exam_date') }}</span>

@@ -326,7 +326,11 @@ return [
     'exam_type_quiz' => 'اختبار قصير',
     'exam_type_midterm' => 'امتحان نصف الفصل',
     'exam_type_final' => 'الامتحان النهائي',
-    'exam_type_other' => 'أخرى',
+    'exam_type_assignment' => 'واجب',
+    'term'   => 'الفصل الدراسي',
+    'term_1' => 'الفصل الأول',
+    'term_2' => 'الفصل الثاني',
+    'term_3' => 'الفصل الثالث',
     'warning_exam' => 'هل أنت متأكد من حذف هذا الاختبار؟',
 
     // Questions
@@ -395,7 +399,35 @@ return [
     'uploaded_by'                           => 'رُفع بواسطة',
     'current_file'                          => 'الملف الحالي',
 
+    // Settings
+    'settings' => 'الإعدادات',
+
     // General Messages
     'created_successfully' => 'تمت العملية بنجاح',
     'something_went_wrong' => 'حدث خطأ ما، يرجى المحاولة مرة أخرى',
+
+    // Teacher Dashboard
+    'teacher_dashboard'    => 'لوحة تحكم المعلم',
+    'welcome_teacher'      => 'مرحباً أستاذ',
+    'my_sections'          => 'أقسامي',
+    'my_students'          => 'طلابي',
+    'my_online_classes'    => 'فصولي الإلكترونية',
+    'my_exams'             => 'امتحاناتي',
+    'present_today'        => 'حاضرون اليوم',
+    'absent_today'         => 'غائبون اليوم',
+    'late_today'           => 'متأخرون اليوم',
+    'excused_today'        => 'معذورون اليوم',
+    'attendance_today'     => 'الحضور اليوم',
+    'students_in_sections' => 'الطلاب في الأقسام',
+    'section_details'      => 'تفاصيل القسم',
+    'students_count'       => 'عدد الطلاب',
+    'specialization'       => 'التخصص',
+    'joining_date'         => 'تاريخ الانضمام',
+    'teacher_info'         => 'بيانات المعلم',
+
+    // Parent Dashboard
+    'parent_dashboard'     => 'لوحة تحكم ولي الأمر',
+    'welcome'              => 'مرحباً',
+    'children'             => 'أبناء',
+
 ];
