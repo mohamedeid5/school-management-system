@@ -430,4 +430,25 @@ return [
     'welcome'              => 'مرحباً',
     'children'             => 'أبناء',
 
+    // Student Dashboard
+    'student_dashboard'      => 'لوحة تحكم الطالب',
+    'welcome_student'        => 'مرحباً أيها الطالب',
+    'my_subjects'            => 'موادي الدراسية',
+    'my_attendance'          => 'حضوري',
+    'attendance_history'     => 'سجل الحضور',
+    'my_fee_invoices'        => 'فواتيري المالية',
+    'upcoming_exams'         => 'الامتحانات القادمة',
+    'student_info'           => 'بيانات الطالب',
+    'total_present'          => 'إجمالي الحضور',
+    'total_absent'           => 'إجمالي الغياب',
+    'total_late'             => 'إجمالي التأخر',
+    'total_excused'          => 'إجمالي المعذورين',
+    'exam_date'              => 'تاريخ الامتحان',
+    'max_score'              => 'الدرجة الكاملة',
+    'term'                   => 'الفصل الدراسي',
+    'amount_due'             => 'المبلغ المستحق',
+    'paid'                   => 'مدفوع',
+    'unpaid'                 => 'غير مدفوع',
+    'partial'                => 'مدفوع جزئياً',
+
 ];

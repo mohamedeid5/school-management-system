@@ -431,4 +431,25 @@ return [
     'welcome'              => 'Welcome',
     'children'             => 'Children',
 
+    // Student Dashboard
+    'student_dashboard'      => 'Student Dashboard',
+    'welcome_student'        => 'Welcome, Student',
+    'my_subjects'            => 'My Subjects',
+    'my_attendance'          => 'My Attendance',
+    'attendance_history'     => 'Attendance History',
+    'my_fee_invoices'        => 'My Fee Invoices',
+    'upcoming_exams'         => 'Upcoming Exams',
+    'student_info'           => 'Student Info',
+    'total_present'          => 'Total Present',
+    'total_absent'           => 'Total Absent',
+    'total_late'             => 'Total Late',
+    'total_excused'          => 'Total Excused',
+    'exam_date'              => 'Exam Date',
+    'max_score'              => 'Max Score',
+    'term'                   => 'Term',
+    'amount_due'             => 'Amount Due',
+    'paid'                   => 'Paid',
+    'unpaid'                 => 'Unpaid',
+    'partial'                => 'Partial',
+
 ];

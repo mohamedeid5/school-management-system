@@ -69,7 +69,16 @@ class Exam extends Model
     public function scopeAuthorizedForUser($query, $user)
     {
         if($user->hasRole('teacher')) {
-            $query->where('teacher_id', $user->teacher->id);
+            return $query->where('teacher_id', $user->teacher->id);
+        }
+
+        if($user->hasRole('student')) {
+
+            $student = $user->student;
+
+            return $query->where('grade_id', $student->grade_id)
+                         ->where('classroom_id', $student->classroom_id)
+                         ->where('exam_date', '>=', now());
         }
 
         return $query;

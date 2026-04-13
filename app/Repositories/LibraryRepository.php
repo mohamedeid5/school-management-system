@@ -4,13 +4,22 @@ namespace App\Repositories;
 
 use App\Models\Library;
 use App\Models\Grade;
+use Illuminate\Support\Facades\Auth;
 
 class LibraryRepository
 {
     public function getIndexData(): array
     {
+
+        $user = Auth::user();
+
+        $libraries = Library::authorizedForUser($user)
+                ->with(['grade', 'classroom', 'section', 'subject', 'user'])
+                ->latest()
+                ->get();
+
         return [
-            'libraries' => Library::with(['grade', 'classroom', 'section', 'subject', 'user'])->latest()->paginate(20),
+            'libraries' => $libraries,
             'grades'    => Grade::all(),
         ];
     }

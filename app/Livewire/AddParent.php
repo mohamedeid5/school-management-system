@@ -39,8 +39,8 @@ class AddParent extends Component
     public function render()
     {
         $parents = $this->showTrashed
-                ? MyParent::onlyTrashed()->latest()->get()
-                : MyParent::latest()->get();
+                ? MyParent::onlyTrashed()->with('user')->latest()->get()
+                : MyParent::with('user')->latest()->get();
 
         return view('livewire.add-parent', [
             'nationalities' => Nationality::all(),

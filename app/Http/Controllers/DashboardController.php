@@ -13,7 +13,7 @@ use App\Models\PaymentStudent;
 use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Teacher;
-use App\Models\Section;
+
 
 class DashboardController extends Controller
 {
@@ -23,6 +23,7 @@ class DashboardController extends Controller
         if ($user->hasRole('admin'))   return redirect()->route('admin.dashboard');
         if ($user->hasRole('teacher')) return redirect()->route('teacher.dashboard');
         if ($user->hasRole('parent'))  return redirect()->route('parent.dashboard');
+        if ($user->hasRole('student')) return redirect()->route('student.dashboard');
         abort(403);
     }
 
@@ -34,9 +35,7 @@ class DashboardController extends Controller
         $sectionsCount    = $sectionIds->count();
         $studentsCount    = Student::whereIn('section_id', $sectionIds)->count();
         $onlineClassCount = OnlineClass::where('user_id', auth()->id())->count();
-        $examsCount       = Exam::whereIn('classroom_id',
-            Section::whereIn('id', $sectionIds)->pluck('classroom_id')
-        )->count();
+        $examsCount       = auth()->user()->teacher->exams()->count();
 
         $todayPresent = Attendance::whereIn('section_id', $sectionIds)
             ->whereDate('attendance_date', today())
@@ -92,13 +91,68 @@ class DashboardController extends Controller
         return view('parents.dashboard.index', compact('parent', 'children'));
     }
 
+    public function studentDashboard()
+    {
+        $student = auth()->user()->student;
+
+        if (!$student) abort(403);
+
+        $subjects = Subject::with('teacher.user')
+            ->where('grade_id',     $student->grade_id)
+            ->where('classroom_id', $student->classroom_id)
+            ->get();
+
+        $upcomingExams = Exam::with('subject', 'teacher.user')
+            ->where('grade_id',     $student->grade_id)
+            ->where('classroom_id', $student->classroom_id)
+            ->where('exam_date', '>=', now())
+            ->orderBy('exam_date')
+            ->limit(6)
+            ->get();
+
+        $onlineClasses = OnlineClass::with('subject', 'user')
+            ->where('grade_id',     $student->grade_id)
+            ->where('classroom_id', $student->classroom_id)
+            ->latest()
+            ->limit(5)
+            ->get();
+
+        $attendances = Attendance::where('student_id', $student->id)->get();
+        $totalPresent = $attendances->where('attendance_status', AttendanceStatus::PRESENT)->count();
+        $totalAbsent  = $attendances->where('attendance_status', AttendanceStatus::ABSENT)->count();
+        $totalLate    = $attendances->where('attendance_status', AttendanceStatus::LATE)->count();
+        $totalExcused = $attendances->where('attendance_status', AttendanceStatus::EXCUSED)->count();
+
+        $recentAttendances = Attendance::where('student_id', $student->id)
+            ->orderByDesc('attendance_date')
+            ->limit(10)
+            ->get();
+
+        $feeInvoices = FeeInvoice::with('fee')
+            ->where('student_id', $student->id)
+            ->latest()
+            ->limit(6)
+            ->get();
+
+        return view('students.dashboard.index', compact(
+            'student',
+            'subjects',
+            'upcomingExams',
+            'onlineClasses',
+            'totalPresent', 'totalAbsent', 'totalLate', 'totalExcused',
+            'recentAttendances',
+            'feeInvoices'
+        ));
+    }
+
     public function index()
     {
-        $studentsCount   = Student::count();
-        $teachersCount   = Teacher::count();
-        $classroomsCount = Classroom::count();
-        $examsCount      = Exam::count();
-        $libraryCount    = Library::count();
+
+        $studentsCount    = Student::count();
+        $teachersCount    = Teacher::count();
+        $classroomsCount  = Classroom::count();
+        $examsCount       = Exam::count();
+        $libraryCount     = Library::count();
         $onlineClassCount = OnlineClass::count();
 
         $todayPresent = Attendance::whereDate('attendance_date', today())

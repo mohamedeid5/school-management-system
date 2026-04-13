@@ -63,7 +63,6 @@
                     </tbody>
                 </table>
             </div>
-            {{ $libraries->links() }}
         </div>
     </div>
 </div>

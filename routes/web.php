@@ -71,13 +71,12 @@ Route::group([
         });
 
         Route::prefix('student')->middleware('role:student')->group(function () {
-           // Route::get('/dashboard', [DashboardController::class, 'student'])->name('student.dashboard');
+            Route::get('/dashboard', [DashboardController::class, 'studentDashboard'])->name('student.dashboard');
         });
 
         Route::prefix('parent')->middleware('role:parent')->group(function () {
             Route::get('/dashboard', [DashboardController::class, 'parentDashboard'])->name('parent.dashboard');
         });
-
 
         Route::middleware('role:admin|teacher|student|parent')->group(function () {
             Route::resource('sections', SectionController::class)->only(['index', 'show']);
@@ -91,9 +90,8 @@ Route::group([
             Route::resource('attendances', AttendanceController::class)->only(['index','show', 'create', 'store']);
             Route::resource('online-classes', OnlineClassController::class)->only(['index','show', 'create', 'store', 'edit', 'update']);
             Route::resource('questions', QuestionController::class)->only(['index','show']);
-            Route::resource('libraries', LibraryController::class)->only(['index', 'show', 'create', 'store', 'edit', 'update', 'destroy']);
+            Route::resource('libraries', LibraryController::class);
         });
-
 
 
         Route::prefix('admin')->middleware('role:admin')->group(function () {
@@ -142,7 +140,7 @@ Route::group([
             Route::resource('subjects', SubjectController::class)->except(['index','show']);
             Route::resource('exams', ExamController::class)->except(['index','show']);
             Route::resource('questions', QuestionController::class)->except(['index','show']);
-            Route::resource('libraries', LibraryController::class)->except(['index','show']);
+            Route::resource('libraries', LibraryController::class);
             Route::resource('online-classes', OnlineClassController::class)->only(['destroy']);
             Route::resource('attendances', AttendanceController::class)->only(['destroy']);
             Route::resource('grades', GradeController::class);
