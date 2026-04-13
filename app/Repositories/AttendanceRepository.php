@@ -13,7 +13,7 @@ class AttendanceRepository
     {
         $user = Auth::user();
 
-        $grades = Grade::forTeacher($user);
+        $grades = Grade::authorizedForUser($user)->get();
 
         return [
             'grades' => $grades,
