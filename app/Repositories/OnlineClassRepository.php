@@ -7,13 +7,24 @@ use App\Models\Grade;
 use App\Models\OnlineClass;
 use App\Models\Subject;
 use App\Models\Teacher;
+use Illuminate\Support\Facades\Auth;
 
 class OnlineClassRepository
 {
     public function getIndexData(): array
     {
+        $query = OnlineClass::with('grade', 'classroom', 'user');
+
+        $user = Auth::user();
+
+        if (!$user->hasRole('admin')) {
+            $query->where('user_id', Auth::id());
+        }
+
+        $onlineClasses = $query->get();
+
         return [
-            'onlineClasses' => OnlineClass::with(['subject', 'grade', 'classroom', 'user'])->latest()->get(),
+            'onlineClasses' => $onlineClasses,
             'grades'        => Grade::all(),
         ];
     }

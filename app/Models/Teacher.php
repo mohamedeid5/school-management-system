@@ -46,4 +46,14 @@ class Teacher extends Model
     {
         return $this->belongsTo(Specialization::class);
     }
+
+    public function exams()
+    {
+        return $this->hasMany(Exam::class);
+    }
+
+    public function questions()
+    {
+        return $this->hasManyThrough(Question::class, Exam::class);
+    }
 }

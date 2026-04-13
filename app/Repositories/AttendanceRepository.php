@@ -11,8 +11,12 @@ class AttendanceRepository
 {
     public function getAttendanceIndexData()
     {
+        $user = Auth::user();
+
+        $grades = Grade::forTeacher($user);
+
         return [
-            'grades' => Grade::all(),
+            'grades' => $grades,
         ];
     }
 

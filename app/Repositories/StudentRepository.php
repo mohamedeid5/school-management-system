@@ -3,12 +3,17 @@
 namespace App\Repositories;
 
 use App\Models\Student;
+use Illuminate\Support\Facades\Auth;
 
 class StudentRepository
 {
     public function getAllStudents()
     {
-        return Student::with(['user', 'grade', 'classroom', 'section', 'parent', 'studentAccounts'])->get();
+        $user = Auth::user();
+
+        return Student::authorizedForUser($user)
+                    ->with(['user', 'grade', 'classroom', 'section', 'parent', 'studentAccounts'])
+                    ->get();
     }
 
     public function createStudent($data, $userId, $studentCode)

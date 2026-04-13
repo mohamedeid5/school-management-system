@@ -37,4 +37,15 @@ class Question extends Model
     {
         return $this->belongsTo(Exam::class);
     }
+
+    public function scopeAuthorizedForUser($query, $user)
+    {
+        if($user->hasRole('teacher')) {
+            $query->whereHas('exam', function($q) use ($user) {
+                $q->where('teacher_id', $user->teacher->id);
+            });
+        }
+
+        return $query->with('exam');
+    }
 }

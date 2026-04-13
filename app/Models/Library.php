@@ -56,4 +56,22 @@ class Library extends Model
     {
         return $this->belongsTo(Subject::class);
     }
+
+    public function scopeAuthorizedForUser($query, $user)
+    {
+        if($user->hasRole('teacher')) {
+            return $query->where('user_id', $user->id);
+        }
+
+        if($user->hasRole('student')) {
+
+            $student = $user->student;
+
+            return $query->where('grade_id', $student->grade_id)
+                    ->where('classroom_id', $student->classroom_id)
+                    ->where('section_id', $student->section_id);
+        }
+
+        return $query;
+    }
 }

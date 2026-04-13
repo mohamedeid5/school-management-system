@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             ClassroomSeeder::class,
             SectionSeeder::class,
             SettingsSeeder::class,
+            RolesAndPermissionsSeeder::class,
         ]);
     }
 }

@@ -24,9 +24,12 @@
                         <th>#</th>
                         <th>{{ __('main.name') }}</th>
                         <th>{{ __('main.exam_type') }}</th>
+                        <th>{{ __('main.teacher') }}</th>
                         <th>{{ __('main.subject') }}</th>
                         <th>{{ __('main.grade') }}</th>
                         <th>{{ __('main.classroom') }}</th>
+                        <th>{{ __('main.academic_year') }}</th>
+                        <th>{{ __('main.term') }}</th>
                         <th>{{ __('main.exam_date') }}</th>
                         <th>{{ __('main.max_score') }}</th>
                         <th>{{ __('main.processes') }}</th>
@@ -40,13 +43,16 @@
                         <td>
                             @php
                                 $typeColors = ['quiz' => 'info', 'midterm' => 'warning', 'final' => 'danger', 'assignment' => 'success'];
-                                $color = $typeColors[$exam->type] ?? 'secondary';
+                                $color = $typeColors[$exam->type->value] ?? 'secondary';
                             @endphp
-                            <span class="badge badge-{{ $color }}">{{ __('main.exam_type_' . $exam->type) }}</span>
+                            <span class="badge badge-{{ $color }}">{{ __('main.exam_type_' . $exam->type->value) }}</span>
                         </td>
+                        <td>{{ $exam->teacher->user->name ?? '-' }}</td>
                         <td>{{ $exam->subject->name }}</td>
                         <td>{{ $exam->grade->name }}</td>
                         <td>{{ $exam->classroom->name }}</td>
+                        <td>{{ $exam->academic_year }}</td>
+                        <td><span class="badge badge-secondary">{{ __('main.term_' . $exam->term) }}</span></td>
                         <td>{{ \Carbon\Carbon::parse($exam->exam_date)->format('Y-m-d') }}</td>
                         <td><span class="badge badge-primary">{{ $exam->max_score }}</span></td>
                         <td>
@@ -64,14 +70,11 @@
                     @include('exams.delete_modal')
                     @empty
                     <tr>
-                        <td colspan="9" class="text-center text-muted">{{ __('main.no_data') }}</td>
+                        <td colspan="12" class="text-center text-muted">{{ __('main.no_data') }}</td>
                     </tr>
                     @endforelse
                 </tbody>
             </table>
-            <div class="mt-3">
-                {{ $exams->links() }}
-            </div>
         </div>
     </div>
 </div>

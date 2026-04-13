@@ -45,7 +45,7 @@
                         <option value="quiz" {{ old('type') == 'quiz' ? 'selected' : '' }}>{{ __('main.exam_type_quiz') }}</option>
                         <option value="midterm" {{ old('type') == 'midterm' ? 'selected' : '' }}>{{ __('main.exam_type_midterm') }}</option>
                         <option value="final" {{ old('type') == 'final' ? 'selected' : '' }}>{{ __('main.exam_type_final') }}</option>
-                        <option value="other" {{ old('type') == 'other' ? 'selected' : '' }}>{{ __('main.exam_type_other') }}</option>
+                        <option value="assignment" {{ old('type') == 'assignment' ? 'selected' : '' }}>{{ __('main.exam_type_assignment') }}</option>
                     </select>
                     @error('type')
                         <div class="text-danger small">{{ $message }}</div>
@@ -66,6 +66,30 @@
                     <input type="number" name="max_score" value="{{ old('max_score', 100) }}" min="1" max="9999" step="0.01"
                            class="form-control @error('max_score') is-invalid @enderror">
                     @error('max_score')
+                        <div class="text-danger small">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label>{{ __('main.academic_year') }} <span class="text-danger">*</span></label>
+                    <input type="text" name="academic_year" value="{{ old('academic_year') }}" placeholder="2025-2026"
+                           class="form-control @error('academic_year') is-invalid @enderror">
+                    @error('academic_year')
+                        <div class="text-danger small">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="col-md-4 form-group">
+                    <label>{{ __('main.term') }} <span class="text-danger">*</span></label>
+                    <select name="term" class="form-control select2 @error('term') is-invalid @enderror">
+                        <option value="" selected disabled>{{ __('main.choose') }}</option>
+                        <option value="1" {{ old('term') == '1' ? 'selected' : '' }}>{{ __('main.term_1') }}</option>
+                        <option value="2" {{ old('term') == '2' ? 'selected' : '' }}>{{ __('main.term_2') }}</option>
+                        <option value="3" {{ old('term') == '3' ? 'selected' : '' }}>{{ __('main.term_3') }}</option>
+                    </select>
+                    @error('term')
                         <div class="text-danger small">{{ $message }}</div>
                     @enderror
                 </div>
@@ -120,14 +144,24 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <label>{{ __('main.description') }}</label>
-                <textarea name="description" rows="3"
-                          class="form-control @error('description') is-invalid @enderror">{{ old('description') }}</textarea>
-                @error('description')
-                    <div class="text-danger small">{{ $message }}</div>
-                @enderror
+            @if(auth()->user()->hasRole('admin'))
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label>{{ __('main.teacher') }} <span class="text-danger">*</span></label>
+                    <select name="teacher_id" class="form-control select2 @error('teacher_id') is-invalid @enderror">
+                        <option value="" selected disabled>{{ __('main.choose') }}</option>
+                        @foreach($teachers as $teacher)
+                            <option value="{{ $teacher->id }}" {{ old('teacher_id') == $teacher->id ? 'selected' : '' }}>
+                                {{ $teacher->user->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('teacher_id')
+                        <div class="text-danger small">{{ $message }}</div>
+                    @enderror
+                </div>
             </div>
+            @endif
 
             <hr>
             <button type="submit" class="btn btn-success btn-lg px-5 shadow">{{ __('main.save') }}</button>

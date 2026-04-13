@@ -6,12 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
-use Spatie\Permission\Traits\HasRoles;
 use Spatie\Translatable\HasTranslations;
 
 class MyParent extends Model
 {
-    use HasTranslations, SoftDeletes, LogsActivity, HasRoles;
+    use HasTranslations, SoftDeletes, LogsActivity;
 
     protected $fillable = [
         'name_father',
@@ -51,7 +50,12 @@ class MyParent extends Model
                 'phone_mother',
                 'nationality_father_id',
                 'nationality_mother_id',
-                'user_id',
+                'blood_type_father_id',
+                'blood_type_mother_id',
+                'religion_father_id',
+                'religion_mother_id',
+                'address_father',
+                'address_mother',
             ])
              ->logOnlyDirty()
              ->dontSubmitEmptyLogs();
@@ -60,5 +64,10 @@ class MyParent extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Student::class, 'parent_id');
     }
 }

@@ -15,6 +15,9 @@ return new class extends Migration
             $table->foreignId('subject_id')->constrained('subjects')->cascadeOnDelete();
             $table->foreignId('grade_id')->constrained('grades')->cascadeOnDelete();
             $table->foreignId('classroom_id')->constrained('classrooms')->cascadeOnDelete();
+            $table->foreignId('teacher_id')->constrained('teachers')->cascadeOnDelete();
+            $table->string('academic_year');
+            $table->tinyInteger('term')->default(1);
             $table->date('exam_date');
             $table->decimal('max_score', 5, 2)->default(100);
             $table->timestamps();

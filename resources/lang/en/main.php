@@ -327,7 +327,11 @@ return [
     'exam_type_quiz' => 'Quiz',
     'exam_type_midterm' => 'Midterm',
     'exam_type_final' => 'Final',
-    'exam_type_other' => 'Other',
+    'exam_type_assignment' => 'Assignment',
+    'term'   => 'Term',
+    'term_1' => 'First Term',
+    'term_2' => 'Second Term',
+    'term_3' => 'Third Term',
     'warning_exam' => 'Are you sure you want to delete this exam?',
 
     // Questions
@@ -396,8 +400,56 @@ return [
     'uploaded_by'                           => 'Uploaded By',
     'current_file'                          => 'Current File',
 
+    // Settings
+    'settings' => 'Settings',
+
     // General Messages
     'created_successfully' => 'Operation completed successfully',
     'something_went_wrong' => 'Something went wrong, please try again',
+
+    // Teacher Dashboard
+    'teacher_dashboard'    => 'Teacher Dashboard',
+    'welcome_teacher'      => 'Welcome, Teacher',
+    'my_sections'          => 'My Sections',
+    'my_students'          => 'My Students',
+    'my_online_classes'    => 'My Online Classes',
+    'my_exams'             => 'My Exams',
+    'present_today'        => 'Present Today',
+    'absent_today'         => 'Absent Today',
+    'late_today'           => 'Late Today',
+    'excused_today'        => 'Excused Today',
+    'attendance_today'     => 'Today\'s Attendance',
+    'students_in_sections' => 'Students in Sections',
+    'section_details'      => 'Section Details',
+    'students_count'       => 'Students Count',
+    'specialization'       => 'Specialization',
+    'joining_date'         => 'Joining Date',
+    'teacher_info'         => 'Teacher Info',
+
+    // Parent Dashboard
+    'parent_dashboard'     => 'Parent Dashboard',
+    'welcome'              => 'Welcome',
+    'children'             => 'Children',
+
+    // Student Dashboard
+    'student_dashboard'      => 'Student Dashboard',
+    'welcome_student'        => 'Welcome, Student',
+    'my_subjects'            => 'My Subjects',
+    'my_attendance'          => 'My Attendance',
+    'attendance_history'     => 'Attendance History',
+    'my_fee_invoices'        => 'My Fee Invoices',
+    'upcoming_exams'         => 'Upcoming Exams',
+    'student_info'           => 'Student Info',
+    'total_present'          => 'Total Present',
+    'total_absent'           => 'Total Absent',
+    'total_late'             => 'Total Late',
+    'total_excused'          => 'Total Excused',
+    'exam_date'              => 'Exam Date',
+    'max_score'              => 'Max Score',
+    'term'                   => 'Term',
+    'amount_due'             => 'Amount Due',
+    'paid'                   => 'Paid',
+    'unpaid'                 => 'Unpaid',
+    'partial'                => 'Partial',
 
 ];
