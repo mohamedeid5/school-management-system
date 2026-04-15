@@ -8,6 +8,7 @@ use App\Models\Section;
 use App\Services\SectionService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class SectionController extends Controller
 {
@@ -15,7 +16,9 @@ class SectionController extends Controller
 
     public function index(): View
     {
-        $data = $this->sectionService->getIndexData();
+        $user = Auth::user();
+
+        $data = $this->sectionService->getIndexData($user);
 
         return view('admin.sections.index', $data);
     }

@@ -4,21 +4,20 @@ namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
 use App\Models\Section;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Services\SectionService;
 
 class SectionController extends Controller
 {
+    public function __construct(protected SectionService $sectionService) {}
+
     public function index()
     {
         Gate::authorize('viewAny', Section::class);
 
-        $teacher  = Auth::user()->teacher;
-        $sections = $teacher
-            ? $teacher->sections()->with(['grade', 'classroom'])->withCount('students')->get()
-            : collect();
+        $data = $this->sectionService->getIndexData();
 
-        return view('teacher.sections.index', compact('sections'));
+        return view('teacher.sections.index', $data);
     }
 
     public function show(Section $section)
