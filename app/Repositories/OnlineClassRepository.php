@@ -13,15 +13,9 @@ class OnlineClassRepository
 {
     public function getIndexData(): array
     {
-        $query = OnlineClass::with('grade', 'classroom', 'user');
-
         $user = Auth::user();
 
-        if (!$user->hasRole('admin')) {
-            $query->where('user_id', Auth::id());
-        }
-
-        $onlineClasses = $query->get();
+        $onlineClasses = OnlineClass::authorizedForUser($user)->with('grade', 'classroom', 'user')->latest()->get();
 
         return [
             'onlineClasses' => $onlineClasses,

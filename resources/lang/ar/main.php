@@ -273,6 +273,12 @@ return [
     // Attendances
     'attendances' => 'الغياب والحضور',
     'record_attendance' => 'تسجيل الحضور',
+    'attendance_status' => 'حالة الحضور',
+    'students_attendance_sheet' => 'كشف حضور الطلاب',
+    'today_date' => 'تاريخ اليوم',
+    'present' => 'حاضر',
+    'absent' => 'غائب',
+    'late' => 'متأخر',
 
     // Receipt Students (سندات القبض)
     'receipt_students' => 'سندات القبض',
@@ -401,6 +407,13 @@ return [
 
     // Settings
     'settings' => 'الإعدادات',
+
+    // General
+    'date' => 'التاريخ',
+    'file' => 'الملف',
+    'balance' => 'الرصيد',
+    'show_active' => 'عرض النشطين',
+    'warning_delete' => 'هل أنت متأكد من حذف هذا العنصر؟',
 
     // General Messages
     'created_successfully' => 'تمت العملية بنجاح',

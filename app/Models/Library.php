@@ -59,19 +59,24 @@ class Library extends Model
 
     public function scopeAuthorizedForUser($query, $user)
     {
-        if($user->hasRole('teacher')) {
-            return $query->where('user_id', $user->id);
+        if ($user->can('view libraries')) {
+            return $query;
         }
 
-        if($user->hasRole('student')) {
+        if($user->hasRole('teacher') && $user->teacher) {
+            $teacher = $user->teacher;
+            $sectionIds = $teacher->sections()->pluck('sections.id');
 
+            return $query->whereIn('section_id', $sectionIds);
+        }
+
+        if($user->hasRole('student') && $user->student) {
             $student = $user->student;
 
             return $query->where('grade_id', $student->grade_id)
-                    ->where('classroom_id', $student->classroom_id)
-                    ->where('section_id', $student->section_id);
+                    ->where('classroom_id', $student->classroom_id);
         }
 
-        return $query;
+        return $query->whereRaw('1 = 0');
     }
 }

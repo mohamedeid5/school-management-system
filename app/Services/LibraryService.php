@@ -4,22 +4,19 @@ namespace App\Services;
 
 use App\Repositories\LibraryRepository;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 
 class LibraryService
 {
     public function __construct(protected LibraryRepository $libraryRepository, protected FileService $fileService) {}
 
-    public function getIndexData(): array
+    public function getIndexData($user): array
     {
-        return $this->libraryRepository->getIndexData();
+        return $this->libraryRepository->getIndexData($user);
     }
 
     public function create(array $data)
     {
         return DB::transaction(function () use ($data) {
-
-            $data['user_id'] = Auth::id();
 
             $file = $this->libraryRepository->create($data);
 

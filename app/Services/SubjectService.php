@@ -9,9 +9,9 @@ class SubjectService
 {
     public function __construct(protected SubjectRepository $subjectRepository) {}
 
-    public function getSubjectIndexData()
+    public function getSubjectIndexData($user)
     {
-        return $this->subjectRepository->getSubjectIndexData();
+        return $this->subjectRepository->getSubjectIndexData($user);
     }
 
     public function createSubject(array $data): Subject

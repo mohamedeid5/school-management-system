@@ -56,4 +56,9 @@ class Teacher extends Model
     {
         return $this->hasManyThrough(Question::class, Exam::class);
     }
+
+    public function subjects()
+    {
+        return $this->hasMany(Subject::class);
+    }
 }

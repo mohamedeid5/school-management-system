@@ -274,6 +274,12 @@ return [
     // Attendances
     'attendances' => 'Attendances',
     'record_attendance' => 'Record Attendance',
+    'attendance_status' => 'Attendance Status',
+    'students_attendance_sheet' => 'Students Attendance Sheet',
+    'today_date' => 'Today\'s Date',
+    'present' => 'Present',
+    'absent' => 'Absent',
+    'late' => 'Late',
 
     // Receipt Students
     'receipt_students' => 'Receipt Vouchers',
@@ -402,6 +408,13 @@ return [
 
     // Settings
     'settings' => 'Settings',
+
+    // General
+    'date' => 'Date',
+    'file' => 'File',
+    'balance' => 'Balance',
+    'show_active' => 'Show Active',
+    'warning_delete' => 'Are you sure you want to delete this item?',
 
     // General Messages
     'created_successfully' => 'Operation completed successfully',

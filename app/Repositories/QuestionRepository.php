@@ -13,7 +13,7 @@ class QuestionRepository
 
         $user = Auth::user();
 
-        $questions = Question::authorizedForUser($user)->latest()->get();
+        $questions = Question::authorizedForUser($user)->with('exam')->latest()->get();
 
         return [
             'grades'    => Grade::all(),

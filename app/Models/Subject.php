@@ -47,7 +47,6 @@ class Subject extends Model
 
     public function scopeAuthorizedForUser($query, $user) {
 
-
          $query->with(['grade', 'classroom', 'teacher']);
 
         if($user->hasRole('teacher')) {

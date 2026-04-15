@@ -6,18 +6,24 @@ use App\Models\Attendance;
 use App\Models\Grade;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\Student;
 
 class AttendanceRepository
 {
-    public function getAttendanceIndexData()
+    public function getAttendanceIndexData($user)
     {
-        $user = Auth::user();
-
         $grades = Grade::authorizedForUser($user)->get();
 
         return [
             'grades' => $grades,
         ];
+    }
+
+    public function show($id)
+    {
+        return Student::with(['grade', 'classroom', 'section', 'attendances' => function ($query) {
+            $query->where('attendance_date', date('Y-m-d'));
+        }])->where('section_id', $id)->get();
     }
 
     public function create($data)
@@ -35,7 +41,7 @@ class AttendanceRepository
                         'grade_id'          => $data->grade_id,
                         'classroom_id'      => $data->classroom_id,
                         'section_id'        => $data->section_id,
-                        'user_id'        => Auth::id(),
+                        'user_id'           => Auth::id(),
                         'attendance_status' => $status,
                     ]
                 );

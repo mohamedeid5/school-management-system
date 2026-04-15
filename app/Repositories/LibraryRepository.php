@@ -4,15 +4,11 @@ namespace App\Repositories;
 
 use App\Models\Library;
 use App\Models\Grade;
-use Illuminate\Support\Facades\Auth;
 
 class LibraryRepository
 {
-    public function getIndexData(): array
+    public function getIndexData($user): array
     {
-
-        $user = Auth::user();
-
         $libraries = Library::authorizedForUser($user)
                 ->with(['grade', 'classroom', 'section', 'subject', 'user'])
                 ->latest()
