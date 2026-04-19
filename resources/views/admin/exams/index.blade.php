@@ -41,11 +41,7 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $exam->name }}</td>
                         <td>
-                            @php
-                                $typeColors = ['quiz' => 'info', 'midterm' => 'warning', 'final' => 'danger', 'assignment' => 'success'];
-                                $color = $typeColors[$exam->type->value] ?? 'secondary';
-                            @endphp
-                            <span class="badge badge-{{ $color }}">{{ __('main.exam_type_' . $exam->type->value) }}</span>
+                            <span class="badge badge-{{ $exam->type->color() }}">{{ $exam->type->label() }}</span>
                         </td>
                         <td>{{ $exam->teacher->user->name ?? '-' }}</td>
                         <td>{{ $exam->subject->name }}</td>

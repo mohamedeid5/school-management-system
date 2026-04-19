@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\GradeDeletionException;
 use App\Models\Grade;
 use App\Repositories\GradeRepository;
 
@@ -9,9 +10,9 @@ class GradeService
 {
     public function __construct(protected GradeRepository $gradeRepository) {}
 
-    public function getAll()
+    public function getAll($user)
     {
-        return $this->gradeRepository->getAll();
+        return $this->gradeRepository->getAll($user);
     }
 
     public function create(array $data): Grade
@@ -24,13 +25,11 @@ class GradeService
         return $this->gradeRepository->update($grade, $data);
     }
 
-    public function delete(Grade $grade): void
+    public function delete(Grade $grade)
     {
+        if($grade->classrooms()->exists()) {
+            throw new GradeDeletionException('Cannot delete grade with associated classrooms');
+        }
         $this->gradeRepository->delete($grade);
-    }
-
-    public function hasClassrooms(Grade $grade): bool
-    {
-        return $this->gradeRepository->hasClassrooms($grade);
     }
 }

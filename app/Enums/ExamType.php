@@ -18,4 +18,14 @@ enum ExamType: string
             self::ASSIGNMENT => __('main.exam_type_assignment'),
         };
     }
+
+    public function color(): string
+    {
+        return match($this) {
+            self::QUIZ => 'info',
+            self::MIDTERM => 'warning',
+            self::FINAL => 'danger',
+            self::ASSIGNMENT => 'success'
+        };
+    }
 }

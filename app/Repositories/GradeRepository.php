@@ -7,10 +7,16 @@ use Illuminate\Support\Facades\Cache;
 
 class GradeRepository
 {
-    public function getAll()
+    public function getAll($user)
     {
-        $grades = Cache::rememberForever('all_grades', function() {
-            return Grade::all();
+
+        $gradeCacheKey = 'grades_user_' . $user->id;
+
+        return Cache::tags(['grades'])->rememberForever($gradeCacheKey, function() use ($user) {
+            return Grade::with('classrooms')
+                ->withCount('classrooms')
+                ->authorizedForUser($user)
+                ->get();
         });
 
         return $grades;
@@ -31,10 +37,5 @@ class GradeRepository
     public function delete(Grade $grade): void
     {
         $grade->delete();
-    }
-
-    public function hasClassrooms(Grade $grade): bool
-    {
-        return $grade->classrooms()->exists();
     }
 }

@@ -8,6 +8,7 @@ use App\Http\Requests\GradeRequest;
 use App\Services\GradeService;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class GradeController extends Controller
 {
@@ -18,7 +19,9 @@ class GradeController extends Controller
      */
     public function index(): View
     {
-        $grades = $this->gradeService->getAll();
+        $user = Auth::user();
+
+        $grades = $this->gradeService->getAll($user);
         return view('admin.grades.index', compact('grades'));
     }
 
@@ -31,12 +34,12 @@ class GradeController extends Controller
             $this->gradeService->create($request->validated());
 
             toastr()->success(__('main.created_successfully'));
-            return redirect()->route('grades.index');
+            return redirect()->route('admin.grades.index');
 
         } catch (\Exception $e) {
             $this->logError('Grade creation failed', $e);
             toastr()->error(__('main.something_went_wrong'));
-            return redirect()->route('grades.index');
+            return redirect()->route('admin.grades.index');
         }
 
     }
@@ -50,33 +53,32 @@ class GradeController extends Controller
             $this->gradeService->update($grade, $request->validated());
             toastr()->success(__('main.updated_successfully'));
 
-            return redirect()->route('grades.index');
+            return redirect()->route('admin.grades.index');
 
         } catch (\Exception $e) {
             $this->logError('Grade update failed', $e, ['grade_id' => $grade->id]);
             toastr()->error(__('main.something_went_wrong'));
 
-            return redirect()->route('grades.index');
+            return redirect()->route('admin.grades.index');
         }
     }
 
     public function destroy(Grade $grade): RedirectResponse
     {
         try {
-            if($this->gradeService->hasClassrooms($grade)) {
-                toastr()->error('لا يمكن حذف المرحلة الدراسية لأنها تحتوي على صفوف');
-                return redirect()->route('grades.index');
-            }
-
             $this->gradeService->delete($grade);
             toastr()->success(__('main.deleted_successfully'));
 
-            return redirect()->route('grades.index');
+            return redirect()->route('admin.grades.index');
+        } catch (\App\Exceptions\GradeDeletionException $e) {
+            toastr()->error($e->getMessage());
+            
+            return redirect()->route('admin.grades.index');
         } catch (\Exception $e) {
             $this->logError('Grade deletion failed', $e, ['grade_id' => $grade->id]);
             toastr()->error(__('main.something_went_wrong'));
 
-            return redirect()->route('grades.index');
+            return redirect()->route('admin.grades.index');
         }
     }
 

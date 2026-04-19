@@ -12,7 +12,10 @@ class ExamRepository
 
         $user = auth()->user();
 
-        $exams = Exam::authorizedForUser($user)->with(['subject', 'grade', 'classroom', 'teacher'])->latest()->get();
+        $exams = Exam::authorizedForUser($user)
+                    ->with(['subject', 'grade', 'classroom', 'teacher.user'])
+                    ->latest()
+                    ->get();
 
         return [
             'grades' => Grade::all(),

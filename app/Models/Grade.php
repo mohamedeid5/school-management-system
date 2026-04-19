@@ -37,24 +37,30 @@ class Grade extends Model
 
     public function scopeAuthorizedForUser($query, $user)
     {
-        if ($user->hasRole('teacher')) {
-            $teacher    = $user->teacher;
-            $sectionIds = $teacher ? $teacher->sections()->pluck('sections.id') : collect();
-
-            return $query->with(['classrooms', 'sections' => fn($q) => $q->whereIn('id', $sectionIds)->with('classroom')])
-                ->whereHas('sections', fn($q) => $q->whereIn('id', $sectionIds));
+        if($user->hasRole('admin')) {
+            return $query;
         }
-        return $query->with(['sections.classroom']);
+
+        $teacher = $user->teacher;
+
+        if (!$teacher) {
+            return $query->whereRaw('1 = 0');
+        }
+
+        $sectionIds = $teacher->sections()->pluck('sections.id');
+
+        return $query->with(['classrooms', 'sections' => fn($q) => $q->whereIn('id', $sectionIds)->with('classroom')])
+            ->whereHas('sections', fn($q) => $q->whereIn('id', $sectionIds));
     }
 
     public static function booted()
     {
         static::saved(function() {
-            Cache::forget('all_grades');
+            Cache::tags(['grades'])->flush();
         });
 
-        static::deleted('all_graded', function() {
-            Cache::delete('all_graded');
+        static::deleted(function() {
+            Cache::tags(['grades'])->flush();
         });
     }
 

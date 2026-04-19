@@ -9,6 +9,8 @@ use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Translatable\HasTranslations;
 use App\Models\Question;
 use App\Models\Teacher;
+use App\Strategies\Authorization\GradeAccessResolver;
+use App\Strategies\Authorization\GradeScopeResolver;
 
 class Exam extends Model
 {
@@ -68,19 +70,7 @@ class Exam extends Model
 
     public function scopeAuthorizedForUser($query, $user)
     {
-        if($user->hasRole('teacher')) {
-            return $query->where('teacher_id', $user->teacher->id);
-        }
-
-        if($user->hasRole('student')) {
-
-            $student = $user->student;
-
-            return $query->where('grade_id', $student->grade_id)
-                         ->where('classroom_id', $student->classroom_id)
-                         ->where('exam_date', '>=', now());
-        }
-
-        return $query;
+        $strategy = app(GradeScopeResolver::class)->resolve($user);
+        return $strategy->apply($query, $user);
     }
 }
