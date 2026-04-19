@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Illuminate\Support\Facades\Cache;
 
 class Classroom extends Model
 {
@@ -22,6 +23,17 @@ class Classroom extends Model
              ->logOnly(['name', 'grade_id'])
              ->logOnlyDirty()
              ->dontSubmitEmptyLogs();
+    }
+
+    protected static function booted()
+    {
+        static::saved(function () {
+            Cache::forget('all_classrooms');
+        });
+
+        static::deleted(function () {
+            Cache::forget('all_classrooms');
+        });
     }
 
     public function grade()

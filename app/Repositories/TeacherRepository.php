@@ -5,13 +5,16 @@ namespace App\Repositories;
 use App\Models\Specialization;
 use App\Models\Teacher;
 use App\Models\Section;
+use Illuminate\Support\Facades\Cache;
 
 class TeacherRepository {
 
 
     public function getAllTeachers()
     {
-        return Teacher::with('user', 'specialization', 'sections')->get();
+        return Cache::rememberForever('all_teachers', function() {
+            return Teacher::with('user', 'specialization', 'sections.classroom')->get();
+        });
     }
 
     public function getAllSpecializations()

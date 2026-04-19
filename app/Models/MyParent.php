@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Translatable\HasTranslations;
@@ -69,5 +70,18 @@ class MyParent extends Model
     public function children()
     {
         return $this->hasMany(Student::class, 'parent_id');
+    }
+
+    public static function booted()
+    {
+        $clearCache = function() {
+            Cache::forget('active_parents');
+            Cache::forget('trashed_parents');
+        };
+
+        static::saved($clearCache);
+        static::deleted($clearCache);
+        static::restored($clearCache);
+        static::forceDeleted($clearCache);
     }
 }

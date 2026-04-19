@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Translatable\HasTranslations;
@@ -47,7 +48,7 @@ class Subject extends Model
 
     public function scopeAuthorizedForUser($query, $user) {
 
-         $query->with(['grade', 'classroom', 'teacher']);
+         $query->with(['grade', 'classroom', 'teacher.user']);
 
         if($user->hasRole('teacher')) {
             return $query->where('teacher_id', $user->teacher->id);
@@ -57,8 +58,17 @@ class Subject extends Model
             return $query->where('grade_id', $user->student->grade_id)
                   ->where('classroom_id', $user->student->classroom_id);
         }
-
         return $query;
+    }
+
+    public static function booted()
+    {
+        $clearCache = function() {
+            Cache::forget('all_grades');
+        };
+
+        static::saved($clearCache);
+        static::deleted($clearCache);
     }
 
 }

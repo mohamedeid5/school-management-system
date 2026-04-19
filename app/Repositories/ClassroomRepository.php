@@ -5,19 +5,28 @@ namespace App\Repositories;
 use App\Models\Classroom;
 use App\Models\Grade;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 
 class ClassroomRepository
 {
     public function getIndexData(array $filters = []): array
     {
+
+        $grades = Cache::rememberForever('all_grades', function () {
+            return Grade::all();
+        });
+
+        $allClassrooms = Cache::rememberForever('all_classrooms', function() {
+            return Classroom::with('grade')->latest()->get();
+        });
+
+        $classrooms = $allClassrooms->when($filters['grade_id'] ?? '', function($query) use ($filters) {
+            return $query->where('grade_id', $filters['grade_id']);
+        });
+
         return [
-            'grades'     => Grade::all(),
-            'classrooms' => Classroom::with('grade')
-                ->when($filters['grade_id'] ?? null, function ($query) use ($filters) {
-                    $query->where('grade_id', $filters['grade_id']);
-                })
-                ->latest()
-                ->get(),
+            'grades'     => $grades,
+            'classrooms' => $classrooms,
         ];
     }
 

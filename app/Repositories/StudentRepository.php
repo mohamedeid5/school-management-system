@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Student;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class StudentRepository
 {
@@ -11,9 +12,13 @@ class StudentRepository
     {
         $user = Auth::user();
 
-        return Student::authorizedForUser($user)
-                    ->with(['user', 'grade', 'classroom', 'section', 'parent', 'studentAccounts'])
+        $studentCacheKey = 'students_for_user_' . $user->id;
+
+        return Cache::remember($studentCacheKey, 3600, function() use ($user) {
+            return Student::authorizedForUser($user)
+                    ->with(['user', 'grade', 'classroom', 'section', 'parent', 'nationality', 'studentAccounts'])
                     ->get();
+        });
     }
 
     public function createStudent($data, $userId, $studentCode)

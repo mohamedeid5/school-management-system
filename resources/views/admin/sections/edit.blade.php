@@ -59,11 +59,8 @@
                     <div class="col">
                         <label class="control-label">{{ trans('main.classroom') }}</label>
                         <select name="classroom_id" class="custom-select classroom-select @error('classroom_id') is-invalid @enderror">
-                            @php
-                                $current_grade_id = old('section_id') == $section->id ? old('grade_id') : $section->grade_id;
-                                $edit_classrooms = \App\Models\Classroom::where('grade_id', $current_grade_id)->get();
-                            @endphp
-                            @foreach ($edit_classrooms as $classroom)
+                            <option value="{{ $section->classroom->classroom_id }}">{{ $section->classroom->name }}</option>
+                            @foreach ($classrooms as $classroom)
                                 <option value="{{ $classroom->id }}"
                                      @selected(old('section_id') == $section->id ? old('classroom_id') : $section->classroom_id == $classroom->id)>
                                     {{ $classroom->name }}

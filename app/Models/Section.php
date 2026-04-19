@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Translatable\HasTranslations;
+
 
 class Section extends Model
 {
@@ -42,6 +44,17 @@ class Section extends Model
     public function students()
     {
         return $this->hasMany(Student::class);
+    }
+
+    public static function booted()
+    {
+        $clearCache = function() {
+            Cache::forget('all_teachers');
+            Cache::forget('all_classrooms');
+        };
+
+        static::saved($clearCache);
+        static::deleted($clearCache);
     }
 
 }

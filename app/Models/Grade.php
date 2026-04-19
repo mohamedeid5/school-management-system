@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Illuminate\Support\Facades\Cache;
 
 class Grade extends Model
 {
@@ -40,10 +41,21 @@ class Grade extends Model
             $teacher    = $user->teacher;
             $sectionIds = $teacher ? $teacher->sections()->pluck('sections.id') : collect();
 
-            return $query->with(['sections' => fn($q) => $q->whereIn('id', $sectionIds)->with('classroom')])
+            return $query->with(['classrooms', 'sections' => fn($q) => $q->whereIn('id', $sectionIds)->with('classroom')])
                 ->whereHas('sections', fn($q) => $q->whereIn('id', $sectionIds));
         }
         return $query->with(['sections.classroom']);
+    }
+
+    public static function booted()
+    {
+        static::saved(function() {
+            Cache::forget('all_grades');
+        });
+
+        static::deleted('all_graded', function() {
+            Cache::delete('all_graded');
+        });
     }
 
 }

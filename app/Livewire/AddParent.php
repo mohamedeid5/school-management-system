@@ -13,6 +13,7 @@ use App\Actions\Parents\DeleteParentAction;
 use App\Actions\Parents\UpdateParentAction;
 use App\Models\MyParent;
 use App\Traits\Loggable;
+use Illuminate\Support\Facades\Cache;
 
 class AddParent extends Component
 {
@@ -38,14 +39,22 @@ class AddParent extends Component
 
     public function render()
     {
-        $parents = $this->showTrashed
+        $nationalities = Cache::rememberForever('all_nationalities', fn() => Nationality::all());
+        $typeBloods = Cache::rememberForever('all_blood_types', fn() => BloodType::all());
+        $religions = Cache::rememberForever('all_religions', fn() => Religion::all());
+
+        $parentsCacheKey = $this->showTrashed ? 'trashed_parents' : 'active_parents';
+
+        $parents = Cache::rememberForever($parentsCacheKey, function() {
+            return $this->showTrashed
                 ? MyParent::onlyTrashed()->with('user')->latest()->get()
                 : MyParent::with('user')->latest()->get();
+        });
 
         return view('livewire.add-parent', [
-            'nationalities' => Nationality::all(),
-            'type_bloods' => BloodType::all(),
-            'religions' => Religion::all(),
+            'nationalities' => $nationalities,
+            'type_bloods' => $typeBloods,
+            'religions' => $religions,
             'parents' => $parents,
         ]);
     }

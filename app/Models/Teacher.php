@@ -7,6 +7,8 @@ use App\Enums\Gender;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
+
 class Teacher extends Model
 {
 
@@ -30,6 +32,17 @@ class Teacher extends Model
              ->logOnly(['name', 'user_id', 'specialization_id', 'gender', 'joining_date', 'address'])
              ->logOnlyDirty()
              ->dontSubmitEmptyLogs();
+    }
+
+    protected static function booted()
+    {
+        static::saved(function () {
+            Cache::forget('all_teachers');
+        });
+
+        static::deleted(function () {
+            Cache::forget('all_teachers');
+        });
     }
 
     public function sections()

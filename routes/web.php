@@ -7,6 +7,13 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AjaxController;
 
+
+
+Route::get('test', function(){
+    dd(auth()->user()->parent->children->toArray());
+});
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -59,6 +66,11 @@ Route::group([
             ->prefix('student')
             ->name('student.')
             ->group(base_path('routes/student.php'));
+
+        Route::middleware(['role:parent'])
+            ->prefix('parent')
+            ->name('parent.')
+            ->group(base_path('routes/parent.php'));
             });
 
 });

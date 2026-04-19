@@ -4,15 +4,24 @@ namespace App\Repositories;
 
 use App\Models\Subject;
 use App\Models\Grade;
+use Illuminate\Support\Facades\Cache;
 
 class SubjectRepository
 {
     public function getSubjectIndexData($user)
     {
-       $subjects = Subject::authorizedForUser($user)->get();
+        $grades = Cache::rememberForever('all_grades', function() {
+            return Grade::all();
+        });
+
+        $subjectsCacheKey = 'subjects_for_user_' . $user->id;
+
+        $subjects = Cache::remember($subjectsCacheKey, 3600, function() use ($user) {
+            return Subject::authorizedForUser($user)->get();
+        });
 
         return [
-            'grades' => Grade::all(),
+            'grades' => $grades,
             'subjects' => $subjects,
         ];
     }

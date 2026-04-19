@@ -6,6 +6,7 @@ use App\Models\Classroom;
 use App\Models\Grade;
 use App\Models\Section;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class SectionRepository
 {
@@ -13,11 +14,22 @@ class SectionRepository
     {
         $user = Auth::user();
 
-        $grades = Grade::authorizedForUser($user)->get();
+        $gradesCacheKey = 'grades_for_user_' . $user->id;
 
-        $classrooms = old('grade_id')
-            ? Classroom::where('grade_id', old('grade_id'))->get()
-            : [];
+        $grades = Cache::remember($gradesCacheKey, 3600, function() use ($user) {
+            return Grade::authorizedForUser($user)->get();
+        });
+
+        $oldGradeId = old('grade_id');
+        $classrooms = collect();
+
+        if($oldGradeId) {
+            $allClassrooms = Cache::rememberForever('all_classrooms', function() {
+                return Classroom::with('grade')->latest()->get();
+            });
+
+            $classrooms = $allClassrooms->where('grade_id', $oldGradeId)->values();
+        }
 
         return compact('grades', 'classrooms');
     }

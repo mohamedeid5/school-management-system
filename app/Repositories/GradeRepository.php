@@ -3,12 +3,17 @@
 namespace App\Repositories;
 
 use App\Models\Grade;
+use Illuminate\Support\Facades\Cache;
 
 class GradeRepository
 {
     public function getAll()
     {
-        return Grade::all();
+        $grades = Cache::rememberForever('all_grades', function() {
+            return Grade::all();
+        });
+
+        return $grades;
     }
 
     public function create(array $data): Grade

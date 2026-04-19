@@ -36,7 +36,7 @@ class AttendanceController extends Controller
         return view('teacher.attendances.create', compact('students'));
     }
 
-    public function store(AttendanceRequest $request)
+    public function create(AttendanceRequest $request)
     {
         try {
             $this->attendanceService->createAttendance($request);
