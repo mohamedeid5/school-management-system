@@ -24,11 +24,7 @@ class TeacherRepository {
 
     public function getAllSections()
     {
-        return Section::all();
-    }
-
-    public function findTeacherById($id) {
-        return Teacher::with('user', 'specialization', 'sections')->findOrFail($id);
+        return Section::with('classroom')->get();
     }
 
     public function createTeacher($data) {

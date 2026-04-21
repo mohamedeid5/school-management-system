@@ -29,7 +29,7 @@ class TeacherRequest extends FormRequest
             'email' => [
                 'required',
                 'email',
-                Rule::unique('users')->ignore($userId),
+                Rule::unique('users', 'email')->ignore($userId),
             ],
             'password' => $this->isMethod('POST') ? 'required|string|min:8' : 'nullable|string|min:8',
             'specialization_id' => 'required|exists:specializations,id',

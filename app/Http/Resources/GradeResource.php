@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\ClassroomResource;
 
 class GradeResource extends JsonResource
 {
@@ -22,8 +23,8 @@ class GradeResource extends JsonResource
             ],
             'notes' => $this->notes,
             'classrooms_count' => $this->whenCounted('classrooms'),
-            //'classrooms' => ClasssroomResource($this->whenLoaded('classrooms'))
-            'classrooms' => $this->whenLoaded('classrooms'),
+            'classrooms' => ClassroomResource::collection($this->whenLoaded('classrooms')),
+            'sections' => SectionResource::collection($this->whenLoaded('sections')),
         ];
     }
 }

@@ -12,6 +12,7 @@ use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use App\Exceptions\ClassroomDeletionException;
 
 class ClassroomController extends Controller
 {
@@ -27,7 +28,7 @@ class ClassroomController extends Controller
     public function store(ClassroomRequest $request): RedirectResponse
     {
         try {
-            $this->classroomService->create($request->list_classrooms);
+            $this->classroomService->create($request->validated());
             toastr()->success(__('main.created_successfully'));
 
             return redirect()->route('classrooms.index');
@@ -45,7 +46,7 @@ class ClassroomController extends Controller
             $this->classroomService->update($classroom, $request->validated());
             toastr()->success(__('main.updated_successfully'));
 
-            return redirect()->route('classrooms.index');
+            return redirect()->route('admin.classrooms.index');
         } catch (Exception $e) {
             $this->logError('Classroom update failed', $e,  ['classroom_id' => $classroom->id]);
             toastr()->error(__('main.something_went_wrong'));
@@ -60,8 +61,11 @@ class ClassroomController extends Controller
             $this->classroomService->delete($classroom);
             toastr()->success(__('main.deleted_successfully'));
 
-            return redirect()->route('classrooms.index');
-        } catch(Exception $e) {
+            return redirect()->route('admin.classrooms.index');
+        } catch (ClassroomDeletionException $e) {
+            toastr()->error($e->getMessage());
+            return redirect()->back();
+        } catch (Exception $e) {
             $this->logError('Classroom delete failed', $e,  ['classroom_id' => $classroom->id]);
             toastr()->error(__('main.something_went_wrong'));
 
@@ -77,7 +81,7 @@ class ClassroomController extends Controller
             $this->classroomService->destroySelected($request->ids);
 
             toastr()->success(__('main.deleted_successfully'));
-            return redirect()->route('classrooms.index');
+            return redirect()->route('admin.classrooms.index');
 
         } catch (Exception $e) {
             $this->logError('Bulk classroom delete failed', $e,  ['classroom_id' => $request->id]);

@@ -5,15 +5,12 @@ namespace App\Repositories;
 use App\Models\Classroom;
 use App\Models\Grade;
 use App\Models\Section;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
 class SectionRepository
 {
-    public function getIndexData(): array
+    public function getIndexData($user): array
     {
-        $user = Auth::user();
-
         $gradesCacheKey = 'grades_for_user_' . $user->id;
 
         $grades = Cache::remember($gradesCacheKey, 3600, function() use ($user) {
@@ -25,7 +22,7 @@ class SectionRepository
 
         if($oldGradeId) {
             $allClassrooms = Cache::rememberForever('all_classrooms', function() {
-                return Classroom::with('grade')->latest()->get();
+                return Classroom::latest()->get();
             });
 
             $classrooms = $allClassrooms->where('grade_id', $oldGradeId)->values();

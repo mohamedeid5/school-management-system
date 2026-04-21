@@ -26,7 +26,7 @@ class TeacherService {
 
     public function storeTeacher(array $data) {
 
-        DB::transaction(function() use ($data) {
+        return DB::transaction(function() use ($data) {
             $user = User::create([
                 'name' => $data['name'],
                 'email' => $data['email'],
@@ -36,7 +36,7 @@ class TeacherService {
             $user->assignRole('teacher');
 
             $data['user_id'] = $user['id'];
-            $this->teacherRepository->createTeacher($data);
+            return $this->teacherRepository->createTeacher($data);
         });
     }
 
@@ -45,7 +45,7 @@ class TeacherService {
     }
 
     public function getEditPageData(Teacher $teacher) {
-        $teacher->load('user', 'specialization', 'sections');
+        $teacher->load('user', 'specialization');
 
         return [
             'teacher' => $teacher,
@@ -81,6 +81,5 @@ class TeacherService {
             $this->teacherRepository->deleteTeacher($teacher);
             $user->delete();
         });
-
     }
 }

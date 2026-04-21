@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ClassroomResource extends JsonResource
+class SectionResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,10 +19,11 @@ class ClassroomResource extends JsonResource
                 'ar' => $this->getTranslation('name', 'ar'),
                 'en' => $this->getTranslation('name', 'en'),
             ],
-            'notes' =>$this->notes,
+            'status' => $this->status,
+            'grade_id' => $this->grade_id,
+            'classroom_id' => $this->classroom_id,
             'grade' => new GradeResource($this->whenLoaded('grade')),
-            'sections_count' => $this->whenCounted('sections'),
-            'sections' => $this->whenLoaded('sections')
+            'classroom' => new ClassroomResource($this->whenLoaded('classroom')),
         ];
     }
 }

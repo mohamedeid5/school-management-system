@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DTOs\GradeDTO;
 use App\Http\Controllers\Controller;
 use App\Models\Grade;
 use App\Http\Requests\GradeRequest;
@@ -31,7 +32,8 @@ class GradeController extends Controller
     public function store(GradeRequest $request): RedirectResponse
     {
         try {
-            $this->gradeService->create($request->validated());
+            $dto = GradeDTO::fromRequest($request);
+            $this->gradeService->create($dto);
 
             toastr()->success(__('main.created_successfully'));
             return redirect()->route('admin.grades.index');
@@ -50,7 +52,8 @@ class GradeController extends Controller
     public function update(GradeRequest $request, Grade $grade): RedirectResponse
     {
         try {
-            $this->gradeService->update($grade, $request->validated());
+            $dto = GradeDTO::fromRequest($request);
+            $this->gradeService->update($grade, $dto);
             toastr()->success(__('main.updated_successfully'));
 
             return redirect()->route('admin.grades.index');
@@ -72,7 +75,7 @@ class GradeController extends Controller
             return redirect()->route('admin.grades.index');
         } catch (\App\Exceptions\GradeDeletionException $e) {
             toastr()->error($e->getMessage());
-            
+
             return redirect()->route('admin.grades.index');
         } catch (\Exception $e) {
             $this->logError('Grade deletion failed', $e, ['grade_id' => $grade->id]);

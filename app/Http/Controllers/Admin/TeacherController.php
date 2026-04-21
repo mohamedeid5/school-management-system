@@ -39,7 +39,7 @@ class TeacherController extends Controller
             $this->teacherService->storeTeacher($request->validated());
 
             toastr()->success(__('main.created_successfully'));
-            return redirect()->route('teachers.index');
+            return redirect()->route('admin.teachers.index');
         } catch (\Exception $e) {
             $this->logError('teacher creation failed', $e);
             toastr()->error(__('main.created_failed'));
@@ -72,12 +72,13 @@ class TeacherController extends Controller
     {
         try {
             $this->teacherService->updateTeacher($request->validated(), $teacher);
-
             toastr()->success(__('main.updated_successfully'));
-            return redirect()->route('teachers.index');
+
+            return redirect()->route('admin.teachers.index');
         } catch (\Exception $e) {
             $this->logError('teacher update failed', $e, ['teacher_id' => $teacher->id]);
             toastr()->error(__('main.updated_failed'));
+
             return redirect()->back()->withInput();
         }
     }
@@ -89,12 +90,13 @@ class TeacherController extends Controller
     {
         try {
             $this->teacherService->deleteTeacher($teacher);
-
             toastr()->success(__('main.deleted_successfully'));
-            return redirect()->route('teachers.index');
+
+            return redirect()->route('admin.teachers.index');
         } catch (\Exception $e) {
             $this->logError('teacher deletion failed', $e, ['teacher_id' => $teacher->id]);
             toastr()->error(__('main.deleted_failed'));
+
             return redirect()->back();
         }
     }

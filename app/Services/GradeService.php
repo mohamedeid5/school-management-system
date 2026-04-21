@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\DTOs\GradeDTO;
 use App\Exceptions\GradeDeletionException;
 use App\Models\Grade;
 use App\Repositories\GradeRepository;
@@ -15,14 +16,14 @@ class GradeService
         return $this->gradeRepository->getAll($user);
     }
 
-    public function create(array $data): Grade
+    public function create(GradeDTO $dto)
     {
-        return $this->gradeRepository->create($data);
+        return $this->gradeRepository->create($dto);
     }
 
-    public function update(Grade $grade, array $data): Grade
+    public function update(Grade $grade, GradeDTO $dto): Grade
     {
-        return $this->gradeRepository->update($grade, $data);
+        return $this->gradeRepository->update($grade, $dto);
     }
 
     public function delete(Grade $grade)

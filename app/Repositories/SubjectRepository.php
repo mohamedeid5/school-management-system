@@ -16,7 +16,7 @@ class SubjectRepository
 
         $subjectsCacheKey = 'subjects_for_user_' . $user->id;
 
-        $subjects = Cache::remember($subjectsCacheKey, 3600, function() use ($user) {
+        $subjects = Cache::tags('subjects')->remember($subjectsCacheKey, 3600, function() use ($user) {
             return Subject::authorizedForUser($user)->get();
         });
 

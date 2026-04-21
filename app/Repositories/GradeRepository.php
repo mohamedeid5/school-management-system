@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\DTOs\GradeDTO;
 use App\Models\Grade;
 use Illuminate\Support\Facades\Cache;
 
@@ -22,14 +23,26 @@ class GradeRepository
         return $grades;
     }
 
-    public function create(array $data): Grade
+    public function create(GradeDTO $dto): Grade
     {
-        return Grade::create($data);
+        return Grade::create([
+            "name" => [
+                "ar" => $dto->nameAr,
+                "en" => $dto->nameAr,
+            ],
+            "notes" => $dto->notes,
+        ]);
     }
 
-    public function update(Grade $grade, array $data): Grade
+    public function update(Grade $grade, GradeDTO $dto): Grade
     {
-        $grade->update($data);
+        $grade->update([
+            "name" => [
+                "ar" => $dto->nameAr,
+                "en" => $dto->nameEn,
+                "notes" => $dto->notes,
+            ]
+        ]);
 
         return $grade;
     }

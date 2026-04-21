@@ -17,7 +17,7 @@ class ClassroomRepository
         });
 
         $allClassrooms = Cache::rememberForever('all_classrooms', function() {
-            return Classroom::with('grade')->latest()->get();
+            return Classroom::with(['grade', 'sections'])->withCount('sections')->latest()->get();
         });
 
         $classrooms = $allClassrooms->when($filters['grade_id'] ?? '', function($query) use ($filters) {
@@ -26,15 +26,16 @@ class ClassroomRepository
 
         return [
             'grades'     => $grades,
-            'classrooms' => $classrooms,
+            'classrooms' => $classrooms->values(),
         ];
     }
 
-    public function create(array $listClassrooms): void
+    public function create(array $request): array
     {
-        DB::transaction(function () use ($listClassrooms) {
-            foreach ($listClassrooms as $classroomData) {
-                Classroom::create([
+        return DB::transaction(function () use ($request) {
+            $created = [];
+            foreach ($request['list_classrooms'] as $classroomData) {
+                $created[] = Classroom::create([
                     'name' => [
                         'ar' => $classroomData['name'],
                         'en' => $classroomData['name_en'],
@@ -42,6 +43,7 @@ class ClassroomRepository
                     'grade_id' => $classroomData['grade_id'],
                 ]);
             }
+            return $created;
         });
     }
 

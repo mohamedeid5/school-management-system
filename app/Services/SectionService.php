@@ -9,9 +9,9 @@ class SectionService
 {
     public function __construct(protected SectionRepository $sectionRepository) {}
 
-    public function getIndexData(): array
+    public function getIndexData($user): array
     {
-        return $this->sectionRepository->getIndexData();
+        return $this->sectionRepository->getIndexData($user);
     }
 
     public function create(array $data): Section

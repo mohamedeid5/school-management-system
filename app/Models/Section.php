@@ -11,10 +11,14 @@ use Spatie\Translatable\HasTranslations;
 
 class Section extends Model
 {
-
     use LogsActivity, HasTranslations;
 
-    protected $fillable = ['name', 'status','grade_id', 'classroom_id'];
+    protected $fillable = [
+        'name',
+        'status',
+        'grade_id',
+        'classroom_id'
+    ];
 
     public array $translatable = ['name'];
 

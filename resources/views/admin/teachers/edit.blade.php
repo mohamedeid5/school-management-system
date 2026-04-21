@@ -76,9 +76,8 @@
                 <label>{{ __('main.sections') }}</label>
                 <select class="form-control select2-multiple @error('section_ids') is-invalid @enderror"
                         name="section_ids[]" multiple="multiple">
-                    @php $selected_sections = old('section_ids', $teacher->sections->pluck('id')->toArray()); @endphp
                     @foreach($sections as $section)
-                        <option value="{{ $section->id }}" @selected(in_array($section->id, $selected_sections))>
+                        <option value="{{ $section->id }}" @selected(in_array($section->id, $teacher->sections->pluck('id')->toArray()))>
                             {{ $section->name }} - {{ $section->classroom->name }}
                         </option>
                     @endforeach

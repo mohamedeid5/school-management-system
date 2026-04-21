@@ -65,6 +65,7 @@ class Subject extends Model
     {
         $clearCache = function() {
             Cache::forget('all_grades');
+            Cache::tags(['subjects'])->flush();
         };
 
         static::saved($clearCache);

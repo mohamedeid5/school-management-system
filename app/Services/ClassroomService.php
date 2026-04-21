@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Classroom;
 use App\Repositories\ClassroomRepository;
+use App\Exceptions\ClassroomDeletionException;
 
 class ClassroomService
 {
@@ -14,9 +15,9 @@ class ClassroomService
         return $this->classroomRepository->getIndexData($filters);
     }
 
-    public function create(array $listClassrooms): void
+    public function create(array $listClassrooms): array
     {
-        $this->classroomRepository->create($listClassrooms);
+        return $this->classroomRepository->create($listClassrooms);
     }
 
     public function update(Classroom $classroom, array $data): Classroom
@@ -26,6 +27,10 @@ class ClassroomService
 
     public function delete(Classroom $classroom): void
     {
+        if($classroom->sections()->exists()) {
+            throw new ClassroomDeletionException('Cannot delete classroom with associated sections.');
+        }
+
         $this->classroomRepository->delete($classroom);
     }
 

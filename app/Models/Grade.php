@@ -38,7 +38,7 @@ class Grade extends Model
     public function scopeAuthorizedForUser($query, $user)
     {
         if($user->hasRole('admin')) {
-            return $query;
+            return $query->with(['classrooms', 'sections.classroom']);
         }
 
         $teacher = $user->teacher;
