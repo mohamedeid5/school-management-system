@@ -19,12 +19,16 @@ class TeacherRepository {
 
     public function getAllSpecializations()
     {
-        return Specialization::all();
+        return Cache::rememberForever('all_specializations', function() {
+            return Specialization::all();
+        });
     }
 
     public function getAllSections()
     {
-        return Section::with('classroom')->get();
+        return Cache::rememberForever('all_sections', function() {
+            return Section::with('classroom')->get();
+        });
     }
 
     public function createTeacher($data) {

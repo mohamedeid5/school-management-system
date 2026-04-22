@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\GradeRequest;
 use App\Http\Resources\GradeResource;
 use App\Models\Grade;
-use App\Models\User;
 use App\Services\GradeService;
+use Illuminate\Support\Facades\Auth;
 
 class GradeController extends BaseApiController
 {
@@ -15,7 +15,7 @@ class GradeController extends BaseApiController
 
     public function index()
     {
-        $user = User::find(2);
+        $user = Auth::user();
 
         $grades = $this->gradeService->getAll($user);
 

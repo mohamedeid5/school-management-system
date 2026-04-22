@@ -2,8 +2,6 @@
 
 namespace App\Actions\Parents;
 
-use App\Livewire\Forms\ParentForm;
-use App\Models\MyParent;
 use App\Models\ParentAttachment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -11,7 +9,7 @@ use App\Models\User;
 
 class UpdateParentAction
 {
-    public function handle(MyParent $parent, ParentForm $form)
+    public function handle($parent, $form)
     {
         return DB::transaction(function () use ($parent, $form) {
 
@@ -55,7 +53,7 @@ class UpdateParentAction
         });
     }
 
-    protected function storeAttachments(MyParent $parent, ParentForm $form): void
+    protected function storeAttachments($parent, $form): void
     {
         if (empty($form->photos)) {
             return;

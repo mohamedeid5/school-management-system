@@ -55,6 +55,7 @@ class Section extends Model
         $clearCache = function() {
             Cache::forget('all_teachers');
             Cache::forget('all_classrooms');
+            Cache::forget('all_sections');
         };
 
         static::saved($clearCache);

@@ -18,9 +18,9 @@ class StudentService
 {
     public function __construct(protected StudentRepository $studentRepository, protected FileService $fileUploadService) {}
 
-    public function getAllStudents()
+    public function getAllStudents($user)
     {
-        return $this->studentRepository->getAllStudents();
+        return $this->studentRepository->getAllStudents($user);
     }
 
     public function getCreatePageData()
@@ -45,7 +45,7 @@ class StudentService
 
     public function storeStudent($data)
     {
-        DB::transaction(function() use ($data) {
+        return DB::transaction(function() use ($data) {
 
             $studentCode = $this->generateStudentCode();
 
@@ -66,6 +66,8 @@ class StudentService
                     'students',
                 );
             }
+
+            return $student;
         });
     }
 
@@ -105,7 +107,7 @@ class StudentService
 
     public function updateStudent($data, $student)
     {
-        DB::transaction(function() use ($data, $student) {
+        return DB::transaction(function() use ($data, $student) {
 
             $user = $student->user;
             $userData = [
@@ -128,6 +130,8 @@ class StudentService
                     'students',
                 );
             }
+
+            return $student;
         });
 
     }

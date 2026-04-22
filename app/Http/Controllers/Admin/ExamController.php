@@ -20,7 +20,9 @@ class ExamController extends Controller
 
     public function index()
     {
-        $data = $this->examService->getExamIndexData();
+        $user = Auth::user();
+
+        $data = $this->examService->getExamIndexData($user);
 
         return view('admin.exams.index', $data);
     }

@@ -10,6 +10,7 @@ use App\Models\Religion;
 use Livewire\WithFileUploads;
 use App\Actions\Parents\CreateParentAction;
 use App\Actions\Parents\DeleteParentAction;
+use App\Actions\Parents\GetParentAction;
 use App\Actions\Parents\UpdateParentAction;
 use App\Models\MyParent;
 use App\Traits\Loggable;
@@ -32,30 +33,23 @@ class AddParent extends Component
     public $parent_id;
 
 
+
     public function updated($propertyName): void
     {
         $this->validateOnly($propertyName);
     }
 
-    public function render()
+    public function render(GetParentAction $getParentAction)
     {
         $nationalities = Cache::rememberForever('all_nationalities', fn() => Nationality::all());
         $typeBloods = Cache::rememberForever('all_blood_types', fn() => BloodType::all());
         $religions = Cache::rememberForever('all_religions', fn() => Religion::all());
 
-        $parentsCacheKey = $this->showTrashed ? 'trashed_parents' : 'active_parents';
-
-        $parents = Cache::rememberForever($parentsCacheKey, function() {
-            return $this->showTrashed
-                ? MyParent::onlyTrashed()->with('user')->latest()->get()
-                : MyParent::with('user')->latest()->get();
-        });
-
         return view('livewire.add-parent', [
             'nationalities' => $nationalities,
             'type_bloods' => $typeBloods,
             'religions' => $religions,
-            'parents' => $parents,
+            'parents' => $getParentAction->handle($this->showTrashed),
         ]);
     }
 

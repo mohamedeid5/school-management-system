@@ -6,8 +6,8 @@ use App\Http\Requests\SubjectRequest;
 use App\Http\Resources\SectionResource;
 use App\Http\Resources\SubjectResource;
 use App\Models\Subject;
-use App\Models\User;
 use App\Services\SubjectService;
+use Illuminate\Support\Facades\Auth;
 
 class SubjectController extends BaseApiController
 {
@@ -19,7 +19,8 @@ class SubjectController extends BaseApiController
      */
     public function index()
     {
-        $user = User::find(2);
+        $user = Auth::user();
+
         $data = $this->subjectService->getSubjectIndexData($user);
 
         return $this->successResponse(

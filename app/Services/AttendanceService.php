@@ -22,4 +22,14 @@ class AttendanceService
     {
         return $this->attendanceRepository->create($data);
     }
+
+    public function storeAttendance(array $data): bool
+    {
+        return $this->attendanceRepository->createFromApi($data);
+    }
+
+    public function getBySection(int $sectionId, string $date)
+    {
+        return $this->attendanceRepository->getBySection($sectionId, $date);
+    }
 }

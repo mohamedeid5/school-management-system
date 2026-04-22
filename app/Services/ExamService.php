@@ -9,9 +9,9 @@ class ExamService
 {
     public function __construct(protected ExamRepository $examRepository) {}
 
-    public function getExamIndexData(): array
+    public function getExamIndexData($user): array
     {
-        return $this->examRepository->getExamIndexData();
+        return $this->examRepository->getExamIndexData($user);
     }
 
     public function createExam(array $data): Exam

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\QuestionType;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -23,6 +24,10 @@ class Question extends Model
         'option_c',
         'option_d',
         'correct_answer',
+    ];
+
+    protected $casts = [
+        'type' => QuestionType::class,
     ];
 
     public function getActivitylogOptions(): LogOptions

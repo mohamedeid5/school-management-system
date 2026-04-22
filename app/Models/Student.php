@@ -115,12 +115,17 @@ class Student extends Model
 
     public function scopeAuthorizedForUser($query, $user)
     {
+
+        if ($user->hasRole('admin')) {
+            return $query;
+        }
+
         if ($user->hasRole('teacher') && $user->teacher) {
             $sectionIds = $user->teacher->sections()->pluck('sections.id');
             return $query->whereIn('section_id', $sectionIds);
         }
 
-        return $query;
+        return $query->whereRaw('1 = 0');
     }
 
 }

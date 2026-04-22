@@ -6,8 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StudentRequest;
 use App\Models\Student;
 use App\Services\StudentService;
-
-use function Flasher\Toastr\Prime\toastr;
+use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller
 {
@@ -24,7 +23,9 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = $this->studentService->getAllStudents();
+        $user = Auth::user();
+        $students = $this->studentService->getAllStudents($user);
+
         return view('admin.students.index', compact('students'));
     }
 
@@ -34,6 +35,7 @@ class StudentController extends Controller
     public function create()
     {
         $data = $this->studentService->getCreatePageData();
+
         return view('admin.students.create', $data);
     }
 
@@ -45,10 +47,12 @@ class StudentController extends Controller
         try {
             $this->studentService->storeStudent($request->validated());
             toastr()->success(__('main.created_successfully'));
+
             return redirect()->route('students.index');
         } catch (\Exception $e) {
             $this->logError('Student creation failed', $e);
             toastr()->error(__('main.something_went_wrong'));
+
             return redirect()->back();
         }
     }
@@ -78,12 +82,13 @@ class StudentController extends Controller
     {
         try {
             $this->studentService->updateStudent($request->validated(), $student);
-
             toastr()->success(__('main.updated_successfully'));
+
             return redirect()->route('students.index');
         } catch (\Exception $e) {
             $this->logError('Student update failed', $e);
             toastr()->error(__('main.something_went_wrong'));
+
             return redirect()->back();
         }
     }
@@ -95,12 +100,13 @@ class StudentController extends Controller
     {
         try {
             $this->studentService->deleteStudent($student);
-
             toastr()->success(__('main.deleted_successfully'));
+
             return redirect()->route('students.index');
         } catch (\Exception $e) {
             $this->logError('Student deletion failed', $e);
             toastr()->error(__('main.something_went_wrong'));
+
             return redirect()->back();
         }
     }

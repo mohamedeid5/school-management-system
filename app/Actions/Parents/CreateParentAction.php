@@ -2,7 +2,6 @@
 
 namespace App\Actions\Parents;
 
-use App\Livewire\Forms\ParentForm;
 use App\Models\MyParent;
 use App\Models\ParentAttachment;
 use Illuminate\Support\Facades\DB;
@@ -12,7 +11,7 @@ use App\Models\User;
 
 class CreateParentAction
 {
-    public function handle(ParentForm $form): MyParent
+    public function handle($form): MyParent
     {
         return DB::transaction(function () use ($form) {
 
@@ -35,7 +34,7 @@ class CreateParentAction
 
     }
 
-    protected function parentData(ParentForm $form, $userId): array
+    protected function parentData($form, $userId): array
     {
         return [
             'national_id_father' => $form->national_id_father,
@@ -70,7 +69,7 @@ class CreateParentAction
         ];
     }
 
-    protected function storeAttachments(MyParent $parent, ParentForm $form): void
+    protected function storeAttachments($parent, $form): void
     {
         if (empty($form->photos)) {
             return;

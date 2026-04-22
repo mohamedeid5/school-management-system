@@ -3,15 +3,12 @@
 namespace App\Repositories;
 
 use App\Models\Student;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
 class StudentRepository
 {
-    public function getAllStudents()
+    public function getAllStudents($user)
     {
-        $user = Auth::user();
-
         $studentCacheKey = 'students_for_user_' . $user->id;
 
         return Cache::remember($studentCacheKey, 3600, function() use ($user) {

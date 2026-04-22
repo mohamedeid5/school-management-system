@@ -28,7 +28,7 @@ class AttendanceController extends Controller
             $this->attendanceService->createAttendance($request);
             toastr()->success(__('main.created_successfully'));
 
-            return redirect()->route('attendances.index');
+            return redirect()->route('admin.attendances.index');
         } catch (\Exception $e) {
             dd($e->getMessage());
             $this->logError('Attendance creation failed', $e);

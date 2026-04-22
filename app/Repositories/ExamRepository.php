@@ -4,14 +4,11 @@ namespace App\Repositories;
 
 use App\Models\Exam;
 use App\Models\Grade;
-use Illuminate\Support\Facades\Auth;
 
 class ExamRepository
 {
-    public function getExamIndexData(): array
+    public function getExamIndexData($user): array
     {
-        $user = Auth::user();
-
         $exams = Exam::authorizedForUser($user)
                 ->with(['subject', 'grade', 'classroom', 'teacher.user'])
                 ->latest()

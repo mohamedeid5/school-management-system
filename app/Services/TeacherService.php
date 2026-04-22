@@ -45,7 +45,7 @@ class TeacherService {
     }
 
     public function getEditPageData(Teacher $teacher) {
-        $teacher->load('user', 'specialization');
+        $teacher->load('user', 'specialization', 'sections.classroom');
 
         return [
             'teacher' => $teacher,

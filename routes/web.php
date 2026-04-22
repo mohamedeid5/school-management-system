@@ -7,13 +7,6 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AjaxController;
 
-
-
-Route::get('test', function(){
-    dd(auth()->user()->parent->children->toArray());
-});
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
