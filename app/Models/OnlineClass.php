@@ -56,6 +56,11 @@ class OnlineClass extends Model
         return $this->belongsTo(Classroom::class);
     }
 
+    public function section()
+    {
+        return $this->belongsTo(Section::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -86,4 +91,5 @@ class OnlineClass extends Model
 
         return $query->whereRaw('1 = 0');
     }
+
 }

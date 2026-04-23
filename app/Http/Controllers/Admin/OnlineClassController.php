@@ -11,6 +11,7 @@ use App\Models\Subject;
 use App\Models\Teacher;
 use App\Services\OnlineClassService;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class OnlineClassController extends Controller
 {
@@ -21,7 +22,9 @@ class OnlineClassController extends Controller
 
         Gate::authorize('viewAny', OnlineClass::class);
 
-        $data = $this->onlineClassService->getIndexData();
+        $user = Auth::user();
+
+        $data = $this->onlineClassService->getIndexData($user);
 
         return view('admin.online_classes.index', $data);
     }

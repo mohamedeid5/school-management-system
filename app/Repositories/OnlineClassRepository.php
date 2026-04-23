@@ -7,19 +7,23 @@ use App\Models\Grade;
 use App\Models\OnlineClass;
 use App\Models\Subject;
 use App\Models\Teacher;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class OnlineClassRepository
 {
-    public function getIndexData(): array
+    public function getIndexData($user): array
     {
-        $user = Auth::user();
+        $onlineClassessCacheKey = "online_classes_user_{$user->id}";
 
-        $onlineClasses = OnlineClass::authorizedForUser($user)->with('grade', 'classroom', 'user')->latest()->get();
+        $onlineClasses = Cache::remember($onlineClassessCacheKey, 3600, function() use ($user) {
+            return OnlineClass::with(['grade', 'classroom', 'section', 'subject', 'user'])
+                ->where('user_id', $user->id)
+                ->latest()
+                ->get();
+        });
 
         return [
             'onlineClasses' => $onlineClasses,
-            'grades'        => Grade::all(),
         ];
     }
 

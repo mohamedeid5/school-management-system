@@ -13,9 +13,9 @@ class OnlineClassService
         protected ZoomService $zoomService,
     ) {}
 
-    public function getIndexData(): array
+    public function getIndexData($user): array
     {
-        return $this->onlineClassRepository->getIndexData();
+        return $this->onlineClassRepository->getIndexData($user);
     }
 
     public function getCreateData(): array
