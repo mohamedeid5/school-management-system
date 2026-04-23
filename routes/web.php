@@ -14,7 +14,7 @@ use App\Http\Controllers\AjaxController;
 */
 Route::group([
     'prefix'     => LaravelLocalization::setLocale(),
-    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath'],
+   // 'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath'],
 ], function () {
 
     Route::get('/', fn () => redirect()->route('dashboard'));

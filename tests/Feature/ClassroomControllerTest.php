@@ -3,11 +3,11 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Grade;
 use App\Models\Classroom;
+use Spatie\Permission\Models\Role;
 
 class ClassroomControllerTest extends TestCase
 {
@@ -22,6 +22,9 @@ class ClassroomControllerTest extends TestCase
 
         $this->user = User::factory()->create();
 
+        Role::create(['name' => 'admin']);
+        $this->user->assignRole('admin');
+
         $this->actingAs($this->user);
     }
 
@@ -32,10 +35,10 @@ class ClassroomControllerTest extends TestCase
             'grade_id' => $grade->id
         ]);
 
-        $response = $this->get(route('classrooms.index'));
+        $response = $this->get(route('admin.classrooms.index'));
 
         $response->assertStatus(200);
-        $response->assertViewIs('classrooms.index');
+        $response->assertViewIs('admin.classrooms.index');
         $response->assertViewHasAll(['classrooms', 'grades']);
     }
 
@@ -58,9 +61,9 @@ class ClassroomControllerTest extends TestCase
             ]
         ];
 
-        $response = $this->post(route('classrooms.store'), $data);
+        $response = $this->post(route('admin.classrooms.store'), $data);
 
-        $response->assertRedirect(route('classrooms.index'));
+        $response->assertRedirect(route('admin.classrooms.index'));
         $this->assertDatabaseCount('classrooms', 2);
         $this->assertDatabaseHas('classrooms', [
             'grade_id' => $grade->id
@@ -69,7 +72,7 @@ class ClassroomControllerTest extends TestCase
 
     public function test_store_validates_required_fields(): void
     {
-        $response = $this->post(route('classrooms.store'), []);
+        $response = $this->post(route('admin.classrooms.store'), []);
 
         $response->assertSessionHasErrors();
     }
@@ -99,8 +102,8 @@ class ClassroomControllerTest extends TestCase
             'grade_id' => $grade->id
         ];
 
-        $response = $this->put(route('classrooms.update', $classroom), $data);
-        $response->assertRedirect(route('classrooms.index'));
+        $response = $this->put(route('admin.classrooms.update', $classroom), $data);
+        $response->assertRedirect(route('admin.classrooms.index'));
 
         $classroom->refresh();
 
@@ -118,7 +121,18 @@ class ClassroomControllerTest extends TestCase
                 'ar' => 'الصف الاول',
                 'en' => 'grade 1'
             ],
-            'grade_id' => ''
+            'grade_id' => $grade->id
+        ]);
+
+        $response = $this->put(
+            route('admin.classrooms.update', $classroom),
+            []
+        );
+
+        $response->assertSessionHasErrors([
+            'name.ar',
+            'name.en',
+            'grade_id'
         ]);
     }
 }

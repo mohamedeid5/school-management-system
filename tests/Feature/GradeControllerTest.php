@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Grade;
+use Spatie\Permission\Models\Role;
 
 class GradeControllerTest extends TestCase
 {
@@ -18,15 +19,17 @@ class GradeControllerTest extends TestCase
         parent::setUp();
 
         $this->user = User::factory()->create();
+        $role = Role::create(['name' => 'admin']);
+        $this->user->assignRole($role);
         $this->actingAs($this->user);
     }
 
     public function test_index_page_is_displayed()
     {
 
-        $response = $this->get(route('grades.index'));
+        $response = $this->get(route('admin.grades.index'));
         $response->assertStatus(200);
-        $response->assertViewIs('grades.index');
+        $response->assertViewIs('admin.grades.index');
     }
 
     public function test_it_can_store_a_new_grade()
@@ -36,8 +39,8 @@ class GradeControllerTest extends TestCase
             'notes' => 'This is grade 1',
         ];
 
-        $response = $this->post(route('grades.store'), $data);
-        $response->assertRedirect(route('grades.index'));
+        $response = $this->post(route('admin.grades.store'), $data);
+        $response->assertRedirect(route('admin.grades.index'));
         $this->assertDatabaseHas('grades', [
             'name->en' => 'Grade 1',
             'name->ar' => 'الصف الأول',
@@ -47,8 +50,8 @@ class GradeControllerTest extends TestCase
 
     public function test_store_requires_valid_data()
     {
-        $response = $this->from(route('grades.index'))->post(route('grades.store'), []);
-        $response->assertRedirect(route('grades.index'));
+        $response = $this->from(route('admin.grades.index'))->post(route('admin.grades.store'), []);
+        $response->assertRedirect(route('admin.grades.index'));
         $response->assertSessionHasErrors(['name.ar', 'name.en']);
     }
 
@@ -64,8 +67,8 @@ class GradeControllerTest extends TestCase
             'notes' => 'This is the updated grade',
         ];
 
-        $response = $this->put(route('grades.update', $grade->id), $data);
-        $response->assertRedirect(route('grades.index'));
+        $response = $this->put(route('admin.grades.update', $grade->id), $data);
+        $response->assertRedirect(route('admin.grades.index'));
         $this->assertDatabaseHas('grades', [
             'id' => $grade->id,
             'name->en' => 'Updated Grade',
@@ -78,8 +81,8 @@ class GradeControllerTest extends TestCase
     {
         $grade = Grade::factory()->create();
 
-       $response = $this->delete(route('grades.destroy', $grade->id));
-       $response->assertRedirect(route('grades.index'));
+       $response = $this->delete(route('admin.grades.destroy', $grade->id));
+       $response->assertRedirect(route('admin.grades.index'));
        $this->assertDatabaseMissing('grades', [
             'id' => $grade->id
        ]);

@@ -31,7 +31,7 @@ class ClassroomController extends Controller
             $this->classroomService->create($request->validated());
             toastr()->success(__('main.created_successfully'));
 
-            return redirect()->route('classrooms.index');
+            return redirect()->route('admin.classrooms.index');
         } catch (\Exception $e) {
             $this->logError('Classroom creation failed', $e);
             toastr()->error(__('main.something_went_wrong'));

@@ -14,6 +14,9 @@ use App\Http\Controllers\Api\QuestionController;
 use App\Http\Controllers\Api\OnlineClassController;
 use App\Http\Controllers\Api\DashboardController;
 
+ Route::post('login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
+Route::post('register', [\App\Http\Controllers\Api\AuthController::class, 'register']);
+
 Route::middleware('auth:sanctum')->group(function() {
     Route::get('dashboard', [DashboardController::class, 'index']);
     Route::apiResource('grades', GradeController::class);
@@ -28,9 +31,6 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::apiResource('questions', QuestionController::class);
     Route::apiResource('online-classes', OnlineClassController::class);
 
-
-    Route::post('login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
-    Route::post('register', [\App\Http\Controllers\Api\AuthController::class, 'register']);
     Route::post('logout', [\App\Http\Controllers\Api\AuthController::class, 'logout']);
 });
 

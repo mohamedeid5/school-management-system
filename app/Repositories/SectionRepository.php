@@ -17,16 +17,15 @@ class SectionRepository
             return Grade::authorizedForUser($user)->get();
         });
 
+        $allClassrooms = Cache::rememberForever('all_classrooms', function() {
+            return Classroom::latest()->get();
+        });
+
+
         $oldGradeId = old('grade_id');
-        $classrooms = collect();
-
-        if($oldGradeId) {
-            $allClassrooms = Cache::rememberForever('all_classrooms', function() {
-                return Classroom::latest()->get();
-            });
-
-            $classrooms = $allClassrooms->where('grade_id', $oldGradeId)->values();
-        }
+        $classrooms = $oldGradeId
+            ? $allClassrooms->where('grade_id', $oldGradeId)->values()
+            : collect();
 
         return compact('grades', 'classrooms');
     }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -11,7 +12,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Section extends Model
 {
-    use LogsActivity, HasTranslations;
+    use LogsActivity, HasTranslations, HasFactory;
 
     protected $fillable = [
         'name',

@@ -29,7 +29,7 @@ class SectionController extends Controller
             $this->sectionService->create($request->validated());
 
             toastr()->success(__('main.created_successfully'));
-            return redirect()->route('sections.index');
+            return redirect()->route('admin.sections.index');
 
         } catch (\Exception $e) {
             $this->logError('Section creation failed', $e);
@@ -45,7 +45,7 @@ class SectionController extends Controller
             $this->sectionService->update($section, $request->validated());
 
             toastr()->success(__('main.updated_successfully'));
-            return redirect()->route('sections.index');
+            return redirect()->route('admin.sections.index');
 
         } catch (\Exception $e) {
             $this->logError('Section update failed', $e, ['section_id' => $section->id]);
@@ -61,7 +61,7 @@ class SectionController extends Controller
             $this->sectionService->delete($section);
 
             toastr()->success(__('main.deleted_successfully'));
-            return redirect()->route('sections.index');
+            return redirect()->route('admin.sections.index');
 
         } catch (\Exception $e) {
             $this->logError('Section delete failed', $e, ['section_id' => $section->id]);

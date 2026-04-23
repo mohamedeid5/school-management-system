@@ -28,7 +28,7 @@ class GradeRepository
         return Grade::create([
             "name" => [
                 "ar" => $dto->nameAr,
-                "en" => $dto->nameAr,
+                "en" => $dto->nameEn,
             ],
             "notes" => $dto->notes,
         ]);
@@ -40,8 +40,8 @@ class GradeRepository
             "name" => [
                 "ar" => $dto->nameAr,
                 "en" => $dto->nameEn,
-                "notes" => $dto->notes,
-            ]
+            ],
+            "notes" => $dto->notes,
         ]);
 
         return $grade;
