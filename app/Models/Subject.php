@@ -7,10 +7,11 @@ use Illuminate\Support\Facades\Cache;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Translatable\HasTranslations;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Subject extends Model
 {
-    use LogsActivity, HasTranslations;
+    use LogsActivity, HasTranslations, HasFactory;
 
     public $translatable = ['name'];
 

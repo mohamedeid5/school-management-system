@@ -23,7 +23,6 @@ class SectionControllerTest extends TestCase
         $this->user = User::factory()->create();
         $role = Role::create(['name' => 'admin']);
         $this->user->assignRole($role);
-        $this->user->assignRole('admin');
 
         $this->actingAs($this->user);
     }
@@ -40,7 +39,7 @@ class SectionControllerTest extends TestCase
         $grade = Grade::factory()->create();
         $classroom = Classroom::factory()->create(['grade_id' => $grade->id]);
 
-        $section = Section::factory()->create([
+        $section = Section::factory()->make([
            'grade_id' => $grade->id,
            'classroom_id' => $classroom->id
         ]);

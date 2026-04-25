@@ -54,7 +54,7 @@ class SubjectController extends Controller
         $this->subjectService->updateSubject($subject, $request->validated());
         toastr()->success(__('main.updated_successfully'));
 
-        return redirect()->route('subjects.index');
+        return redirect()->route('admin.subjects.index');
     }
 
     public function destroy(Subject $subject)
@@ -62,7 +62,7 @@ class SubjectController extends Controller
         $this->subjectService->deleteSubject($subject);
         toastr()->success(__('main.deleted_successfully'));
 
-        return redirect()->route('subjects.index');
+        return redirect()->route('admin.subjects.index');
     }
 }
 
