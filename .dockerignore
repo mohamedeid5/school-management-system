@@ -1,0 +1,32 @@
+# Git
+.git
+.gitignore
+
+# Node
+node_modules
+
+# Laravel dev files
+.env
+.env.*
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+
+# Tests
+tests/
+phpunit.xml
+
+# Docker files (don't copy into image)
+docker-compose*.yml
+Dockerfile
+
+# IDE / OS
+.idea
+.vscode
+*.DS_Store
+*.swp
+
+# Docs
+README.md
+*.md

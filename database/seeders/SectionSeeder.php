@@ -30,6 +30,7 @@ class SectionSeeder extends Seeder
             foreach ($sections as $section) {
                 Section::create([
                     'name' => $section,
+                    'grade_id' => rand(1, 3),
                     'classroom_id' => rand(1, 6),
                 ]);
             }

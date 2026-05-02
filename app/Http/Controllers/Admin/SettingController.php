@@ -23,11 +23,11 @@ class SettingController extends Controller
         try {
             $this->settingService->updateSettings($request->validated());
             toastr(__('Settings updated successfully'), 'success');
-            return redirect()->route('settings.edit');
+            return redirect()->route('admin.settings.edit');
         } catch (\Exception $e) {
             $this->logError('Error updating settings', $e);
             toastr(__('An error occurred while updating settings'), 'error');
-            return redirect()->route('settings.edit');
+            return redirect()->route('admin.settings.edit');
         }
     }
 }

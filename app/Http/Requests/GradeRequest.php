@@ -27,13 +27,13 @@ class GradeRequest extends FormRequest
                 'required',
                 'min:2',
                 'max:255',
-                Rule::unique('grades', 'name->ar')->ignore($this->grade),
+                Rule::unique('grades', 'name->ar')->ignore($this->route('grade')),
             ],
             'name.en' => [
                 'required',
                 'min:2',
                 'max:255',
-                Rule::unique('grades', 'name->en')->ignore($this->grade),
+                Rule::unique('grades', 'name->en')->ignore($this->route('grade')),
             ],
             'notes' => 'nullable|string',
         ];
