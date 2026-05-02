@@ -22,6 +22,7 @@
 - [Roles & Permissions](#roles--permissions)
 - [API Endpoints](#api-endpoints)
 - [Database Schema](#database-schema)
+- [How to Run](#how-to-run)
 - [Getting Started](#getting-started)
 - [Environment Variables](#environment-variables)
 
@@ -207,6 +208,19 @@ online_classes (zoom_meeting_id, join_url, start_url, subject_id)
 libraries      (polymorphic file attachments)
 attachments    (polymorphic: students, parents, settings)
 activity_log   (full audit trail via Spatie)
+```
+
+---
+
+## How to Run
+
+```bash
+# Clone the repository
+git clone https://github.com/your-username/school-management-system.git
+cd school-management-system
+
+# Run the setup script
+./setup.sh
 ```
 
 ---
