@@ -21,15 +21,14 @@ jobs:
         extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite3, pdo_sqlite, bcmath, gd
         coverage: none
 
-    - name: ⚙️ تجهيز ملف الإعدادات (.env)
+    - name: (.env)
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
-    - name: 📦 تسطيب الباكدجات (Composer)
+    - name: (Composer)
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-    - name: 🔑 توليد مفتاح لارافل
+    - name: Key Generation
       run: php artisan key:generate
 
-    - name: 🧪 تشغيل المفتش (Tests)
-
+    - name: (Tests)
       run: php artisan test
